@@ -1,0 +1,18 @@
+penambahan dosen penguji pada jadwal
+
+/*==============================================================*/
+/* Table: MENGUJI                                               */
+/*==============================================================*/
+create table MENGUJI  (
+   ID_JADWAL            NUMBER(5)                       not null,
+   INISIAL_DOSEN        VARCHAR2(3)                     not null,
+   constraint PK_MENGUJI primary key (ID_JADWAL, INISIAL_DOSEN)
+);
+
+alter table MENGUJI
+   add constraint FK_MENGUJI_MENGUJI_JADWAL foreign key (ID_JADWAL)
+      references JADWAL (ID_JADWAL);
+
+alter table MENGUJI
+   add constraint FK_MENGUJI_MENGUJI2_DOSEN foreign key (INISIAL_DOSEN)
+      references DOSEN (INISIAL_DOSEN);

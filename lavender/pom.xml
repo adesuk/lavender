@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ac.id.itb.ppl.group4</groupId>
+  <artifactId>lavender</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>lavender</name>
+  <modules>
+    <module>lavender-ear</module>
+    <module>lavender-web</module>
+    <module>lavender-ejb</module>
+  </modules>
+</project>

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Pengelolaan Bidang Keahlian</h2>
+              <br />
+              
+              <h:form>
+                <f:view>
+                  <h:form>
+                    <h1><h:outputText value="Create/Edit"/></h1>
+                    <h:panelGrid columns="2">
+                      <h:outputLabel value="Id:" for="id" />
+                      <h:outputLabel id="id" value="#{dosenMBean.dosen.id}" title="Id" />
+                      <h:outputLabel value="Nama:" for="nama" />
+                      <h:outputLabel id="nama" value="#{dosenMBean.dosen.nama}" title="Nama" />
+                      <h:outputLabel value="Inisial:" for="inisial" />
+                      <h:outputLabel id="inisial" value="#{dosenMBean.dosen.inisial}" title="Inisial" />
+                      <h:outputLabel value="BidangKeahlian:" for="bidangKeahlian" />
+                      <h:inputText id="bidangKeahlian" value="#{dosenMBean.dosen.bidangKeahlian}" title="Bidang Keahlian" />
+                      <h:selectManyCheckbox value="#{dosenMBean.dosen.bidangKeahlian}" layout="pageDirection">
+                        <f:selectItems value="#{dosenMBean.opsis}" var="n" 
+                                       itemLabel="#{n.nama}" itemValue="#{n.id}" /><br />
+                      </h:selectManyCheckbox>
+                    </h:panelGrid>
+                  </h:form>
+                </f:view>
+
+              </h:form>
+              
+              <h:form>
+                <h:outputText value="Inisial Dosen" />
+                <h:outputText value="US" /><br />
+                <h:outputText value="Nama" />
+                <h:outputText value="Prof. Dr. Ulfsaar, ST, MT" /><br />
+                <h:outputText value="Minat Bidang" /><br />
+                
+                <h:selectManyCheckbox value="#{keahlianController.opsis}" layout="pageDirection">
+                  <f:selectItems value="#{keahlianController.opsis}" var="n" 
+                                 itemLabel="#{n.nama}" itemValue="#{n.id}" /><br />
+                </h:selectManyCheckbox>
+                <br></br>
+                <button class="btn btn-primary">Search</button>
+              </h:form>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

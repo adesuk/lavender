@@ -1,0 +1,13 @@
+--- Read me first ---
+
+Semua referensi yang berhubungan dengan pembangunan sopwer APSSI - lavender ini 
+tulis di sini yah... Mana tau jadi ilmu buat kita untuk pengembangan sopwer selanjutnya :D
+
+--- End of read me ---
+
+--- Templating di JSF ---
+- http://www.oracle.com/technetwork/articles/java/facelets-454361.html
+- http://www.mkyong.com/jsf2/jsf-2-templating-with-facelets-example/
+
+--- Themes JSF (PrimeFace) ---
+- http://www.primefaces.org/themes.html

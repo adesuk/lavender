@@ -1,0 +1,160 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package ac.id.itb.ppl.group4.lavender.model;
+
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author adesuk
+ */
+@Entity
+@Table(name = "KARYA_AKHIR")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "KaryaAkhir.findAll", query = "SELECT k FROM KaryaAkhir k"),
+    @NamedQuery(name = "KaryaAkhir.findByIdKa", query = "SELECT k FROM KaryaAkhir k WHERE k.idKa = :idKa"),
+    @NamedQuery(name = "KaryaAkhir.findByJudulKa", query = "SELECT k FROM KaryaAkhir k WHERE k.judulKa = :judulKa"),
+    @NamedQuery(name = "KaryaAkhir.findByStatusKa", query = "SELECT k FROM KaryaAkhir k WHERE k.statusKa = :statusKa")})
+public class KaryaAkhir implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_KA")
+    private Integer idKa;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(name = "JUDUL_KA")
+    private String judulKa;
+    @Column(name = "STATUS_KA")
+    private Character statusKa;
+    @ManyToMany(mappedBy = "karyaAkhirCollection")
+    private Collection<Dosen> dosenCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKa")
+    private Collection<Jadwal> jadwalCollection;
+    @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")
+    @ManyToOne
+    private Topik idTopik;
+    @JoinColumn(name = "NIM", referencedColumnName = "NIM")
+    @ManyToOne(optional = false)
+    private Mahasiswa nim;
+
+    public KaryaAkhir() {
+    }
+
+    public KaryaAkhir(Integer idKa) {
+        this.idKa = idKa;
+    }
+
+    public KaryaAkhir(Integer idKa, String judulKa) {
+        this.idKa = idKa;
+        this.judulKa = judulKa;
+    }
+
+    public Integer getIdKa() {
+        return idKa;
+    }
+
+    public void setIdKa(Integer idKa) {
+        this.idKa = idKa;
+    }
+
+    public String getJudulKa() {
+        return judulKa;
+    }
+
+    public void setJudulKa(String judulKa) {
+        this.judulKa = judulKa;
+    }
+
+    public Character getStatusKa() {
+        return statusKa;
+    }
+
+    public void setStatusKa(Character statusKa) {
+        this.statusKa = statusKa;
+    }
+
+    @XmlTransient
+    public Collection<Dosen> getDosenCollection() {
+        return dosenCollection;
+    }
+
+    public void setDosenCollection(Collection<Dosen> dosenCollection) {
+        this.dosenCollection = dosenCollection;
+    }
+
+    @XmlTransient
+    public Collection<Jadwal> getJadwalCollection() {
+        return jadwalCollection;
+    }
+
+    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
+        this.jadwalCollection = jadwalCollection;
+    }
+
+    public Topik getIdTopik() {
+        return idTopik;
+    }
+
+    public void setIdTopik(Topik idTopik) {
+        this.idTopik = idTopik;
+    }
+
+    public Mahasiswa getNim() {
+        return nim;
+    }
+
+    public void setNim(Mahasiswa nim) {
+        this.nim = nim;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idKa != null ? idKa.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof KaryaAkhir)) {
+            return false;
+        }
+        KaryaAkhir other = (KaryaAkhir) object;
+        if ((this.idKa == null && other.idKa != null) || (this.idKa != null && !this.idKa.equals(other.idKa))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.group4.lavender.model2.KaryaAkhir[ idKa=" + idKa + " ]";
+    }
+    
+}
