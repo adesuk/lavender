@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ac.id.itb.ppl.lavender</groupId>
+  <artifactId>jadwalKaEAR</artifactId>
+  <version>0.1</version>
+  <packaging>ear</packaging>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>ac.id.itb.ppl.lavender</groupId>
+      	<artifactId>jadwalKaEJB</artifactId>
+      	<version>0.1</version>
+      	<type>ejb</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>ac.id.itb.ppl.lavender</groupId>
+      	<artifactId>jadwalKaWEB</artifactId>
+      	<version>0.1</version>
+      	<type>war</type>
+  	</dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-ear-plugin</artifactId>
+        	<version>2.6</version>
+        	<!-- configuring the ear plugin -->
+        	<configuration>
+          		<modules>
+            		<webModule>
+              			<groupId>ac.id.itb.ppl.lavender</groupId>
+              			<artifactId>jadwalKaWEB</artifactId>
+            		</webModule>
+            		<ejbModule>
+              			<groupId>ac.id.itb.ppl.lavender</groupId>
+              			<artifactId>jadwalKaEJB</artifactId>
+            		</ejbModule>
+          		</modules>
+          		<!-- <generateApplicationXml>true</generateApplicationXml>  -->
+        	</configuration>
+  		</plugin>
+  	</plugins>
+  </build>
+</project>

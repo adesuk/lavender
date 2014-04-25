@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="jadwalKaEAR-0.1">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
+        <dependent-module archiveName="jadwalKaWEB-0.1.war" deploy-path="/" handle="module:/resource/jadwalKaWEB/jadwalKaWEB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jadwalKaEJB-0.1.jar" deploy-path="/" handle="module:/resource/jadwalKaEJB/jadwalKaEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="eclipselink-2.5.0.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/eclipse/persistence/eclipselink/2.5.0/eclipselink-2.5.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javax.persistence-2.1.0.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/eclipse/persistence/javax.persistence/2.1.0/javax.persistence-2.1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commonj.sdo-2.1.1.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/eclipse/persistence/commonj.sdo/2.1.1/commonj.sdo-2.1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
