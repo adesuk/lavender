@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ac.id.itb.ppl.lavender</groupId>
+  <artifactId>jadwalKaWEB</artifactId>
+  <version>0.1</version>
+  <packaging>war</packaging>
+    
+  <dependencies>
+    <!-- JSF Dependecies -->
+    <dependency>
+		<groupId>com.sun.faces</groupId>
+		<artifactId>jsf-api</artifactId>
+		<version>2.2.6</version>
+	</dependency>
+    <dependency>
+        <groupId>com.sun.faces</groupId>
+        <artifactId>jsf-impl</artifactId>
+        <version>2.2.6</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>javax</groupId>
+    	<artifactId>javaee-api</artifactId>
+    	<version>6.0</version>
+    	<scope>provided</scope>
+    </dependency>
+    
+    <!-- EJB -->
+    <!-- 
+    <dependency>
+    	<groupId>ac.id.itb.ppl.lavender</groupId>
+    	<artifactId>jadwalKaEJB</artifactId>
+    	<version>0.1</version>
+    </dependency>
+     -->
+     
+    <!-- Primefaces -->
+    <dependency>
+        <groupId>org.primefaces</groupId>
+        <artifactId>primefaces</artifactId>
+        <version>4.0</version>
+    </dependency>
+</dependencies>
+  
+<!-- Primefaces dependencies -->  
+<repositories>
+    <repository>
+        <id>prime-repo</id>
+        <name>PrimeFaces Maven Repository</name>
+        <url>http://repository.primefaces.org</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
+  
+</project>
