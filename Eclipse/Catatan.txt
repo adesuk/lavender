@@ -1,0 +1,6 @@
+-buat pooling dulu di glassfish yang mampu koneksi ke database oracle
+-defaultnya jdbc/jadwalDB
+-Run
+
+-Jika run gagal coba dibuild dulu agar dibuatkan artifaknya di repo.
+-coba lagi run
