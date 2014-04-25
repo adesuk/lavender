@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ac.id.itb.ppl.lavender</groupId>
+  <artifactId>jadwalKaEJB</artifactId>
+  <version>0.1</version>
+  <packaging>ejb</packaging>
+  
+   <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- JPA for Java EE application servers  -->
+ 		 <dependency>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>eclipselink</artifactId>
+      <version>2.5.0</version>
+      <scope>compile</scope>
+  </dependency>
+
+		
+   </dependencies>
+   
+   <repositories>
+  <repository>
+      <id>EclipseLink Repo</id>
+      <name>EclipseLink Repository</name>
+      <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+  </repository>
+</repositories>
+   
+   
+   <build>
+		<plugins>
+			 <plugin>
+        		<artifactId>maven-ejb-plugin</artifactId>
+        		<version>2.3</version>
+        		<configuration>
+       				<ejbVersion>3.2</ejbVersion>
+        		</configuration>
+      		</plugin>
+		</plugins>
+   </build>
+  
+</project>
