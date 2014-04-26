@@ -61,7 +61,8 @@ public class ControlerGenerateJadwal {
                                dataJadwal.getRuangan().getKdRuangan() +"\t"+
                                dataJadwal.getKaryaAkhir().getIdKa()+"\t"+
                                dataJadwal.getKaryaAkhir().getDosensPembimbing().get(0).getInisialDosen()+"\t"+
-                               dataJadwal.getDosensPenguji().get(0).getInisialDosen());
+                               dataJadwal.getDosensPenguji().get(0).getInisialDosen()+"\t"+
+                               dataJadwal.getGenerateDate().toString());
          }
         // save jadwal to database
 
