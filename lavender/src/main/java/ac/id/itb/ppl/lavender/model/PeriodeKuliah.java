@@ -7,23 +7,27 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "PERIODE_KULIAH")
@@ -57,6 +61,8 @@ public class PeriodeKuliah implements Serializable {
     private String tahunAkademik;
     @Column(name = "SEMESTER")
     private Short semester;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPeriodeKuliah")
+    private Collection<JadwalKuliah> jadwalKuliahCollection;
 
     public PeriodeKuliah() {
     }
@@ -111,6 +117,15 @@ public class PeriodeKuliah implements Serializable {
 
     public void setSemester(Short semester) {
         this.semester = semester;
+    }
+
+    @XmlTransient
+    public Collection<JadwalKuliah> getJadwalKuliahCollection() {
+        return jadwalKuliahCollection;
+    }
+
+    public void setJadwalKuliahCollection(Collection<JadwalKuliah> jadwalKuliahCollection) {
+        this.jadwalKuliahCollection = jadwalKuliahCollection;
     }
 
     @Override

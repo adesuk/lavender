@@ -7,20 +7,25 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "RUANGAN")
@@ -37,9 +42,16 @@ public class Ruangan implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "KD_RUANGAN")
     private String kdRuangan;
-    @Size(max = 5)
+    @Size(max = 20)
     @Column(name = "NAMA_RUANGAN")
     private String namaRuangan;
+    
+    private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
+    
+//    @OneToMany(mappedBy = "kdRuangan")
+//    private Collection<Jadwal> jadwalCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kdRuangan")
+//    private Collection<JadwalKuliah> jadwalKuliahCollection;
 
     public Ruangan() {
     }
@@ -64,6 +76,32 @@ public class Ruangan implements Serializable {
         this.namaRuangan = namaRuangan;
     }
 
+    @XmlTransient
+//    public Collection<Jadwal> getJadwalCollection() {
+//        return jadwalCollection;
+//    }
+//
+//    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
+//        this.jadwalCollection = jadwalCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<JadwalKuliah> getJadwalKuliahCollection() {
+//        return jadwalKuliahCollection;
+//    }
+//
+//    public void setJadwalKuliahCollection(Collection<JadwalKuliah> jadwalKuliahCollection) {
+//        this.jadwalKuliahCollection = jadwalKuliahCollection;
+//    }
+
+    public List<KetersediaanRuangan> getKetersediaanWaktuRuangan() {
+        return ketersediaanWaktuRuangan;
+    }
+
+    public void setKetersediaanWaktuRuangan(List<KetersediaanRuangan> ketersediaanWaktuRuangan) {
+        this.ketersediaanWaktuRuangan = ketersediaanWaktuRuangan;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -7,22 +7,26 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "SLOT_WAKTU")
@@ -48,6 +52,10 @@ public class SlotWaktu implements Serializable {
     @Column(name = "JAM_AKHIR")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jamAkhir;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSlot")
+    private Collection<Jadwal> jadwalCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "slotWaktu")
+    private Collection<KetersediaanDosen> ketersediaanWaktuDosenCollection;
 
     public SlotWaktu() {
     }
@@ -86,6 +94,24 @@ public class SlotWaktu implements Serializable {
 
     public void setJamAkhir(Date jamAkhir) {
         this.jamAkhir = jamAkhir;
+    }
+
+    @XmlTransient
+    public Collection<Jadwal> getJadwalCollection() {
+        return jadwalCollection;
+    }
+
+    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
+        this.jadwalCollection = jadwalCollection;
+    }
+
+    @XmlTransient
+    public Collection<KetersediaanDosen> getKetersediaanWaktuDosenCollection() {
+        return ketersediaanWaktuDosenCollection;
+    }
+
+    public void setKetersediaanWaktuDosenCollection(Collection<KetersediaanDosen> ketersediaanWaktuDosenCollection) {
+        this.ketersediaanWaktuDosenCollection = ketersediaanWaktuDosenCollection;
     }
 
     @Override

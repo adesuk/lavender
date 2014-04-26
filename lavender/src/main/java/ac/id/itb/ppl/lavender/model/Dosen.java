@@ -7,20 +7,28 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "DOSEN")
@@ -52,6 +60,32 @@ public class Dosen implements Serializable {
     @Size(max = 30)
     @Column(name = "GELAR_BELAKANG")
     private String gelarBelakang;
+    
+//    @JoinTable(name = "MENGAJAR", joinColumns = {
+//        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+//        @JoinColumn(name = "ID_JADWAL_KULIAH", referencedColumnName = "ID_JADWAL_KULIAH")})
+//    @ManyToMany
+//    private Collection<JadwalKuliah> jadwalKuliahCollection;
+    
+    @JoinTable(name = "REFERENCE", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")})
+    @ManyToMany
+    private List<Topik> bidangKeahlian;
+//    @JoinTable(name = "MENGUJI", joinColumns = {
+//        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+//        @JoinColumn(name = "ID_JADWAL", referencedColumnName = "ID_JADWAL")})
+//    @ManyToMany
+//    private Collection<Jadwal> jadwalCollection;
+    
+//    @JoinTable(name = "MEMBIMBING", joinColumns = {
+//        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+//        @JoinColumn(name = "ID_KA", referencedColumnName = "ID_KA")})
+//    @ManyToMany
+//    private Collection<KaryaAkhir> karyaAkhirCollection;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dosen")
+    private List<KetersediaanDosen> KetersediaanWaktuDosens;
 
     public Dosen() {
     }
@@ -98,6 +132,51 @@ public class Dosen implements Serializable {
 
     public void setGelarBelakang(String gelarBelakang) {
         this.gelarBelakang = gelarBelakang;
+    }
+
+//    @XmlTransient
+//    public Collection<JadwalKuliah> getJadwalKuliahCollection() {
+//        return jadwalKuliahCollection;
+//    }
+//
+//    public void setJadwalKuliahCollection(Collection<JadwalKuliah> jadwalKuliahCollection) {
+//        this.jadwalKuliahCollection = jadwalKuliahCollection;
+//    }
+
+    @XmlTransient
+    public List<Topik> getBidangKeahlian() {
+        return bidangKeahlian;
+    }
+
+    public void setBidangKeahlian(List<Topik> bidangKeahlian) {
+        this.bidangKeahlian = bidangKeahlian;
+    }
+
+//    @XmlTransient
+//    public Collection<Jadwal> getJadwalCollection() {
+//        return jadwalCollection;
+//    }
+//
+//    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
+//        this.jadwalCollection = jadwalCollection;
+//    }
+
+//    @XmlTransient
+//    public Collection<KaryaAkhir> getKaryaAkhirCollection() {
+//        return karyaAkhirCollection;
+//    }
+//
+//    public void setKaryaAkhirCollection(Collection<KaryaAkhir> karyaAkhirCollection) {
+//        this.karyaAkhirCollection = karyaAkhirCollection;
+//    }
+
+    @XmlTransient
+    public List<KetersediaanDosen> getKetersediaanWaktuDosens() {
+        return KetersediaanWaktuDosens;
+    }
+
+    public void setKetersediaanWaktuDosens(List<KetersediaanDosen> KetersediaanWaktuDosens) {
+        this.KetersediaanWaktuDosens = KetersediaanWaktuDosens;
     }
 
     @Override

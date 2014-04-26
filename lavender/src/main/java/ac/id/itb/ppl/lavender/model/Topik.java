@@ -7,20 +7,24 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "TOPIK")
@@ -43,6 +47,10 @@ public class Topik implements Serializable {
     @Size(max = 10)
     @Column(name = "BIDANG")
     private String bidang;
+    @ManyToMany(mappedBy = "topikCollection")
+    private Collection<Dosen> dosenCollection;
+    @OneToMany(mappedBy = "idTopik")
+    private Collection<KaryaAkhir> karyaAkhirCollection;
 
     public Topik() {
     }
@@ -73,6 +81,24 @@ public class Topik implements Serializable {
 
     public void setBidang(String bidang) {
         this.bidang = bidang;
+    }
+
+    @XmlTransient
+    public Collection<Dosen> getDosenCollection() {
+        return dosenCollection;
+    }
+
+    public void setDosenCollection(Collection<Dosen> dosenCollection) {
+        this.dosenCollection = dosenCollection;
+    }
+
+    @XmlTransient
+    public Collection<KaryaAkhir> getKaryaAkhirCollection() {
+        return karyaAkhirCollection;
+    }
+
+    public void setKaryaAkhirCollection(Collection<KaryaAkhir> karyaAkhirCollection) {
+        this.karyaAkhirCollection = karyaAkhirCollection;
     }
 
     @Override

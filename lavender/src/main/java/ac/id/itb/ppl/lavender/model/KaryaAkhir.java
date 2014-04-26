@@ -7,20 +7,28 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "KARYA_AKHIR")
@@ -28,8 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "KaryaAkhir.findAll", query = "SELECT k FROM KaryaAkhir k"),
     @NamedQuery(name = "KaryaAkhir.findByIdKa", query = "SELECT k FROM KaryaAkhir k WHERE k.idKa = :idKa"),
-    @NamedQuery(name = "KaryaAkhir.findByIdTopik", query = "SELECT k FROM KaryaAkhir k WHERE k.idTopik = :idTopik"),
-    @NamedQuery(name = "KaryaAkhir.findByNim", query = "SELECT k FROM KaryaAkhir k WHERE k.nim = :nim"),
     @NamedQuery(name = "KaryaAkhir.findByJudulKa", query = "SELECT k FROM KaryaAkhir k WHERE k.judulKa = :judulKa"),
     @NamedQuery(name = "KaryaAkhir.findByStatusKa", query = "SELECT k FROM KaryaAkhir k WHERE k.statusKa = :statusKa")})
 public class KaryaAkhir implements Serializable {
@@ -39,13 +45,6 @@ public class KaryaAkhir implements Serializable {
     @NotNull
     @Column(name = "ID_KA")
     private Integer idKa;
-    @Column(name = "ID_TOPIK")
-    private Integer idTopik;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 8)
-    @Column(name = "NIM")
-    private String nim;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
@@ -53,6 +52,19 @@ public class KaryaAkhir implements Serializable {
     private String judulKa;
     @Column(name = "STATUS_KA")
     private Character statusKa;
+    
+    @ManyToMany(mappedBy = "karyaAkhirCollection")
+    private List<Dosen> dosenPembimbing;
+    
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKa")
+//    private List<Jadwal> jadwalCollection;
+//    @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")
+    
+    @ManyToOne
+    private Topik idTopik;
+    @JoinColumn(name = "NIM", referencedColumnName = "NIM")
+    @ManyToOne(optional = false)
+    private Mahasiswa mahasiswa;
 
     public KaryaAkhir() {
     }
@@ -61,9 +73,8 @@ public class KaryaAkhir implements Serializable {
         this.idKa = idKa;
     }
 
-    public KaryaAkhir(Integer idKa, String nim, String judulKa) {
+    public KaryaAkhir(Integer idKa, String judulKa) {
         this.idKa = idKa;
-        this.nim = nim;
         this.judulKa = judulKa;
     }
 
@@ -73,22 +84,6 @@ public class KaryaAkhir implements Serializable {
 
     public void setIdKa(Integer idKa) {
         this.idKa = idKa;
-    }
-
-    public Integer getIdTopik() {
-        return idTopik;
-    }
-
-    public void setIdTopik(Integer idTopik) {
-        this.idTopik = idTopik;
-    }
-
-    public String getNim() {
-        return nim;
-    }
-
-    public void setNim(String nim) {
-        this.nim = nim;
     }
 
     public String getJudulKa() {
@@ -105,6 +100,40 @@ public class KaryaAkhir implements Serializable {
 
     public void setStatusKa(Character statusKa) {
         this.statusKa = statusKa;
+    }
+
+    @XmlTransient
+    public List<Dosen> getDosensPembimbing() {
+        return dosenPembimbing;
+    }
+
+    public void setDosenPembimbing(List<Dosen> dosenPembimbing) {
+        this.dosenPembimbing = dosenPembimbing;
+    }
+
+//    @XmlTransient
+//    public Collection<Jadwal> getJadwalCollection() {
+//        return jadwalCollection;
+//    }
+//
+//    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
+//        this.jadwalCollection = jadwalCollection;
+//    }
+
+    public Topik getTopik() {
+        return idTopik;
+    }
+
+    public void setTopik(Topik topik) {
+        this.idTopik = topik;
+    }
+
+    public Mahasiswa getMahasiswa() {
+        return mahasiswa;
+    }
+
+    public void setMahasiswa(Mahasiswa mahasiswa) {
+        this.mahasiswa = mahasiswa;
     }
 
     @Override

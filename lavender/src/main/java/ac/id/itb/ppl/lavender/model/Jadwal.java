@@ -8,11 +8,16 @@ package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,10 +26,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Edbert
+ * @author TOSHIBA
  */
 @Entity
 @Table(name = "JADWAL")
@@ -32,14 +38,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Jadwal.findAll", query = "SELECT j FROM Jadwal j"),
     @NamedQuery(name = "Jadwal.findByIdJadwal", query = "SELECT j FROM Jadwal j WHERE j.idJadwal = :idJadwal"),
-    @NamedQuery(name = "Jadwal.findByKdRuangan", query = "SELECT j FROM Jadwal j WHERE j.kdRuangan = :kdRuangan"),
-    @NamedQuery(name = "Jadwal.findByIdSlot", query = "SELECT j FROM Jadwal j WHERE j.idSlot = :idSlot"),
-    @NamedQuery(name = "Jadwal.findByIdPeriode", query = "SELECT j FROM Jadwal j WHERE j.idPeriode = :idPeriode"),
-    @NamedQuery(name = "Jadwal.findByIdKa", query = "SELECT j FROM Jadwal j WHERE j.idKa = :idKa"),
     @NamedQuery(name = "Jadwal.findByTanggal", query = "SELECT j FROM Jadwal j WHERE j.tanggal = :tanggal"),
     @NamedQuery(name = "Jadwal.findByStatusPelaksanaan", query = "SELECT j FROM Jadwal j WHERE j.statusPelaksanaan = :statusPelaksanaan"),
     @NamedQuery(name = "Jadwal.findByStatusHasilPelaksanaan", query = "SELECT j FROM Jadwal j WHERE j.statusHasilPelaksanaan = :statusHasilPelaksanaan"),
-    @NamedQuery(name = "Jadwal.findByGenerateDate", query = "SELECT j FROM Jadwal j WHERE j.generateDate = :generateDate")})
+    @NamedQuery(name = "Jadwal.findByGenerateDate", query = "SELECT j FROM Jadwal j WHERE j.generateDate = :generateDate"),
+    @NamedQuery(name = "Jadwal.findByDosenBentrok", query = "SELECT j FROM Jadwal j WHERE j.dosenBentrok = :dosenBentrok")})
 public class Jadwal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,21 +50,8 @@ public class Jadwal implements Serializable {
     @NotNull
     @Column(name = "ID_JADWAL")
     private Integer idJadwal;
-    @Size(max = 4)
-    @Column(name = "KD_RUANGAN")
-    private String kdRuangan;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_SLOT")
-    private int idSlot;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_PERIODE")
-    private int idPeriode;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_KA")
-    private int idKa;
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.DATE)
     private Date tanggal;
@@ -74,6 +64,28 @@ public class Jadwal implements Serializable {
     @Column(name = "GENERATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date generateDate;
+    @Size(max = 50)
+    @Column(name = "DOSEN_BENTROK")
+    private String dosenBentrok;
+    
+    @ManyToMany(mappedBy = "jadwalCollection")
+    private List<Dosen> dosenPenguji;
+    
+    @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT")
+    @ManyToOne(optional = false)
+    private SlotWaktu slotWaktu;
+    
+    @JoinColumn(name = "KD_RUANGAN", referencedColumnName = "KD_RUANGAN")
+    @ManyToOne
+    private Ruangan ruangan;
+    
+    @JoinColumn(name = "ID_PERIODE", referencedColumnName = "ID_PERIODE")
+    @ManyToOne(optional = false)
+    private Periode idPeriode;
+    
+    @JoinColumn(name = "ID_KA", referencedColumnName = "ID_KA")
+    @ManyToOne(optional = false)
+    private KaryaAkhir karyaAkhir;
 
     public Jadwal() {
     }
@@ -82,11 +94,9 @@ public class Jadwal implements Serializable {
         this.idJadwal = idJadwal;
     }
 
-    public Jadwal(Integer idJadwal, int idSlot, int idPeriode, int idKa, Date generateDate) {
+    public Jadwal(Integer idJadwal, Date tanggal, Date generateDate) {
         this.idJadwal = idJadwal;
-        this.idSlot = idSlot;
-        this.idPeriode = idPeriode;
-        this.idKa = idKa;
+        this.tanggal = tanggal;
         this.generateDate = generateDate;
     }
 
@@ -96,38 +106,6 @@ public class Jadwal implements Serializable {
 
     public void setIdJadwal(Integer idJadwal) {
         this.idJadwal = idJadwal;
-    }
-
-    public String getKdRuangan() {
-        return kdRuangan;
-    }
-
-    public void setKdRuangan(String kdRuangan) {
-        this.kdRuangan = kdRuangan;
-    }
-
-    public int getIdSlot() {
-        return idSlot;
-    }
-
-    public void setIdSlot(int idSlot) {
-        this.idSlot = idSlot;
-    }
-
-    public int getIdPeriode() {
-        return idPeriode;
-    }
-
-    public void setIdPeriode(int idPeriode) {
-        this.idPeriode = idPeriode;
-    }
-
-    public int getIdKa() {
-        return idKa;
-    }
-
-    public void setIdKa(int idKa) {
-        this.idKa = idKa;
     }
 
     public Date getTanggal() {
@@ -160,6 +138,55 @@ public class Jadwal implements Serializable {
 
     public void setGenerateDate(Date generateDate) {
         this.generateDate = generateDate;
+    }
+
+    public String getDosenBentrok() {
+        return dosenBentrok;
+    }
+
+    public void setDosenBentrok(String dosenBentrok) {
+        this.dosenBentrok = dosenBentrok;
+    }
+
+    @XmlTransient
+    public List<Dosen> getDosensPenguji() {
+        return dosenPenguji;
+    }
+
+    public void setDosenPenguji(List<Dosen> dosenPenguji) {
+        this.dosenPenguji = dosenPenguji;
+    }
+
+    public SlotWaktu getSlotWaktu() {
+        return slotWaktu;
+    }
+
+    public void setSlotWaktu(SlotWaktu slotWaktu) {
+        this.slotWaktu = slotWaktu;
+    }
+
+    public Ruangan getRuangan() {
+        return ruangan;
+    }
+
+    public void setRuangan(Ruangan ruangan) {
+        this.ruangan = ruangan;
+    }
+
+    public Periode getIdPeriode() {
+        return idPeriode;
+    }
+
+    public void setIdPeriode(Periode idPeriode) {
+        this.idPeriode = idPeriode;
+    }
+
+    public KaryaAkhir getKaryaAkhir() {
+        return karyaAkhir;
+    }
+
+    public void setKaryaAkhir(KaryaAkhir karyaAkhir) {
+        this.karyaAkhir = karyaAkhir;
     }
 
     @Override
