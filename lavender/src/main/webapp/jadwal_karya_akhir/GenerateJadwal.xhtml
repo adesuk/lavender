@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h2><h:outputText value="Generate Jadwal Seminar/Sidang" /></h2>
+                <hr />
+                <h:form styleClass="form-horizontal">
+                  <!-- Periode nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Periode" />
+                    </h:outputLabel>
+                    <div class="col-sm-4">
+                      <p:selectOneMenu value="#{generateJadwal.selectedPeriode}"
+                                       converter="#{periodeConverter}">
+                        <f:selectItems value="#{generateJadwal.periodes}"
+                                       var="item" itemLabel="#{generateJadwal.formatnya(item)}" 
+                                       itemValue="#{item}" />
+                        <f:ajax listener="#{generateJadwal.periodeListener}" render="namaPeriode" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+                  
+                  <!-- Nama Periode nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Nama periode" />
+                    </h:outputLabel>
+                    <div class="col-sm-10">
+                      <p class="col-sm-10 form-control-static">
+                        <h:outputText id="namaPeriode"
+                                      value="#{generateJadwal.selectedPeriode.namaPeriode}" />
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Ruangan nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Ruangan" />
+                    </h:outputLabel>
+                    <div class="col-sm-4">
+                      <p:dataTable id="ruangans" var="ruangan" value="#{generateJadwal.ruangans}"
+                                   rowKey="#{ruangan.kdRuangan}"
+                                   selection="#{generateJadwal.selectedRuangans}"
+                                   selectionMode="multiple">
+                        <p:column headerText="Kode Ruangan">
+                          #{ruangan.kdRuangan}
+                        </p:column>
+                        
+                        <p:column headerText="Jumlah Sesi Kosong">
+                          N/A
+                        </p:column>
+                      </p:dataTable>
+                    </div>
+                  </div>
+
+                  <!-- Button Generate nya ini -->
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <h:commandButton styleClass="btn btn-primary" value="Generate"
+                                       action="#{generateJadwal.generateJadwal}"/>
+                    </div>
+                  </div>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

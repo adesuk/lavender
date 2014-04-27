@@ -13,10 +13,7 @@ import javax.persistence.*;
  */
 @Stateless
 @LocalBean
-public class PeriodeDaoImpl {
-    @PersistenceContext(unitName = "lavenderPU")
-    protected EntityManager em;
-    
+public class PeriodeDaoImpl extends JpaDao {
     public Periode find(Integer id) {
         return em.find(Periode.class, id);
     }
