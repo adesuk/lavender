@@ -8,8 +8,8 @@ import javax.persistence.*;
  * The persistent class for the DOSEN database table.
  * 
  */
-@Entity
-@NamedQuery(name="Dosen.findAll", query="SELECT d FROM Dosen d")
+//@Entity
+//@NamedQuery(name="Dosen.findAll", query="SELECT d FROM Dosen d")
 public class Dosen implements Serializable {
 	private static final long serialVersionUID = 1L;
 

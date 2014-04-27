@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 /**
  * Session Bean implementation class DosenBean
  */
-@Stateless
+@Stateless(name = "Dosen_Bean")
 @LocalBean
 public class DosenBean {
 	@PersistenceContext(unitName="jadwalPU")

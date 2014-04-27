@@ -1,4 +1,4 @@
-package com.coba.bean;
+package ac.id.itb.ppl.lavender.managedbean;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,10 +7,10 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.coba.model.Dosen;
-import com.coba.model.DosenBean;
+import ac.id.itb.ppl.lavender.bean.DosenBean;
+import ac.id.itb.ppl.lavender.model.Dosen;
 
-@ManagedBean(name="dosen_Bean")
+@ManagedBean(name="dosenBean")
 @ViewScoped
 public class DosenMBean implements Serializable{
 	/**
@@ -18,13 +18,13 @@ public class DosenMBean implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private DosenBean dosenBea;
+	private DosenBean dosenBean;
 	
 	public DosenMBean() {
 		
 	}
 	
 	public List<Dosen> getDosens() {
-		return dosenBea.findAll();
+		return dosenBean.findAll();
 	}
 }

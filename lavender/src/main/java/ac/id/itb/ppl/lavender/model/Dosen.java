@@ -72,11 +72,11 @@ public class Dosen implements Serializable {
         @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")})
     @ManyToMany
     private List<Topik> bidangKeahlian;
-//    @JoinTable(name = "MENGUJI", joinColumns = {
-//        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
-//        @JoinColumn(name = "ID_JADWAL", referencedColumnName = "ID_JADWAL")})
-//    @ManyToMany
-//    private Collection<Jadwal> jadwalCollection;
+    @JoinTable(name = "MENGUJI", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_JADWAL", referencedColumnName = "ID_JADWAL")})
+    @ManyToMany
+    private Collection<Jadwal> jadwalCollection;
     
 //    @JoinTable(name = "MEMBIMBING", joinColumns = {
 //        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
