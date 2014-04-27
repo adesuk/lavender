@@ -9,6 +9,7 @@ import ac.id.itb.ppl.lavender.model.Jadwal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +50,7 @@ public class GeneratorJadwal {
                             "ID_KA"+"\t"+
                             "ID_PEMBIMBING"+"\t"+
                             "ID_DOSEN");
+         Date genDate = Calendar.getInstance().getTime();
          for (int i = 0; i<result.size(); i++){
             Kromosom dataJadwal = result.getKromosom(i);
             System.out.println(dataJadwal.genWaktu.getIdSlot() + "\t"+
@@ -59,7 +61,7 @@ public class GeneratorJadwal {
                                dataJadwal.getGenDosenPenguji().get(0).getInisialDosen());
             Jadwal element = new Jadwal();
             element.setDosenPenguji(dataJadwal.getGenDosenPenguji());
-            element.setGenerateDate(Calendar.getInstance().getTime());
+            element.setGenerateDate(genDate);
             element.setKaryaAkhir(dataJadwal.getGenKA());
             element.setRuangan(dataJadwal.getGenRuangan());
             element.setSlotWaktu(dataJadwal.getGenWaktu());
