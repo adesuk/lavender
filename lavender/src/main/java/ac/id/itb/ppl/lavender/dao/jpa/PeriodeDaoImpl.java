@@ -19,8 +19,16 @@ public class PeriodeDaoImpl extends JpaDao {
     }
     
     public List<Periode> findAll() {
-        Query query = em.createQuery("select p from Periode p");
+        Query query = em.createQuery("select p from Periode p order by p.periodeAwal desc");
         List<Periode> periodes = query.getResultList();
         return periodes;
+    }
+    
+    public void save(Periode periode) {
+        
+    }
+    
+    public Periode update(Periode periode) {
+        return em.merge(periode);
     }
 }

@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -62,9 +63,9 @@ public class PengelolaanPeriodeMBean implements Serializable {
     public void initializePeriode() {
         periode = new Periode();
     }
-    // end of business logic
+    // End of business logic
     
-    // ajax
+    // Ajax
     public void cariListener(AjaxBehaviorEvent e) {
         reloadPeriodes();
         renderHidden = true;
@@ -81,5 +82,9 @@ public class PengelolaanPeriodeMBean implements Serializable {
     public void handleClose() {
         initializePeriode();
     }
-    // end of ajax
+    
+    public void onEdit(RowEditEvent event) {
+        periodeDao.update((Periode) event.getObject());
+    }
+    // End of ajax
 }

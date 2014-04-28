@@ -7,8 +7,8 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "PERIODE_KULIAH")
@@ -62,7 +62,7 @@ public class PeriodeKuliah implements Serializable {
     @Column(name = "SEMESTER")
     private Short semester;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPeriodeKuliah")
-    private Collection<JadwalKuliah> jadwalKuliahCollection;
+    private List<JadwalKuliah> jadwalKuliahList;
 
     public PeriodeKuliah() {
     }
@@ -120,12 +120,12 @@ public class PeriodeKuliah implements Serializable {
     }
 
     @XmlTransient
-    public Collection<JadwalKuliah> getJadwalKuliahCollection() {
-        return jadwalKuliahCollection;
+    public List<JadwalKuliah> getJadwalKuliahList() {
+        return jadwalKuliahList;
     }
 
-    public void setJadwalKuliahCollection(Collection<JadwalKuliah> jadwalKuliahCollection) {
-        this.jadwalKuliahCollection = jadwalKuliahCollection;
+    public void setJadwalKuliahList(List<JadwalKuliah> jadwalKuliahList) {
+        this.jadwalKuliahList = jadwalKuliahList;
     }
 
     @Override

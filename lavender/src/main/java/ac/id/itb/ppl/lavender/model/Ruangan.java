@@ -7,7 +7,6 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "RUANGAN")
@@ -42,16 +42,15 @@ public class Ruangan implements Serializable {
     @Size(min = 1, max = 4)
     @Column(name = "KD_RUANGAN")
     private String kdRuangan;
-    @Size(max = 20)
+    @Size(max = 5)
     @Column(name = "NAMA_RUANGAN")
     private String namaRuangan;
-    
+    @OneToMany(mappedBy = "ruangan")
+    private List<Jadwal> jadwalList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kdRuangan")
+    private List<JadwalKuliah> jadwalKuliahList;
+    @Transient
     private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
-    
-//    @OneToMany(mappedBy = "kdRuangan")
-//    private Collection<Jadwal> jadwalCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kdRuangan")
-//    private Collection<JadwalKuliah> jadwalKuliahCollection;
 
     public Ruangan() {
     }
@@ -77,22 +76,22 @@ public class Ruangan implements Serializable {
     }
 
     @XmlTransient
-//    public Collection<Jadwal> getJadwalCollection() {
-//        return jadwalCollection;
-//    }
-//
-//    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
-//        this.jadwalCollection = jadwalCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<JadwalKuliah> getJadwalKuliahCollection() {
-//        return jadwalKuliahCollection;
-//    }
-//
-//    public void setJadwalKuliahCollection(Collection<JadwalKuliah> jadwalKuliahCollection) {
-//        this.jadwalKuliahCollection = jadwalKuliahCollection;
-//    }
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
+
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
+
+    @XmlTransient
+    public List<JadwalKuliah> getJadwalKuliahList() {
+        return jadwalKuliahList;
+    }
+
+    public void setJadwalKuliahList(List<JadwalKuliah> jadwalKuliahList) {
+        this.jadwalKuliahList = jadwalKuliahList;
+    }
 
     public List<KetersediaanRuangan> getKetersediaanWaktuRuangan() {
         return ketersediaanWaktuRuangan;

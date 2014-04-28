@@ -15,10 +15,10 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Embeddable
-public class KetersediaanDosenPK implements Serializable {
+public class KetersediaanWaktuDosenPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
@@ -29,10 +29,10 @@ public class KetersediaanDosenPK implements Serializable {
     @Column(name = "ID_SLOT")
     private int idSlot;
 
-    public KetersediaanDosenPK() {
+    public KetersediaanWaktuDosenPK() {
     }
 
-    public KetersediaanDosenPK(String inisialDosen, int idSlot) {
+    public KetersediaanWaktuDosenPK(String inisialDosen, int idSlot) {
         this.inisialDosen = inisialDosen;
         this.idSlot = idSlot;
     }
@@ -64,10 +64,10 @@ public class KetersediaanDosenPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof KetersediaanDosenPK)) {
+        if (!(object instanceof KetersediaanWaktuDosenPK)) {
             return false;
         }
-        KetersediaanDosenPK other = (KetersediaanDosenPK) object;
+        KetersediaanWaktuDosenPK other = (KetersediaanWaktuDosenPK) object;
         if ((this.inisialDosen == null && other.inisialDosen != null) || (this.inisialDosen != null && !this.inisialDosen.equals(other.inisialDosen))) {
             return false;
         }

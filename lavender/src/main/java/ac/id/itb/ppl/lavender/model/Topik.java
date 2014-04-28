@@ -7,7 +7,7 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "TOPIK")
@@ -47,10 +47,10 @@ public class Topik implements Serializable {
     @Size(max = 10)
     @Column(name = "BIDANG")
     private String bidang;
-    @ManyToMany(mappedBy = "topikCollection")
-    private Collection<Dosen> dosenCollection;
-    @OneToMany(mappedBy = "idTopik")
-    private Collection<KaryaAkhir> karyaAkhirCollection;
+    @ManyToMany(mappedBy = "bidangKeahlian")
+    private List<Dosen> dosenList;
+    @OneToMany(mappedBy = "topik")
+    private List<KaryaAkhir> karyaAkhirList;
 
     public Topik() {
     }
@@ -84,21 +84,21 @@ public class Topik implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Dosen> getDosenCollection() {
-        return dosenCollection;
+    public List<Dosen> getDosenList() {
+        return dosenList;
     }
 
-    public void setDosenCollection(Collection<Dosen> dosenCollection) {
-        this.dosenCollection = dosenCollection;
+    public void setDosenList(List<Dosen> dosenList) {
+        this.dosenList = dosenList;
     }
 
     @XmlTransient
-    public Collection<KaryaAkhir> getKaryaAkhirCollection() {
-        return karyaAkhirCollection;
+    public List<KaryaAkhir> getKaryaAkhirList() {
+        return karyaAkhirList;
     }
 
-    public void setKaryaAkhirCollection(Collection<KaryaAkhir> karyaAkhirCollection) {
-        this.karyaAkhirCollection = karyaAkhirCollection;
+    public void setKaryaAkhirList(List<KaryaAkhir> karyaAkhirList) {
+        this.karyaAkhirList = karyaAkhirList;
     }
 
     @Override

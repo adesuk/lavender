@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
  *
  * @author Edbert
  */
-@Stateless
 public class DosenDaoImpl { //extends JpaDao<Dosen, String> {
     
 }

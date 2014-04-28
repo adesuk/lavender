@@ -7,7 +7,6 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "KARYA_AKHIR")
@@ -52,16 +51,13 @@ public class KaryaAkhir implements Serializable {
     private String judulKa;
     @Column(name = "STATUS_KA")
     private Character statusKa;
-    
-    @ManyToMany(mappedBy = "karyaAkhirCollection")
+    @ManyToMany(mappedBy = "karyaAkhirList")
     private List<Dosen> dosenPembimbing;
-    
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKa")
-//    private List<Jadwal> jadwalCollection;
-//    @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "karyaAkhir")
+    private List<Jadwal> jadwalList;
+    @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")
     @ManyToOne
-    private Topik idTopik;
+    private Topik topik;
     @JoinColumn(name = "NIM", referencedColumnName = "NIM")
     @ManyToOne(optional = false)
     private Mahasiswa mahasiswa;
@@ -103,7 +99,7 @@ public class KaryaAkhir implements Serializable {
     }
 
     @XmlTransient
-    public List<Dosen> getDosensPembimbing() {
+    public List<Dosen> getDosenPembimbing() {
         return dosenPembimbing;
     }
 
@@ -111,21 +107,21 @@ public class KaryaAkhir implements Serializable {
         this.dosenPembimbing = dosenPembimbing;
     }
 
-//    @XmlTransient
-//    public Collection<Jadwal> getJadwalCollection() {
-//        return jadwalCollection;
-//    }
-//
-//    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
-//        this.jadwalCollection = jadwalCollection;
-//    }
+    @XmlTransient
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
+
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
 
     public Topik getTopik() {
-        return idTopik;
+        return topik;
     }
 
     public void setTopik(Topik topik) {
-        this.idTopik = topik;
+        this.topik = topik;
     }
 
     public Mahasiswa getMahasiswa() {

@@ -60,8 +60,8 @@ public class ControlerGenerateJadwal {
                                dataJadwal.getTanggal().toString() + "\t"+
                                dataJadwal.getRuangan().getKdRuangan() +"\t"+
                                dataJadwal.getKaryaAkhir().getIdKa()+"\t"+
-                               dataJadwal.getKaryaAkhir().getDosensPembimbing().get(0).getInisialDosen()+"\t"+
-                               dataJadwal.getDosensPenguji().get(0).getInisialDosen()+"\t"+
+                               dataJadwal.getKaryaAkhir().getDosenPembimbing().get(0).getInisialDosen()+"\t"+
+                               dataJadwal.getDosenPenguji().get(0).getInisialDosen()+"\t"+
                                dataJadwal.getGenerateDate().toString());
          }
         // save jadwal to database
@@ -1057,7 +1057,7 @@ public class ControlerGenerateJadwal {
             KA1.setMahasiswa(M1);
             KA1.setTopik(T3);
             KA1.setDosenPembimbing(new ArrayList());
-            KA1.getDosensPembimbing().add(BY);
+            KA1.getDosenPembimbing().add(BY);
             KA1.setStatusKa('1');
             listGenKaryaAkhir.add(KA1);
 
@@ -1067,7 +1067,7 @@ public class ControlerGenerateJadwal {
             KA2.setMahasiswa(M2);
             KA2.setTopik(T2);
             KA2.setDosenPembimbing(new ArrayList());
-            KA2.getDosensPembimbing().add(CS);
+            KA2.getDosenPembimbing().add(CS);
             KA2.setStatusKa('1');
             listGenKaryaAkhir.add(KA2);
 
@@ -1077,7 +1077,7 @@ public class ControlerGenerateJadwal {
             KA3.setMahasiswa(M3);
             KA3.setTopik(T2);
             KA3.setDosenPembimbing(new ArrayList());
-            KA3.getDosensPembimbing().add(BY);
+            KA3.getDosenPembimbing().add(BY);
             KA3.setStatusKa('1');
             listGenKaryaAkhir.add(KA3);
 
@@ -1087,7 +1087,7 @@ public class ControlerGenerateJadwal {
             KA4.setMahasiswa(M4);
             KA4.setTopik(T2);
             KA4.setDosenPembimbing(new ArrayList());
-            KA4.getDosensPembimbing().add(AP);
+            KA4.getDosenPembimbing().add(AP);
             KA4.setStatusKa('1');
             listGenKaryaAkhir.add(KA4);
 
@@ -1097,7 +1097,7 @@ public class ControlerGenerateJadwal {
             KA5.setMahasiswa(M5);
             KA5.setTopik(T2);
             KA5.setDosenPembimbing(new ArrayList());
-            KA5.getDosensPembimbing().add(AP);
+            KA5.getDosenPembimbing().add(AP);
             KA5.setStatusKa('1');
             listGenKaryaAkhir.add(KA5);
 
@@ -1107,7 +1107,7 @@ public class ControlerGenerateJadwal {
             KA6.setMahasiswa(M6);
             KA6.setTopik(T4);
             KA6.setDosenPembimbing(new ArrayList());
-            KA6.getDosensPembimbing().add(HLL);
+            KA6.getDosenPembimbing().add(HLL);
             KA6.setStatusKa('1');
             listGenKaryaAkhir.add(KA6);
 
@@ -1117,7 +1117,7 @@ public class ControlerGenerateJadwal {
             KA7.setMahasiswa(M7);
             KA7.setTopik(T4);
             KA7.setDosenPembimbing(new ArrayList());
-            KA7.getDosensPembimbing().add(AI);
+            KA7.getDosenPembimbing().add(AI);
             KA7.setStatusKa('1');
             listGenKaryaAkhir.add(KA7);
 
@@ -1127,7 +1127,7 @@ public class ControlerGenerateJadwal {
             KA8.setMahasiswa(M8);
             KA8.setTopik(T3);
             KA8.setDosenPembimbing(new ArrayList());
-            KA8.getDosensPembimbing().add(AI);
+            KA8.getDosenPembimbing().add(AI);
             KA8.setStatusKa('1');
             listGenKaryaAkhir.add(KA8);
 
@@ -1137,7 +1137,7 @@ public class ControlerGenerateJadwal {
             KA9.setMahasiswa(M9);
             KA9.setTopik(T5);
             KA9.setDosenPembimbing(new ArrayList());
-            KA9.getDosensPembimbing().add(FNA);
+            KA9.getDosenPembimbing().add(FNA);
             KA9.setStatusKa('1');
             listGenKaryaAkhir.add(KA9);
 
@@ -1147,7 +1147,7 @@ public class ControlerGenerateJadwal {
             KA10.setMahasiswa(M10);
             KA10.setTopik(T4);
             KA10.setDosenPembimbing(new ArrayList());
-            KA10.getDosensPembimbing().add(FNA);
+            KA10.getDosenPembimbing().add(FNA);
             KA10.setStatusKa('1');
             listGenKaryaAkhir.add(KA10);
 

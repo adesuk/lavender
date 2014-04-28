@@ -21,13 +21,13 @@
                       <h:outputText value="Periode jadwal" /> <span class="required">*</span>
                     </h:outputLabel>
                     <div class="col-md-4">
-                      <h:selectOneMenu value="#{pengelolaanJadwal.selectedPeriode}"
+                      <p:selectOneMenu value="#{pengelolaanJadwal.selectedPeriode}"
                                        converter="#{periodeConverter}">
                         <f:selectItems value="#{pengelolaanJadwal.periodes}"
                                        var="item" itemLabel="#{pengelolaanJadwal.formatnya(item)}"
                                        itemValue="#{item}" />
                         <f:ajax listener="#{pengelolaanJadwal.periodeListener}" render="namaPeriode" />
-                      </h:selectOneMenu>
+                      </p:selectOneMenu>
                     </div>
                   </div>
 
@@ -81,13 +81,13 @@
                             <h:selectBooleanCheckbox value="#{item.selected}" />
                           </p:column>
                           <p:column headerText="NIM">
-                            <h:outputText value="#{item.idKa.nim.nim}" />
+                            <h:outputText value="#{item.karyaAkhir.mahasiswa.mahasiswa}" />
                           </p:column>
                           <p:column headerText="Nama">
-                            <h:outputText value="#{item.idKa.nim.namaMhs}" />
+                            <h:outputText value="mahasiswatem.idKa.nim.namaMhs}" />
                           </p:column>
                           <p:column headerText="Judul Karya">
-                            <h:outputText value="#{item.idKa.judulKa}" />
+                            <h:outputText value="#karyaAkhirm.idKa.judulKa}" />
                           </p:column>
                           <p:column headerText="Pemb 1">
                             <h:outputText value="-" />
@@ -110,10 +110,10 @@
                           <p:column headerText="Ruangan" style="width:150px">
                             <p:cellEditor>
                               <f:facet name="output">
-                                <h:outputText value="#{item.kdRuangan.kdRuangan}" />
+                                <h:outputText value="#{item.ruangan.ruangan}" />
                               </f:facet>
                               <f:facet name="input">
-                                <p:selectOneMenu value="#{item.kdRuangan}"
+                                <p:selectOneMenu value="#{item.ruangan}"
                                                  converter="#{ruanganConverter}"
                                                  style="width:100px" panelStyle="width:100px">
                                   <f:selectItems value="#{pengelolaanJadwal.ruangans}"
@@ -142,7 +142,7 @@
                           <h:outputText value="NIM" /> <span class="required">*</span>
                         </h:outputLabel>
                         <div class="col-md-4">
-                          <p:autoComplete id="nim" value="#{pengelolaanJadwal.newJadwal.idKa}"
+                          <p:autoComplete id="nim" value="#{pengelolaanJadwal.newJadwal.karyaAkhir}"
                                           completeMethod="#{pengelolaanJadwal.completeNim}"
                                           converter="#{nimToKaryaConverter}" />
                         </div>
@@ -165,8 +165,7 @@
                           <h:outputText value="Ruangan" /> <span class="required">*</span>
                         </h:outputLabel>
                         <div class="col-md-4">
-                          <p:selectOneMenu value="#{pengelolaanJadwal.newJadwal.kdRuangan}"
-                                           style="width:100px">
+                          <p:selectOneMenu value="#{pengelolaanJadwal.newJadwal.ruangan}"                                        style="width:100px">
                             <f:selectItems value="#{pengelolaanJadwal.ruangans}"
                                            var="ruangan" itemLabel="#{ruangan.kdRuangan}"
                                            itemValue="#{ruangan}" />

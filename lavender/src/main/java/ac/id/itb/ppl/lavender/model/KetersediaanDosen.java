@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "KETERSEDIAAN_WAKTU_DOSEN")
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class KetersediaanDosen implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected KetersediaanDosenPK ketersediaanWaktuDosenPK;
+    protected KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK;
     @Column(name = "TANGGAL_DSN_SEDIA")
     @Temporal(TemporalType.DATE)
     private Date tanggalDsnSedia;
@@ -49,19 +49,19 @@ public class KetersediaanDosen implements Serializable {
     public KetersediaanDosen() {
     }
 
-    public KetersediaanDosen(KetersediaanDosenPK ketersediaanWaktuDosenPK) {
+    public KetersediaanDosen(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
         this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
     }
 
     public KetersediaanDosen(String inisialDosen, int idSlot) {
-        this.ketersediaanWaktuDosenPK = new KetersediaanDosenPK(inisialDosen, idSlot);
+        this.ketersediaanWaktuDosenPK = new KetersediaanWaktuDosenPK(inisialDosen, idSlot);
     }
 
-    public KetersediaanDosenPK getKetersediaanWaktuDosenPK() {
+    public KetersediaanWaktuDosenPK getKetersediaanWaktuDosenPK() {
         return ketersediaanWaktuDosenPK;
     }
 
-    public void setKetersediaanWaktuDosenPK(KetersediaanDosenPK ketersediaanWaktuDosenPK) {
+    public void setKetersediaanWaktuDosenPK(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
         this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
     }
 

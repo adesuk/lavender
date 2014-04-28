@@ -83,9 +83,7 @@ public class GenerateJadwalMBean implements Serializable {
     }
     
     public String generateJadwal() {
-        for (Ruangan r : selectedRuangans) {
-            System.out.println(">>> " + r.getKdRuangan());
-        }
+        
         return "ProsesGenerateJadwal.xhtml";
     }
     // End of business logic

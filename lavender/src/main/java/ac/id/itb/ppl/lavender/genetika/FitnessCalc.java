@@ -84,7 +84,7 @@ public class FitnessCalc {
     private static int checkDosenPembimbingSlotWaktu (Kromosom kromosom){
          int pinalty = 0;
          boolean statusPinalty = true;
-         List<Dosen> tempPembimbing = kromosom.getGenKA().getDosensPembimbing();
+         List<Dosen> tempPembimbing = kromosom.getGenKA().getDosenPembimbing();
          for (int j=0; j<tempPembimbing.size(); j++){
              statusPinalty = true;
              Dosen tempDosen = tempPembimbing.get(j);
@@ -131,7 +131,7 @@ public class FitnessCalc {
     private static int checkDosenPengujiPembimbing (Kromosom kromosom){
          int pinalty = 0;
          boolean statusPinalty = false;
-         List<Dosen> listPembimbing = kromosom.getGenKA().getDosensPembimbing();
+         List<Dosen> listPembimbing = kromosom.getGenKA().getDosenPembimbing();
          for (int j=0; j<listPembimbing.size(); j++){
              Dosen pembimbing = listPembimbing.get(j);
              List<Dosen> listPenguji = kromosom.getGenDosenPenguji();
