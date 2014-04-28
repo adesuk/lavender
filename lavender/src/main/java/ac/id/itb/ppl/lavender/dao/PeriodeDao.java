@@ -8,7 +8,6 @@ import javax.ejb.Remote;
  *
  * @author edbert
  */
-@Remote
 public interface PeriodeDao {
     Periode find(Integer id);
     List<Periode> findAll();

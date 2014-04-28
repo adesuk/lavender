@@ -8,7 +8,7 @@ package ac.id.itb.ppl.lavender.genetika;
 import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
-import ac.id.itb.ppl.lavender.model.KetersediaanDosen;
+import ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen;
 import ac.id.itb.ppl.lavender.model.KetersediaanRuangan;
 import ac.id.itb.ppl.lavender.model.Mahasiswa;
 import ac.id.itb.ppl.lavender.model.Periode;
@@ -160,38 +160,38 @@ public class ControlerGenerateJadwal {
             SlotWaktu12.setSesi((short) 4);
       
            // List DOSEN
-            KetersediaanDosen tempSedia;
+            KetersediaanWaktuDosen tempSedia;
             //########## DOSEN AI
             Dosen AI = new Dosen();
             AI.setInisialDosen("AI");
             AI.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu9);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
@@ -208,7 +208,7 @@ public class ControlerGenerateJadwal {
             AM.setInisialDosen("AM");
             AM.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AM.getKetersediaanWaktuDosens().add(tempSedia);
@@ -226,32 +226,32 @@ public class ControlerGenerateJadwal {
             AP.setInisialDosen("AP");
             AP.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
@@ -269,57 +269,57 @@ public class ControlerGenerateJadwal {
             BS.setInisialDosen("BS");
             BS.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 7
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 8
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 9
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 10
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 11
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
@@ -337,17 +337,17 @@ public class ControlerGenerateJadwal {
             BY.setInisialDosen("BY");
             BY.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
@@ -365,22 +365,22 @@ public class ControlerGenerateJadwal {
             CS.setInisialDosen("CS");
             CS.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
@@ -398,37 +398,37 @@ public class ControlerGenerateJadwal {
             DHW.setInisialDosen("DHW");
             DHW.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 7
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
@@ -446,27 +446,27 @@ public class ControlerGenerateJadwal {
             DPL.setInisialDosen("DPL");
             DPL.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
@@ -484,17 +484,17 @@ public class ControlerGenerateJadwal {
             FNA.setInisialDosen("FNA");
             FNA.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
@@ -515,22 +515,22 @@ public class ControlerGenerateJadwal {
             HLL.setInisialDosen("HLL");
             HLL.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
@@ -679,38 +679,38 @@ public class ControlerGenerateJadwal {
             SlotWaktu12.setSesi((short) 4);
 
            // List DOSEN
-            KetersediaanDosen tempSedia;
+            KetersediaanWaktuDosen tempSedia;
             //########## DOSEN AI
             Dosen AI = new Dosen();
             AI.setInisialDosen("AI");
             AI.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu9);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AI.getKetersediaanWaktuDosens().add(tempSedia);
@@ -726,7 +726,7 @@ public class ControlerGenerateJadwal {
             AM.setInisialDosen("AM");
             AM.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             AM.getKetersediaanWaktuDosens().add(tempSedia);
@@ -743,32 +743,32 @@ public class ControlerGenerateJadwal {
             AP.setInisialDosen("AP");
             AP.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             AP.getKetersediaanWaktuDosens().add(tempSedia);
@@ -785,57 +785,57 @@ public class ControlerGenerateJadwal {
             BS.setInisialDosen("BS");
             BS.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 7
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 8
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 9
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 10
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
             // 11
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BS.getKetersediaanWaktuDosens().add(tempSedia);
@@ -852,17 +852,17 @@ public class ControlerGenerateJadwal {
             BY.setInisialDosen("BY");
             BY.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             BY.getKetersediaanWaktuDosens().add(tempSedia);
@@ -878,22 +878,22 @@ public class ControlerGenerateJadwal {
             CS.setInisialDosen("CS");
             CS.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu10);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             CS.getKetersediaanWaktuDosens().add(tempSedia);
@@ -909,37 +909,37 @@ public class ControlerGenerateJadwal {
             DHW.setInisialDosen("DHW");
             DHW.setKetersediaanWaktuDosens(new ArrayList());
             // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu5);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 6
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
             // 7
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu12);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             DHW.getKetersediaanWaktuDosens().add(tempSedia);
@@ -956,27 +956,27 @@ public class ControlerGenerateJadwal {
             DPL.setInisialDosen("DPL");
             DPL.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu2);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140211"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu6);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
              // 5
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             DPL.getKetersediaanWaktuDosens().add(tempSedia);
@@ -993,17 +993,17 @@ public class ControlerGenerateJadwal {
             FNA.setInisialDosen("FNA");
             FNA.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu1);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140214"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140210"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu11);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             FNA.getKetersediaanWaktuDosens().add(tempSedia);
@@ -1023,22 +1023,22 @@ public class ControlerGenerateJadwal {
             HLL.setInisialDosen("HLL");
             HLL.setKetersediaanWaktuDosens(new ArrayList());
              // 1
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu3);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 2
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu4);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140213"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 3
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu7);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);
              // 4
-            tempSedia = new KetersediaanDosen();
+            tempSedia = new KetersediaanWaktuDosen();
             tempSedia.setSlotWaktu(SlotWaktu8);
             tempSedia.setTanggalDsnSedia((Date) formatter.parse("20140212"));
             HLL.getKetersediaanWaktuDosens().add(tempSedia);

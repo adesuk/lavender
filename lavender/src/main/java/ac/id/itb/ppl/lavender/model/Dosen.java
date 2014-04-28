@@ -80,7 +80,7 @@ public class Dosen implements Serializable {
     @ManyToMany
     private List<KaryaAkhir> karyaAkhirList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dosen")
-    private List<KetersediaanDosen> ketersediaanWaktuDosenList;
+    private List<KetersediaanWaktuDosen> ketersediaanWaktuDosens;
 
     public Dosen() {
     }
@@ -166,12 +166,12 @@ public class Dosen implements Serializable {
     }
 
     @XmlTransient
-    public List<KetersediaanDosen> getKetersediaanWaktuDosens() {
-        return ketersediaanWaktuDosenList;
+    public List<KetersediaanWaktuDosen> getKetersediaanWaktuDosens() {
+        return ketersediaanWaktuDosens;
     }
 
-    public void setKetersediaanWaktuDosens(List<KetersediaanDosen> ketersediaanWaktuDosenList) {
-        this.ketersediaanWaktuDosenList = ketersediaanWaktuDosenList;
+    public void setKetersediaanWaktuDosens(List<KetersediaanWaktuDosen> ketersediaanWaktuDosens) {
+        this.ketersediaanWaktuDosens = ketersediaanWaktuDosens;
     }
 
     @Override

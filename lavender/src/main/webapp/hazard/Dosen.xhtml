@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <f:view>
+      <h:form>
+        <h1><h:outputText value="List"/></h1>
+        <h:dataTable value="#{dosenBean.dosens}" var="item">
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="InisialDosen"/>
+            </f:facet>
+            <h:outputText value="#{item.inisialDosen}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="NamaDosen"/>
+            </f:facet>
+            <h:outputText value="#{item.namaDosen}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="Status"/>
+            </f:facet>
+            <h:outputText value="#{item.status}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="GelarDepan"/>
+            </f:facet>
+            <h:outputText value="#{item.gelarDepan}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="GelarBelakang"/>
+            </f:facet>
+            <h:outputText value="#{item.gelarBelakang}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="Bidang Keahlian"/>
+            </f:facet>
+            <h:outputText value="#{item.bidangKeahlian}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="Ketersediaan Waktunya"/>
+            </f:facet>
+            <ui:repeat value="#{item.ketersediaanWaktuDosens}" var="tezz">
+              <h:outputText value="#{tezz.slotWaktu.idSlot}">
+                
+              </h:outputText>
+            </ui:repeat>
+          </h:column>
+        </h:dataTable>
+      </h:form>
+    </f:view>
+
+  </h:body>
+</html>
+

@@ -55,7 +55,7 @@ public class SlotWaktu implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "slotWaktu")
     private List<Jadwal> jadwalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "slotWaktu")
-    private List<KetersediaanDosen> ketersediaanWaktuDosenList;
+    private List<KetersediaanWaktuDosen> ketersediaanWaktuDosenList;
 
     public SlotWaktu() {
     }
@@ -106,11 +106,11 @@ public class SlotWaktu implements Serializable {
     }
 
     @XmlTransient
-    public List<KetersediaanDosen> getKetersediaanWaktuDosenList() {
+    public List<KetersediaanWaktuDosen> getKetersediaanWaktuDosenList() {
         return ketersediaanWaktuDosenList;
     }
 
-    public void setKetersediaanWaktuDosenList(List<KetersediaanDosen> ketersediaanWaktuDosenList) {
+    public void setKetersediaanWaktuDosenList(List<KetersediaanWaktuDosen> ketersediaanWaktuDosenList) {
         this.ketersediaanWaktuDosenList = ketersediaanWaktuDosenList;
     }
 

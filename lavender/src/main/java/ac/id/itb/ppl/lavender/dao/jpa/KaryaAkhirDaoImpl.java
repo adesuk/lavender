@@ -26,6 +26,17 @@ public class KaryaAkhirDaoImpl extends JpaDao {
         return ka;
     }
     
+    public List<KaryaAkhir> getToBeExecutedKaryaAkhirs(char tipeJadwal) {
+        Query query = em.createQuery(
+            "select ka from KaryaAkhir as ka "
+            + "join fetch ka.mahasiswa as mhs "
+            + "join fetch ka.dosenPembimbing as pemb "
+            + "where ka.statusKa = :status")
+            .setParameter("status", tipeJadwal - 1);
+        List<KaryaAkhir> karyaAkhirs = query.getResultList();
+        return karyaAkhirs;
+    }
+    
     public List<String> getAllMahasiswaYangIkutDiSelectedPeriode(
         Periode periode, String query) {
         Query q = em.createNativeQuery("select nim from mahasiswa where nim like ?")
