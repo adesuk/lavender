@@ -30,6 +30,7 @@ public class Ruangan implements Serializable {
 	@OneToMany(mappedBy="ruangan")
 	private List<JadwalKuliah> jadwalKuliahs;
 
+	@Transient
 	private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
 	
 	public Ruangan() {

@@ -1,7 +1,9 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -126,4 +128,8 @@ public class KaryaAkhir implements Serializable {
 		this.dosens = dosens;
 	}
 
+	@Override
+	public String toString() {
+		return idKa+ "-"+ judulKa;
+	}
 }

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h2><h:outputText value="Pengelolaan Jadwal Seminar/Sidang" /></h2>
+                <hr/>
+                <p:dataTable id="tabelJadwal" var="jadwal" value="#{jadwalMBean.jadwals}" > 
+                	<p:column headerText="Hari, Tanggal">  
+            			<h:outputText value="#{jadwal.hariTanggal}" />  
+        			</p:column>
+        			<p:column headerText="Pukul">  
+            			<h:outputText value="#{jadwal.pukul}" />  
+        			</p:column> 
+        			<p:column headerText="NIM">  
+            			<h:outputText value="#{jadwal.nim}" />  
+        			</p:column> 
+        			<p:column headerText="Nama">  
+            			<h:outputText value="#{jadwal.nama}" />  
+        			</p:column>
+        			<p:column headerText="Judul">  
+            			<h:outputText value="#{jadwal.judul}" />  
+        			</p:column>
+        			<p:column headerText="Pembimbing 1">  
+            			<h:outputText value="#{jadwal.pembimbing1}" />  
+        			</p:column>
+        			<p:column headerText="Pembimbing 2">  
+            			<h:outputText value="#{jadwal.pembimbing2}" />  
+        			</p:column>
+        			<p:column headerText="Penguji 1">  
+            			<h:outputText value="#{jadwal.penguji1}" />  
+        			</p:column>
+        			<p:column headerText="Penguji 2">  
+            			<h:outputText value="#{jadwal.penguji2}" />  
+        			</p:column>
+        			<p:column headerText="Ruangan">  
+            			<h:outputText value="#{jadwal.ruangan}" />  
+        			</p:column>
+                </p:dataTable>
+              </f:view>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

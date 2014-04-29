@@ -70,7 +70,10 @@ public class Jadwal implements Serializable {
 			}
 		)
 	private List<Dosen> dosens;
-
+	
+	@Column(name="DOSEN_BENTROK")
+    private String dosenBentrok; // sebagai versi jadwal 
+	
 	public Jadwal() {
 	}
 
@@ -152,6 +155,14 @@ public class Jadwal implements Serializable {
 
 	public void setDosensPenguji(List<Dosen> dosens) {
 		this.dosens = dosens;
+	}
+	
+	public String getDosenBentrok() {
+		return this.dosenBentrok;
+	}
+
+	public void setDosenBentrok(String dosenBentrok) {
+		this.dosenBentrok = dosenBentrok;
 	}
 
 }
