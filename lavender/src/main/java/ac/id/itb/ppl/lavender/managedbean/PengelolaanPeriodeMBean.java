@@ -26,6 +26,7 @@ public class PengelolaanPeriodeMBean implements Serializable {
     private Periode selectedPeriode;
     private String keyword;
     private List<Periode> periodes2;
+    //private List<Periode> selectedPeriodes;
     private boolean renderHidden;
     private Periode periode = new Periode();
     
@@ -54,11 +55,16 @@ public class PengelolaanPeriodeMBean implements Serializable {
     }
     
     public List<Periode> getPeriodes2() {
-//        if (periodes == null || periodes.isEmpty()) {
-//            reloadPeriodes();
-//        }
         return periodes2;
     }
+    
+//    public List<Periode> getSelectedPeriodes() {
+//        return selectedPeriodes;
+//    }
+//    
+//    public void setSelectedPeriodes(List<Periode> selectedPeriodes) {
+//        this.selectedPeriodes = selectedPeriodes;
+//    }
     
     public boolean getRenderHidden() {
         return renderHidden;
@@ -101,15 +107,19 @@ public class PengelolaanPeriodeMBean implements Serializable {
     }
     
     public void savePeriode() {
-        //System.out.println(">>> ceritanya nyimpen periode baru <<<");
         periodeDao.save(periode);
-        System.out.println(">>> " + periode.getNamaPeriode() + " <<<");
-        System.out.println(">>> " + periode.getPeriodeAwal()+ " <<<");
-        System.out.println(">>> " + periode.getPeriodeAkhir()+ " <<<");
         initializePeriode();
         
         FacesMessage msg = new FacesMessage("Periode telah ditambah");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void deletePeriode() {
+        for (Periode p : periodes2) {
+            if (p.getSelected()) {
+                periodeDao.delete(p);
+            }
+        }
     }
     
     public void handleClose() {

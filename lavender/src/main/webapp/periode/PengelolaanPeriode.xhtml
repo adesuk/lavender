@@ -61,15 +61,22 @@
                                        update=":dialogInputForm">
                         <p:resetInput target=":dialogInputForm" />
                       </p:commandButton>
-                      <p:button value="Edit" style="margin: 0 5px; width: 90px;" />
-                      <p:button value="Delete" style="margin: 0 5px; width: 90px;" />
+                      <p:commandButton value="Delete" style="margin: 0 5px; width: 90px;"
+                                       action="#{pengelolaanPeriode.deletePeriode}"/>
                     </div>
                   </div>
-
+                  
+                  <!-- Table itu -->
                   <h:panelGroup layout="block" id="jadwalArea">
                       <p:dataTable id="periodes" var="periode" value="#{pengelolaanPeriode.periodes2}"
                                    editable="true">
                         <p:ajax event="rowEdit" listener="#{pengelolaanPeriode.onEdit}" />
+                        <p:column headerText="">
+                          <f:facet name="header">
+                            <h:outputText value="" />
+                          </f:facet>
+                          <h:selectBooleanCheckbox value="#{periode.selected}" />
+                        </p:column>
                         <p:column headerText="Nama Periode">
                           <p:cellEditor>
                             <f:facet name="output">

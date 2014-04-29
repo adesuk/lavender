@@ -43,4 +43,9 @@ public class PeriodeDaoImpl extends JpaDao {
     public Periode update(Periode periode) {
         return em.merge(periode);
     }
+    
+    public void delete(Periode periode) {
+        Periode p = em.merge(periode);
+        em.remove(p);
+    }
 }

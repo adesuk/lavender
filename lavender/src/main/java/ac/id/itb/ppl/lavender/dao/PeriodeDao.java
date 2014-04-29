@@ -2,7 +2,6 @@ package ac.id.itb.ppl.lavender.dao;
 
 import ac.id.itb.ppl.lavender.model.Periode;
 import java.util.List;
-import javax.ejb.Remote;
 
 /**
  *
