@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -79,7 +80,7 @@ public class Dosen implements Serializable {
         @JoinColumn(name = "ID_KA", referencedColumnName = "ID_KA")})
     @ManyToMany
     private List<KaryaAkhir> karyaAkhirList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dosen")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dosen", fetch = FetchType.LAZY)
     private List<KetersediaanWaktuDosen> ketersediaanWaktuDosens;
 
     public Dosen() {

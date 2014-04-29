@@ -90,7 +90,7 @@ public class GenerateJadwalMBean implements Serializable {
     
     public String generateJadwal() {
         ControlerGenerateJadwal cgj = new ControlerGenerateJadwal();
-        List<Dosen> dosens = dosenDao.getDosenWithTopikAndKetersediaan();
+        List<Dosen> dosens = dosenDao.getDosenWithTopikAndKetersediaan(selectedPeriode);
         List<KaryaAkhir> karyaAkhirs = null;
         List<SlotWaktu> slotWaktus = slotWaktuDao.findAll();
         cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, selectedPeriode);

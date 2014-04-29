@@ -20,7 +20,7 @@ public class JadwalDaoImpl extends JpaDao {
         }
         
         Query query = em.createQuery(
-            "select j from Jadwal as j where j.idPeriode.idPeriode = :id")
+            "select j from Jadwal as j join fetch j.slotWaktu as s where j.idPeriode.idPeriode = :id")
             .setParameter("id", periode.getIdPeriode());
         List<Jadwal> result = query.getResultList();
         return result;

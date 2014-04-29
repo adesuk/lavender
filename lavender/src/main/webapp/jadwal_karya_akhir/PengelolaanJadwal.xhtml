@@ -75,8 +75,7 @@
                         <p:dataTable id="jadwal" value="#{pengelolaanJadwal.jadwal}"
                                      var="item" rowKey="#{item.idJadwal}"
                                      selection="#{pengelolaanJadwal.selectedJadwal}"
-                                     selectionMode="single"
-                                     editable="true">
+                                     selectionMode="single">
                           <p:column headerText="">
                             <h:selectBooleanCheckbox value="#{item.selected}" />
                           </p:column>
@@ -96,36 +95,15 @@
                             <h:outputText value="-" />
                           </p:column>
                           <p:column headerText="Tanggal">
-                            <p:cellEditor>
-                              <f:facet name="output">
-                                <h:outputText value="#{item.tanggal}">
-                                  <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-                              </f:facet>
-                              <f:facet name="input">
-                                <p:calendar value="#{item.tanggal}" />
-                              </f:facet>
-                            </p:cellEditor>
+                            <h:outputText value="#{item.tanggal}">
+                              <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                          </p:column>
+                          <p:column headerText="Jam">
+                            <h:outputText value="#{item.slotWaktu.jamAwal} - #{item.slotWaktu.jamAkhir}" />
                           </p:column>
                           <p:column headerText="Ruangan" style="width:150px">
-                            <p:cellEditor>
-                              <f:facet name="output">
-                                <h:outputText value="#{item.ruangan.ruangan}" />
-                              </f:facet>
-                              <f:facet name="input">
-                                <p:selectOneMenu value="#{item.ruangan}"
-                                                 converter="#{ruanganConverter}"
-                                                 style="width:100px" panelStyle="width:100px">
-                                  <f:selectItems value="#{pengelolaanJadwal.ruangans}"
-                                                 var="ruangan"
-                                                 itemLabel="#{ruangan.kdRuangan}"
-                                                 itemValue="#{ruangan}" />
-                                </p:selectOneMenu>
-                              </f:facet>
-                            </p:cellEditor>
-                          </p:column>
-                          <p:column style="width:70px">
-                            <p:rowEditor />
+                            <h:outputText value="#{item.ruangan.ruangan}" />
                           </p:column>
                         </p:dataTable>
                       </h:form>

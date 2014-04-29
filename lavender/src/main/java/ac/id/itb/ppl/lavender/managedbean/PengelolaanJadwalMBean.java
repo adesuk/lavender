@@ -36,7 +36,6 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     private Jadwal selectedJadwal;
     private List<Ruangan> ruangans;
     private Jadwal newJadwal;
-    private String selectedNim;
     
     public PengelolaanJadwalMBean() {
         initializeJadwal();
@@ -113,7 +112,6 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
         newJadwal.setKaryaAkhir(k);
         newJadwal.setIdPeriode(new Periode());
         newJadwal.setRuangan(new Ruangan());
-        selectedNim = null;
     }
     // End of business logic
     
