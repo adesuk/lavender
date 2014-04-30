@@ -53,7 +53,8 @@
                       <p:dataTable id="ruangans" var="ruangan" value="#{generateJadwal.ruangans}"
                                    rowKey="#{ruangan.kdRuangan}"
                                    selection="#{generateJadwal.selectedRuangans}"
-                                   selectionMode="multiple">
+                                   selectionMode="multiple"
+                                   scrollable="true" scrollHeight="250">
                         <p:column headerText="Kode Ruangan">
                           #{ruangan.kdRuangan}
                         </p:column>

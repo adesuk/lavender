@@ -4,9 +4,14 @@ import ac.id.itb.ppl.lavender.dao.jpa.JadwalDaoImpl;
 import ac.id.itb.ppl.lavender.dao.jpa.KaryaAkhirDaoImpl;
 import ac.id.itb.ppl.lavender.dao.jpa.PeriodeDaoImpl;
 import ac.id.itb.ppl.lavender.dao.jpa.RuanganDaoImpl;
+import ac.id.itb.ppl.lavender.dao.jpa.SlotWaktuDaoImpl;
 import ac.id.itb.ppl.lavender.model.*;
 import ac.id.itb.ppl.lavender.util.PeriodeFormat;
+import ac.id.itb.ppl.lavender.util.SlotWaktuFormat;
+import ac.id.itb.ppl.lavender.util.TipeEksekusi;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -22,20 +27,19 @@ import javax.inject.Named;
 public class PengelolaanJadwalMBean implements java.io.Serializable {
     private static final long serialVersionUID = -91232124123L;
     
-    @EJB
-    private PeriodeDaoImpl periodeDao;
-    @EJB
-    private JadwalDaoImpl jadwalDao;
-    @EJB
-    private RuanganDaoImpl ruanganDao;
-    @EJB
-    private KaryaAkhirDaoImpl karyaAkhirDao;
+    @EJB private PeriodeDaoImpl periodeDao;
+    @EJB private JadwalDaoImpl jadwalDao;
+    @EJB private RuanganDaoImpl ruanganDao;
+    @EJB private KaryaAkhirDaoImpl karyaAkhirDao;
+    @EJB private SlotWaktuDaoImpl slotWaktuDao;
     private List<Periode> periodes;
     private Periode periode;
     private List<Jadwal> jadwal;
     private Jadwal selectedJadwal;
     private List<Ruangan> ruangans;
     private Jadwal newJadwal;
+    private String typedNim;
+    //private List<SlotWaktu> slotWaktus;
     
     public PengelolaanJadwalMBean() {
         initializeJadwal();
@@ -86,6 +90,18 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     public void setNewJadwal(Jadwal newJadwal) {
         this.newJadwal = newJadwal;
     }
+    
+    public List<SlotWaktu> getSlotWaktus() {
+        return slotWaktuDao.findAll();
+    }
+    
+    public String getTypedNim() {
+        return typedNim;
+    }
+    
+    public void setTypedNim(String typedNim) {
+        this.typedNim = typedNim;
+    }
     // End of getter dan setter
     
     // Business logic simpel
@@ -110,8 +126,31 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
         KaryaAkhir k = new KaryaAkhir();
         k.setMahasiswa(new Mahasiswa());
         newJadwal.setKaryaAkhir(k);
-        newJadwal.setIdPeriode(new Periode());
+        newJadwal.setIdPeriode(getSelectedPeriode());
         newJadwal.setRuangan(new Ruangan());
+    }
+    
+    public String getTipeJadwalRealName(char tipeJadwal) {
+        Map<Character, String> temp = new TipeEksekusi().getTipeEksekusis();
+        return temp.get(tipeJadwal);
+    }
+    
+    public String createJadwal() {
+        initializeJadwal();
+        System.out.println("Kepanggil, gan!");
+        return "FormJadwal";
+    }
+    
+    public String formatSlotWaktu(SlotWaktu slot) {
+        return SlotWaktuFormat.format(slot);
+    }
+    
+    public String saveJadwal() {
+        Mahasiswa m = new Mahasiswa(typedNim);
+        KaryaAkhir ka = karyaAkhirDao.findByOwner(m);
+        newJadwal.setKaryaAkhir(ka);
+        jadwalDao.save(newJadwal);
+        return "PengelolaanJadwal";
     }
     // End of business logic
     
@@ -132,8 +171,14 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     }
     
     public List<String> completeNim(String query) {
-        List<String> results = karyaAkhirDao.getAllMahasiswaYangIkutDiSelectedPeriode(null, query);
-        return results;
+        List<Mahasiswa> results = karyaAkhirDao
+            .getAllMahasiswaYangIkutDiSelectedPeriode(
+                getSelectedPeriode().getTipeJadwal(), query);
+        List<String> strs = new ArrayList<String>(results.size());
+        for (Mahasiswa m : results) {
+            strs.add(m.getNim());
+        }
+        return strs;
     }
     // End of ajax
 }

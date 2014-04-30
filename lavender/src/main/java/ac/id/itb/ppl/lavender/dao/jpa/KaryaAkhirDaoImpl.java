@@ -20,7 +20,7 @@ public class KaryaAkhirDaoImpl extends JpaDao {
     
     public KaryaAkhir findByOwner(Mahasiswa mahasiswa) {
         KaryaAkhir ka = (KaryaAkhir) em.createQuery(
-            "select k from KaryaAkhir as k where k.nim.nim = :nim")
+            "select k from KaryaAkhir as k where k.mahasiswa.nim = :nim")
             .setParameter("nim", mahasiswa.getNim())
             .getSingleResult();
         return ka;
@@ -37,11 +37,16 @@ public class KaryaAkhirDaoImpl extends JpaDao {
         return karyaAkhirs;
     }
     
-    public List<String> getAllMahasiswaYangIkutDiSelectedPeriode(
-        Periode periode, String query) {
-        Query q = em.createNativeQuery("select nim from mahasiswa where nim like ?")
-            .setParameter(1, query + "%");
-        List<String> nims = q.getResultList();
-        return nims;
+    public List<Mahasiswa> getAllMahasiswaYangIkutDiSelectedPeriode(
+        char tipeJadwal, String query) {
+//        Query q = em.createNativeQuery("select nim from mahasiswa where nim like ?")
+//            .setParameter(1, query + "%");
+//        List<String> nims = q.getResultList();
+        
+        List<Mahasiswa> mhss = em.createQuery(
+            "select m from Mahasiswa as m inner join m.karyaAkhirList as k on k.statusKa = :status")
+            .setParameter("status", tipeJadwal - 1)
+            .getResultList();
+        return mhss;
     }
 }
