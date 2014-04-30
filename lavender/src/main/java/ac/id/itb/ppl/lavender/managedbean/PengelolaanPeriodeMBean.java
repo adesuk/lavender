@@ -106,12 +106,18 @@ public class PengelolaanPeriodeMBean implements Serializable {
         return "TambahPeriode";
     }
     
-    public void savePeriode() {
+//    public void savePeriode() {
+//        periodeDao.save(periode);
+//        initializePeriode();
+//        
+//        FacesMessage msg = new FacesMessage("Periode telah ditambah");
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    }
+    
+    public String savePeriode() {
         periodeDao.save(periode);
         initializePeriode();
-        
-        FacesMessage msg = new FacesMessage("Periode telah ditambah");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        return "PengelolaaanPeriode";
     }
     
     public void deletePeriode() {

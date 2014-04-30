@@ -54,13 +54,15 @@
                                 listener="#{pengelolaanPeriode.cariListener}" />
                       </p:commandButton>
                       <!-- Button tambah -->
-                      <p:commandButton value="Tambah" type="button"
+                      <!--<p:commandButton value="Tambah" type="button"
                                        style="margin: 0 5px; width: 90px;"
                                        onclick="PF('periodeDialog').show()"
                                        actionListener="#{pengelolaanPeriode.initializePeriode()}"
                                        update=":dialogInputForm">
                         <p:resetInput target=":dialogInputForm" />
-                      </p:commandButton>
+                      </p:commandButton>-->
+                      <p:button value="Add" outcome="TambahPeriode.xhtml"
+                                style="margin: 0 5px; width: 90px;" />
                       <p:commandButton value="Delete" style="margin: 0 5px; width: 90px;"
                                        action="#{pengelolaanPeriode.deletePeriode}"/>
                     </div>

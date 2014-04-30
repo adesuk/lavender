@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <f:view>
+          <!-- Form nya ini -->
+          <h:form styleClass="form-horizontal">
+            <h1><h:outputText value="Tambah Jadwal"/></h1><hr />
+
+            <!-- Mahasiswa nya ini -->
+            <div class="form-group">
+              <h:outputLabel for="mahasiswa" styleClass="col-md-3">
+                <h:outputText value="Mahasiswa" />
+              </h:outputLabel>
+              <div class="col-md-4">
+                <p:autoComplete id="mhs" value="#{pengelolaanJadwal.typedNim}"
+                                completeMethod="#{pengelolaanJadwal.completeNim}"/>
+              </div>
+            </div>
+
+            <!-- Tanggal pelaksanaan eksekusi nya ini -->
+            <div class="form-group">
+              <h:outputLabel for="tanggal" styleClass="col-md-3">
+                <h:outputText value="Tanggal pelaksanaan" />
+              </h:outputLabel>
+              <div class="col-md-4">
+                <p:calendar id="tanggal" value="#{pengelolaanJadwal.newJadwal.tanggal}" 
+                            title="Tanggal" pattern="dd/MM/yyyy" />
+              </div>
+            </div>
+
+            <!-- Slot waktu nya ini -->
+            <div class="form-group">
+              <h:outputLabel for="slotWaktu" styleClass="col-md-3">
+                <h:outputText value="Waktu" />
+              </h:outputLabel>
+              <div class="col-md-4">
+                <p:selectOneMenu id="slotWaktu" 
+                                 value="#{pengelolaanJadwal.newJadwal.slotWaktu}" 
+                                 required="true" 
+                                 requiredMessage="The Slot Waktu field is required."
+                                 converter="#{slotWaktuConverter}">
+                  <f:selectItems value="#{pengelolaanJadwal.slotWaktus}"
+                                 var="item" itemLabel="#{pengelolaanJadwal.formatSlotWaktu(item)}" 
+                                 itemValue="#{item}" />
+                </p:selectOneMenu>
+              </div>
+            </div>
+
+            <!-- Ruangan nya ini -->
+            <div class="form-group">
+              <h:outputLabel for="ruangan" styleClass="col-md-3">
+                <h:outputText value="Ruangan" />
+              </h:outputLabel>
+              <div class="col-md-4">
+                <p:selectOneMenu id="ruangan" 
+                                 value="#{pengelolaanJadwal.newJadwal.ruangan}"
+                                 converter="#{ruanganConverter}">
+                  <f:selectItems value="#{pengelolaanJadwal.ruangans}" var="item"
+                                 itemLabel="#{item.kdRuangan}"
+                                 itemValue="#{item}"/>
+                </p:selectOneMenu>
+              </div>
+            </div>
+            
+            <!-- Button-button itu -->
+            <div class="form-group">
+              <div class="col-md-offset-3 col-md-4">
+                <p:commandButton id="update" value="Update" 
+                                 action="#{pengelolaanJadwal.saveJadwal}"/>
+              </div>
+            </div>
+          </h:form>
+        </f:view>
+
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

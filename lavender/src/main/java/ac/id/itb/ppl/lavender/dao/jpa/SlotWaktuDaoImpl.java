@@ -15,4 +15,8 @@ public class SlotWaktuDaoImpl extends JpaDao {
     public List<SlotWaktu> findAll() {
         return em.createQuery("select s from SlotWaktu as s").getResultList();
     }
+    
+    public SlotWaktu find(Integer id) {
+        return em.find(SlotWaktu.class, id);
+    }
 }

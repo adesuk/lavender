@@ -8,9 +8,10 @@ package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -18,51 +19,39 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Edbert
+ * @author adesuk
  */
 @Entity
 @Table(name = "KETERSEDIAAN_WAKTU_DOSEN")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "KetersediaanWaktuDosen.findAll", query = "SELECT k FROM KetersediaanWaktuDosen k"),
-    @NamedQuery(name = "KetersediaanWaktuDosen.findByInisialDosen", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.ketersediaanWaktuDosenPK.inisialDosen = :inisialDosen"),
-    @NamedQuery(name = "KetersediaanWaktuDosen.findByIdSlot", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.ketersediaanWaktuDosenPK.idSlot = :idSlot"),
     @NamedQuery(name = "KetersediaanWaktuDosen.findByTanggalDsnSedia", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.tanggalDsnSedia = :tanggalDsnSedia")})
 public class KetersediaanWaktuDosen implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "TANGGAL_DSN_SEDIA")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date tanggalDsnSedia;
-    @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT", insertable = false, updatable = false)
+    @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT")
     @ManyToOne(optional = false)
     private SlotWaktu slotWaktu;
-    @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN", insertable = false, updatable = false)
+    @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")
     @ManyToOne(optional = false)
-    private Dosen dosen;
+    private Dosen inisialDosen;
 
     public KetersediaanWaktuDosen() {
     }
 
-    public KetersediaanWaktuDosen(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
-        this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
-    }
-
-    public KetersediaanWaktuDosen(String inisialDosen, int idSlot) {
-        this.ketersediaanWaktuDosenPK = new KetersediaanWaktuDosenPK(inisialDosen, idSlot);
-    }
-
-    public KetersediaanWaktuDosenPK getKetersediaanWaktuDosenPK() {
-        return ketersediaanWaktuDosenPK;
-    }
-
-    public void setKetersediaanWaktuDosenPK(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
-        this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
+    public KetersediaanWaktuDosen(Date tanggalDsnSedia) {
+        this.tanggalDsnSedia = tanggalDsnSedia;
     }
 
     public Date getTanggalDsnSedia() {
@@ -81,18 +70,18 @@ public class KetersediaanWaktuDosen implements Serializable {
         this.slotWaktu = slotWaktu;
     }
 
-    public Dosen getDosen() {
-        return dosen;
+    public Dosen getInisialDosen() {
+        return inisialDosen;
     }
 
-    public void setDosen(Dosen dosen) {
-        this.dosen = dosen;
+    public void setInisialDosen(Dosen inisialDosen) {
+        this.inisialDosen = inisialDosen;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (ketersediaanWaktuDosenPK != null ? ketersediaanWaktuDosenPK.hashCode() : 0);
+        hash += (tanggalDsnSedia != null ? tanggalDsnSedia.hashCode() : 0);
         return hash;
     }
 
@@ -103,7 +92,7 @@ public class KetersediaanWaktuDosen implements Serializable {
             return false;
         }
         KetersediaanWaktuDosen other = (KetersediaanWaktuDosen) object;
-        if ((this.ketersediaanWaktuDosenPK == null && other.ketersediaanWaktuDosenPK != null) || (this.ketersediaanWaktuDosenPK != null && !this.ketersediaanWaktuDosenPK.equals(other.ketersediaanWaktuDosenPK))) {
+        if ((this.tanggalDsnSedia == null && other.tanggalDsnSedia != null) || (this.tanggalDsnSedia != null && !this.tanggalDsnSedia.equals(other.tanggalDsnSedia))) {
             return false;
         }
         return true;
@@ -111,7 +100,7 @@ public class KetersediaanWaktuDosen implements Serializable {
 
     @Override
     public String toString() {
-        return "ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen[ ketersediaanWaktuDosenPK=" + ketersediaanWaktuDosenPK + " ]";
+        return "ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen[ tanggalDsnSedia=" + tanggalDsnSedia + " ]";
     }
     
 }
