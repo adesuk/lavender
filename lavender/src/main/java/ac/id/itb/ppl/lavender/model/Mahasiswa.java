@@ -7,7 +7,7 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "MAHASISWA")
@@ -48,8 +48,8 @@ public class Mahasiswa implements Serializable {
     @Size(max = 2)
     @Column(name = "JENJANG")
     private String jenjang;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nim")
-    private Collection<KaryaAkhir> karyaAkhirCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mahasiswa")
+    private List<KaryaAkhir> karyaAkhirList;
 
     public Mahasiswa() {
     }
@@ -83,12 +83,12 @@ public class Mahasiswa implements Serializable {
     }
 
     @XmlTransient
-    public Collection<KaryaAkhir> getKaryaAkhirCollection() {
-        return karyaAkhirCollection;
+    public List<KaryaAkhir> getKaryaAkhirList() {
+        return karyaAkhirList;
     }
 
-    public void setKaryaAkhirCollection(Collection<KaryaAkhir> karyaAkhirCollection) {
-        this.karyaAkhirCollection = karyaAkhirCollection;
+    public void setKaryaAkhirList(List<KaryaAkhir> karyaAkhirList) {
+        this.karyaAkhirList = karyaAkhirList;
     }
 
     @Override

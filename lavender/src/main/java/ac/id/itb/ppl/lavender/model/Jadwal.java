@@ -8,7 +8,6 @@ package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -23,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "JADWAL")
@@ -50,8 +50,6 @@ public class Jadwal implements Serializable {
     @NotNull
     @Column(name = "ID_JADWAL")
     private Integer idJadwal;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "TANGGAL")
     @Temporal(TemporalType.DATE)
     private Date tanggal;
@@ -67,25 +65,22 @@ public class Jadwal implements Serializable {
     @Size(max = 50)
     @Column(name = "DOSEN_BENTROK")
     private String dosenBentrok;
-    
-    @ManyToMany(mappedBy = "jadwalCollection")
+    @ManyToMany(mappedBy = "jadwalList")
     private List<Dosen> dosenPenguji;
-    
     @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT")
     @ManyToOne(optional = false)
     private SlotWaktu slotWaktu;
-    
     @JoinColumn(name = "KD_RUANGAN", referencedColumnName = "KD_RUANGAN")
     @ManyToOne
     private Ruangan ruangan;
-    
     @JoinColumn(name = "ID_PERIODE", referencedColumnName = "ID_PERIODE")
     @ManyToOne(optional = false)
     private Periode idPeriode;
-    
     @JoinColumn(name = "ID_KA", referencedColumnName = "ID_KA")
     @ManyToOne(optional = false)
     private KaryaAkhir karyaAkhir;
+    @Transient
+    private boolean selected;
 
     public Jadwal() {
     }
@@ -94,9 +89,8 @@ public class Jadwal implements Serializable {
         this.idJadwal = idJadwal;
     }
 
-    public Jadwal(Integer idJadwal, Date tanggal, Date generateDate) {
+    public Jadwal(Integer idJadwal, Date generateDate) {
         this.idJadwal = idJadwal;
-        this.tanggal = tanggal;
         this.generateDate = generateDate;
     }
 
@@ -149,7 +143,7 @@ public class Jadwal implements Serializable {
     }
 
     @XmlTransient
-    public List<Dosen> getDosensPenguji() {
+    public List<Dosen> getDosenPenguji() {
         return dosenPenguji;
     }
 
@@ -187,6 +181,14 @@ public class Jadwal implements Serializable {
 
     public void setKaryaAkhir(KaryaAkhir karyaAkhir) {
         this.karyaAkhir = karyaAkhir;
+    }
+    
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

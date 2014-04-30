@@ -6,7 +6,7 @@
 package ac.id.itb.ppl.lavender.genetika;
 
 import ac.id.itb.ppl.lavender.model.Dosen;
-import ac.id.itb.ppl.lavender.model.KetersediaanDosen;
+import ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen;
 import ac.id.itb.ppl.lavender.model.KetersediaanRuangan;
 import ac.id.itb.ppl.lavender.model.Topik;
 import java.util.List;
@@ -62,7 +62,7 @@ public class FitnessCalc {
          boolean statusPinalty = true;
          for (int j=0; j<kromosom.getGenDosenPenguji().size(); j++){
              Dosen tempDosen = kromosom.getGenDosenPenguji().get(j);
-             List<KetersediaanDosen> listSDosen = tempDosen.getKetersediaanWaktuDosens();
+             List<KetersediaanWaktuDosen> listSDosen = tempDosen.getKetersediaanWaktuDosens();
              for (int i=0; i<listSDosen.size(); i++){
                 if (kromosom.getGenWaktu().getIdSlot() ==  listSDosen.get(i).getSlotWaktu().getIdSlot() &&
                     kromosom.getGenDate().compareTo(listSDosen.get(i).getTanggalDsnSedia()) == 0){
@@ -84,11 +84,11 @@ public class FitnessCalc {
     private static int checkDosenPembimbingSlotWaktu (Kromosom kromosom){
          int pinalty = 0;
          boolean statusPinalty = true;
-         List<Dosen> tempPembimbing = kromosom.getGenKA().getDosensPembimbing();
+         List<Dosen> tempPembimbing = kromosom.getGenKA().getDosenPembimbing();
          for (int j=0; j<tempPembimbing.size(); j++){
              statusPinalty = true;
              Dosen tempDosen = tempPembimbing.get(j);
-             List<KetersediaanDosen> listSDosen = tempDosen.getKetersediaanWaktuDosens();
+             List<KetersediaanWaktuDosen> listSDosen = tempDosen.getKetersediaanWaktuDosens();
              for (int i=0; i<listSDosen.size(); i++){
                 if (kromosom.getGenWaktu().getIdSlot() ==  listSDosen.get(i).getSlotWaktu().getIdSlot() &&
                     kromosom.getGenDate().compareTo(listSDosen.get(i).getTanggalDsnSedia()) == 0){
@@ -131,7 +131,7 @@ public class FitnessCalc {
     private static int checkDosenPengujiPembimbing (Kromosom kromosom){
          int pinalty = 0;
          boolean statusPinalty = false;
-         List<Dosen> listPembimbing = kromosom.getGenKA().getDosensPembimbing();
+         List<Dosen> listPembimbing = kromosom.getGenKA().getDosenPembimbing();
          for (int j=0; j<listPembimbing.size(); j++){
              Dosen pembimbing = listPembimbing.get(j);
              List<Dosen> listPenguji = kromosom.getGenDosenPenguji();

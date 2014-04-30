@@ -8,8 +8,8 @@ package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "PERIODE")
@@ -50,12 +51,18 @@ public class Periode implements Serializable {
     @NotNull
     @Column(name = "ID_PERIODE")
     private Integer idPeriode;
-    @Size(max = 100)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "NAMA_PERIODE")
     private String namaPeriode;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "PERIODE_AWAL")
     @Temporal(TemporalType.DATE)
     private Date periodeAwal;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "PERIODE_AKHIR")
     @Temporal(TemporalType.DATE)
     private Date periodeAkhir;
@@ -68,13 +75,22 @@ public class Periode implements Serializable {
     @Column(name = "STATUS_JADWAL")
     private Character statusJadwal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPeriode")
-    private Collection<Jadwal> jadwalCollection;
+    private List<Jadwal> jadwalList;
+    @Transient
+    private boolean selected;
 
     public Periode() {
     }
 
     public Periode(Integer idPeriode) {
         this.idPeriode = idPeriode;
+    }
+
+    public Periode(Integer idPeriode, String namaPeriode, Date periodeAwal, Date periodeAkhir) {
+        this.idPeriode = idPeriode;
+        this.namaPeriode = namaPeriode;
+        this.periodeAwal = periodeAwal;
+        this.periodeAkhir = periodeAkhir;
     }
 
     public Integer getIdPeriode() {
@@ -142,12 +158,20 @@ public class Periode implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Jadwal> getJadwalCollection() {
-        return jadwalCollection;
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
     }
 
-    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
-        this.jadwalCollection = jadwalCollection;
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
+    
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

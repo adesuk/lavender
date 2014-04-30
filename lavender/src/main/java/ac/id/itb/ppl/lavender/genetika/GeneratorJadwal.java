@@ -57,7 +57,7 @@ public class GeneratorJadwal {
                                dataJadwal.genDate.toString() + "\t"+
                                dataJadwal.genRuangan.getKdRuangan() +"\t"+
                                dataJadwal.getGenKA().getIdKa()+"\t"+
-                               dataJadwal.getGenKA().getDosensPembimbing().get(0).getInisialDosen()+"\t"+
+                               dataJadwal.getGenKA().getDosenPembimbing().get(0).getInisialDosen()+"\t"+
                                dataJadwal.getGenDosenPenguji().get(0).getInisialDosen());
             Jadwal element = new Jadwal();
             element.setDosenPenguji(dataJadwal.getGenDosenPenguji());

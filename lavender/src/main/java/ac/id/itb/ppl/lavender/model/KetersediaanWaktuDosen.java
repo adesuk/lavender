@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "KETERSEDIAAN_WAKTU_DOSEN")
@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "KetersediaanWaktuDosen.findByInisialDosen", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.ketersediaanWaktuDosenPK.inisialDosen = :inisialDosen"),
     @NamedQuery(name = "KetersediaanWaktuDosen.findByIdSlot", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.ketersediaanWaktuDosenPK.idSlot = :idSlot"),
     @NamedQuery(name = "KetersediaanWaktuDosen.findByTanggalDsnSedia", query = "SELECT k FROM KetersediaanWaktuDosen k WHERE k.tanggalDsnSedia = :tanggalDsnSedia")})
-public class KetersediaanDosen implements Serializable {
+public class KetersediaanWaktuDosen implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected KetersediaanDosenPK ketersediaanWaktuDosenPK;
+    protected KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK;
     @Column(name = "TANGGAL_DSN_SEDIA")
     @Temporal(TemporalType.DATE)
     private Date tanggalDsnSedia;
@@ -46,22 +46,22 @@ public class KetersediaanDosen implements Serializable {
     @ManyToOne(optional = false)
     private Dosen dosen;
 
-    public KetersediaanDosen() {
+    public KetersediaanWaktuDosen() {
     }
 
-    public KetersediaanDosen(KetersediaanDosenPK ketersediaanWaktuDosenPK) {
+    public KetersediaanWaktuDosen(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
         this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
     }
 
-    public KetersediaanDosen(String inisialDosen, int idSlot) {
-        this.ketersediaanWaktuDosenPK = new KetersediaanDosenPK(inisialDosen, idSlot);
+    public KetersediaanWaktuDosen(String inisialDosen, int idSlot) {
+        this.ketersediaanWaktuDosenPK = new KetersediaanWaktuDosenPK(inisialDosen, idSlot);
     }
 
-    public KetersediaanDosenPK getKetersediaanWaktuDosenPK() {
+    public KetersediaanWaktuDosenPK getKetersediaanWaktuDosenPK() {
         return ketersediaanWaktuDosenPK;
     }
 
-    public void setKetersediaanWaktuDosenPK(KetersediaanDosenPK ketersediaanWaktuDosenPK) {
+    public void setKetersediaanWaktuDosenPK(KetersediaanWaktuDosenPK ketersediaanWaktuDosenPK) {
         this.ketersediaanWaktuDosenPK = ketersediaanWaktuDosenPK;
     }
 
@@ -99,10 +99,10 @@ public class KetersediaanDosen implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof KetersediaanDosen)) {
+        if (!(object instanceof KetersediaanWaktuDosen)) {
             return false;
         }
-        KetersediaanDosen other = (KetersediaanDosen) object;
+        KetersediaanWaktuDosen other = (KetersediaanWaktuDosen) object;
         if ((this.ketersediaanWaktuDosenPK == null && other.ketersediaanWaktuDosenPK != null) || (this.ketersediaanWaktuDosenPK != null && !this.ketersediaanWaktuDosenPK.equals(other.ketersediaanWaktuDosenPK))) {
             return false;
         }

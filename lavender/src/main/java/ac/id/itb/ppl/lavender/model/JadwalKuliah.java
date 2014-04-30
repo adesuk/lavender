@@ -7,8 +7,8 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "JADWAL_KULIAH")
@@ -47,20 +47,22 @@ public class JadwalKuliah implements Serializable {
     @NotNull
     @Column(name = "ID_JADWAL_KULIAH")
     private Integer idJadwalKuliah;
-    @Size(max = 6)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
     @Column(name = "KODE_MATA_KULIAH")
     private String kodeMataKuliah;
     @Size(max = 3)
     @Column(name = "HARI")
     private String hari;
     @Column(name = "WAKTU_MASUK")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date waktuMasuk;
     @Column(name = "WAKTU_KELUAR")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date waktuKeluar;
-    @ManyToMany(mappedBy = "jadwalKuliahCollection")
-    private Collection<Dosen> dosenCollection;
+    @ManyToMany(mappedBy = "jadwalKuliahList")
+    private List<Dosen> dosenList;
     @JoinColumn(name = "KD_RUANGAN", referencedColumnName = "KD_RUANGAN")
     @ManyToOne(optional = false)
     private Ruangan kdRuangan;
@@ -73,6 +75,11 @@ public class JadwalKuliah implements Serializable {
 
     public JadwalKuliah(Integer idJadwalKuliah) {
         this.idJadwalKuliah = idJadwalKuliah;
+    }
+
+    public JadwalKuliah(Integer idJadwalKuliah, String kodeMataKuliah) {
+        this.idJadwalKuliah = idJadwalKuliah;
+        this.kodeMataKuliah = kodeMataKuliah;
     }
 
     public Integer getIdJadwalKuliah() {
@@ -116,12 +123,12 @@ public class JadwalKuliah implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Dosen> getDosenCollection() {
-        return dosenCollection;
+    public List<Dosen> getDosenList() {
+        return dosenList;
     }
 
-    public void setDosenCollection(Collection<Dosen> dosenCollection) {
-        this.dosenCollection = dosenCollection;
+    public void setDosenList(List<Dosen> dosenList) {
+        this.dosenList = dosenList;
     }
 
     public Ruangan getKdRuangan() {

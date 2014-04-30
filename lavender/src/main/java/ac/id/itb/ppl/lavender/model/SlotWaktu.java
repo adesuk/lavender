@@ -7,8 +7,8 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author TOSHIBA
+ * @author Edbert
  */
 @Entity
 @Table(name = "SLOT_WAKTU")
@@ -52,10 +52,10 @@ public class SlotWaktu implements Serializable {
     @Column(name = "JAM_AKHIR")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jamAkhir;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSlot")
-    private Collection<Jadwal> jadwalCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "slotWaktu")
-    private Collection<KetersediaanDosen> ketersediaanWaktuDosenCollection;
+    private List<Jadwal> jadwalList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "slotWaktu")
+    private List<KetersediaanWaktuDosen> ketersediaanWaktuDosenList;
 
     public SlotWaktu() {
     }
@@ -97,21 +97,21 @@ public class SlotWaktu implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Jadwal> getJadwalCollection() {
-        return jadwalCollection;
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
     }
 
-    public void setJadwalCollection(Collection<Jadwal> jadwalCollection) {
-        this.jadwalCollection = jadwalCollection;
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
     }
 
     @XmlTransient
-    public Collection<KetersediaanDosen> getKetersediaanWaktuDosenCollection() {
-        return ketersediaanWaktuDosenCollection;
+    public List<KetersediaanWaktuDosen> getKetersediaanWaktuDosenList() {
+        return ketersediaanWaktuDosenList;
     }
 
-    public void setKetersediaanWaktuDosenCollection(Collection<KetersediaanDosen> ketersediaanWaktuDosenCollection) {
-        this.ketersediaanWaktuDosenCollection = ketersediaanWaktuDosenCollection;
+    public void setKetersediaanWaktuDosenList(List<KetersediaanWaktuDosen> ketersediaanWaktuDosenList) {
+        this.ketersediaanWaktuDosenList = ketersediaanWaktuDosenList;
     }
 
     @Override
