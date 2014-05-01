@@ -5,9 +5,9 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="1521"/>
         <property name="databaseName" value="XE"/>
-        <property name="User" value="jadwal2"/>
-        <property name="Password" value="jadwal2"/>
-        <property name="URL" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+        <property name="User" value="jadwal"/>
+        <property name="Password" value="jadwal"/>
+        <property name="URL" value="jdbc:oracle:thin:@192.168.1.104:1521:XE"/>
         <property name="driverClass" value="oracle.jdbc.OracleDriver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="lavender-pu" object-type="user" pool-name="oracle-thin_XE_jadwalPool"/>

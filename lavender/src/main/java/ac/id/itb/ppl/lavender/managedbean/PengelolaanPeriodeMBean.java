@@ -2,9 +2,11 @@ package ac.id.itb.ppl.lavender.managedbean;
 
 import ac.id.itb.ppl.lavender.dao.jpa.PeriodeDaoImpl;
 import ac.id.itb.ppl.lavender.model.Periode;
+import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -20,17 +22,15 @@ import org.primefaces.event.RowEditEvent;
 @Named(value = "pengelolaanPeriode")
 @SessionScoped
 public class PengelolaanPeriodeMBean implements Serializable {
-    @EJB
-    private PeriodeDaoImpl periodeDao;
+    @EJB private PeriodeDaoImpl periodeDao;
     private List<Periode> periodes1;
     private Periode selectedPeriode;
     private String keyword;
     private List<Periode> periodes2;
-    //private List<Periode> selectedPeriodes;
     private boolean renderHidden;
     private Periode periode = new Periode();
     
-    // Getter dan setter
+    //<editor-fold defaultstate="collapsed" desc="Getter dan setter">
     public List<Periode> getPeriodes1() {
         if (periodes1 == null || periodes1.isEmpty()) {
             reloadPeriodes();
@@ -58,14 +58,6 @@ public class PengelolaanPeriodeMBean implements Serializable {
         return periodes2;
     }
     
-//    public List<Periode> getSelectedPeriodes() {
-//        return selectedPeriodes;
-//    }
-//    
-//    public void setSelectedPeriodes(List<Periode> selectedPeriodes) {
-//        this.selectedPeriodes = selectedPeriodes;
-//    }
-    
     public boolean getRenderHidden() {
         return renderHidden;
     }
@@ -73,31 +65,37 @@ public class PengelolaanPeriodeMBean implements Serializable {
     public Periode getPeriode() {
         return periode;
     }
-    // End of getter dan setter
     
-    // Business logic simpel
+    public Map<String, Character> getTipeJadwals() {
+        return new TipeEksekusi().getTipeEksekusis();
+    }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Business logic simpel">
     public void reloadPeriodes() {
         periodes1 = periodeDao.findAll();
+    }
+    
+    public void reloadPeriodes2() {
+        if (selectedPeriode == null) {
+            if (keyword != null) {
+                keyword = "";
+            }
+            periodes2 = periodeDao.findByKeyword(keyword);
+        } else {
+            periodes2 = new ArrayList<Periode>(1);
+            periodes2.add(selectedPeriode);
+        }
     }
     
     public void initializePeriode() {
         periode = new Periode();
     }
-    // End of business logic
+    //</editor-fold>
     
-    // Ajax
+    //<editor-fold defaultstate="collapsed" desc="Ajaxnya">
     public void cariListener(AjaxBehaviorEvent e) {
-        //reloadPeriodes();
-        if (selectedPeriode == null) {
-            if (keyword != null || !keyword.equals("")) {
-                periodes2 = periodeDao.findByKeyword(keyword);
-            } else {
-                periodes2 = periodeDao.findAll();
-            }
-        } else {
-            periodes2 = new ArrayList<Periode>(1);
-            periodes2.add(selectedPeriode);
-        }
+        reloadPeriodes2();
         renderHidden = true;
     }
     
@@ -106,18 +104,11 @@ public class PengelolaanPeriodeMBean implements Serializable {
         return "TambahPeriode";
     }
     
-//    public void savePeriode() {
-//        periodeDao.save(periode);
-//        initializePeriode();
-//        
-//        FacesMessage msg = new FacesMessage("Periode telah ditambah");
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//    }
-    
     public String savePeriode() {
         periodeDao.save(periode);
         initializePeriode();
-        return "PengelolaaanPeriode";
+        reloadPeriodes2();
+        return "PengelolaanPeriode";
     }
     
     public void deletePeriode() {
@@ -126,6 +117,7 @@ public class PengelolaanPeriodeMBean implements Serializable {
                 periodeDao.delete(p);
             }
         }
+        reloadPeriodes2();
     }
     
     public void handleClose() {
@@ -135,5 +127,5 @@ public class PengelolaanPeriodeMBean implements Serializable {
     public void onEdit(RowEditEvent event) {
         periodeDao.update((Periode) event.getObject());
     }
-    // End of ajax
+    //</editor-fold>
 }

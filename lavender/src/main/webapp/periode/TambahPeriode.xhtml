@@ -15,6 +15,7 @@
           <div class="row">
             <div class="col-md-12">
               <f:view>
+                <h2><h:outputText value="Tambah Periode" /></h2><hr />
                 <h:form class="form-horizontal" id="dialogInputForm">
                   <div class="form-group">
                     <h:outputLabel styleClass="col-md-offset-2 col-md-3">
@@ -52,7 +53,10 @@
                       <h:outputText value="Tipe jadwal" /> <span class="required">*</span>
                     </h:outputLabel>
                     <div class="col-md-4">
-                      <p:inputText value="#{pengelolaanPeriode.periode.tipeJadwal}" />  
+                      <!--<p:inputText value="#{pengelolaanPeriode.periode.tipeJadwal}" />  -->
+                      <p:selectOneMenu value="#{pengelolaanPeriode.periode.tipeJadwal}">
+                          <f:selectItems value="#{pengelolaanPeriode.tipeJadwals}" />
+                        </p:selectOneMenu>
                     </div>
                   </div>
 
