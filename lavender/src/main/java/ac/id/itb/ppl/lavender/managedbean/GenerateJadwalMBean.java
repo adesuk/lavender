@@ -95,7 +95,7 @@ public class GenerateJadwalMBean implements Serializable {
         List<SlotWaktu> slotWaktus = slotWaktuDao.findAll();
         cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, selectedPeriode);
         
-        return "ProsesGenerateJadwal.xhtml";
+        return "ProsesGenerateJadwal";
     }
     // End of business logic
 }

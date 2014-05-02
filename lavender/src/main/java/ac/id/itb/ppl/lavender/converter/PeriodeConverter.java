@@ -22,13 +22,15 @@ public class PeriodeConverter implements Converter, java.io.Serializable {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value == null) {
-            return null;
-        } else if (value.equals("All")) {
-            return null;
-        } else {
-            return periodeDao.find(Integer.valueOf(value));
+        Object output = null;
+        if (value != null) {
+            try {
+                output = periodeDao.find(Integer.valueOf(value));
+            } catch (NumberFormatException nfe) {
+                output = null;
+            }
         }
+        return output;
     }
 
     @Override

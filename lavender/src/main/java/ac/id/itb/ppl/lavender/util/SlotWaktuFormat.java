@@ -17,8 +17,6 @@ public class SlotWaktuFormat {
         
         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm", indonesia);
         return new StringBuilder()
-            .append(slotWaktu.getIdSlot())
-            .append(". ")
             .append(sdf1.format(date1))
             .append("-")
             .append(sdf1.format(date2))

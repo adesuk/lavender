@@ -9,7 +9,10 @@ import ac.id.itb.ppl.lavender.model.*;
 import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 import ac.id.itb.ppl.lavender.util.SlotWaktuFormat;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
+import ac.id.itb.ppl.lavender.util.VersiFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -17,6 +20,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -24,9 +28,7 @@ import javax.inject.Named;
  */
 @Named(value = "pengelolaanJadwal")
 @SessionScoped
-public class PengelolaanJadwalMBean implements java.io.Serializable {
-    private static final long serialVersionUID = -91232124123L;
-    
+public class PengelolaanJadwalMBean implements Serializable {
     @EJB private PeriodeDaoImpl periodeDao;
     @EJB private JadwalDaoImpl jadwalDao;
     @EJB private RuanganDaoImpl ruanganDao;
@@ -35,11 +37,11 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     private List<Periode> periodes;
     private Periode periode;
     private List<Jadwal> jadwal;
-    private Jadwal selectedJadwal;
+    private Jadwal jadwalDetail;
     private List<Ruangan> ruangans;
-    private Jadwal newJadwal;
     private String typedNim;
-    //private List<SlotWaktu> slotWaktus;
+    private List<Date> jadwalVersions;
+    private Date selectedJadwalVersion;
     
     public PengelolaanJadwalMBean() {
         initializeJadwal();
@@ -55,7 +57,7 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     
     public Periode getSelectedPeriode() {
         if (periode == null && (periodes != null && !periodes.isEmpty())) {
-            periode = periodes.get(0);
+            //periode = periodes.get(0);
         }
         return periode;
     }
@@ -68,12 +70,24 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
         return jadwal;
     }
     
-    public Jadwal getSelectedJadwal() {
-        return selectedJadwal;
+    public Jadwal getJadwalDetail() {
+        return jadwalDetail;
     }
     
-    public void setSelectedJadwal(Jadwal selectedJadwal) {
-        this.selectedJadwal = selectedJadwal;
+    public void setJadwalDetail(Jadwal jadwalDetail) {
+        this.jadwalDetail = jadwalDetail;
+    }
+    
+    public List<Date> getJadwalVersions() {
+        return jadwalVersions;
+    }
+    
+    public Date getSelectedJadwalVersion() {
+        return selectedJadwalVersion;
+    }
+    
+    public void setSelectedJadwalVersion(Date selectedJadwalVersion) {
+        this.selectedJadwalVersion = selectedJadwalVersion;
     }
     
     public List<Ruangan> getRuangans() {
@@ -81,14 +95,6 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
             ruangans = ruanganDao.findAll();
         }
         return ruangans;
-    }
-    
-    public Jadwal getNewJadwal() {
-        return newJadwal;
-    }
-    
-    public void setNewJadwal(Jadwal newJadwal) {
-        this.newJadwal = newJadwal;
     }
     
     public List<SlotWaktu> getSlotWaktus() {
@@ -114,7 +120,20 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     }
     
     public void reloadJadwal() {
-        jadwal = jadwalDao.findJadwalByPeriode(getSelectedPeriode());
+        if (getSelectedPeriode() != null) {
+            jadwal = jadwalDao.findJadwalByPeriodeAndVersi(getSelectedPeriode(), getSelectedJadwalVersion());
+        }
+    }
+    
+    public void reloadJadwalVersions() {
+        if (getSelectedPeriode() != null) {
+            jadwalVersions = jadwalDao.findJadwalVersions(getSelectedPeriode());
+            if (jadwalVersions != null && !jadwalVersions.isEmpty()) {
+                selectedJadwalVersion = jadwalVersions.get(0);
+            }
+        } else {
+            jadwalVersions = new ArrayList<Date>(0);
+        }
     }
     
     public String formatnya(Periode periode) {
@@ -122,35 +141,72 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     }
     
     public void initializeJadwal() {
-        newJadwal = new Jadwal();
+        typedNim = null;
+        jadwalDetail = new Jadwal();
         KaryaAkhir k = new KaryaAkhir();
         k.setMahasiswa(new Mahasiswa());
-        newJadwal.setKaryaAkhir(k);
-        newJadwal.setIdPeriode(getSelectedPeriode());
-        newJadwal.setRuangan(new Ruangan());
+        jadwalDetail.setKaryaAkhir(k);
+        jadwalDetail.setIdPeriode(getSelectedPeriode());
+        jadwalDetail.setRuangan(new Ruangan());
+        System.out.println("Masuk inisialisasi jadwal");
     }
     
     public String getTipeJadwalRealName(char tipeJadwal) {
-        Map<Character, String> temp = new TipeEksekusi().getTipeEksekusis();
-        return temp.get(tipeJadwal);
+        Map<String, Character> temp = new TipeEksekusi().getTipeEksekusis();
+        for (String s : temp.keySet()) {
+            if (temp.get(s) == tipeJadwal) {
+                return s;
+            }
+        }
+        return null;
     }
     
     public String createJadwal() {
         initializeJadwal();
-        System.out.println("Kepanggil, gan!");
-        return "FormJadwal";
+        return "TambahJadwal";
+    }
+    
+    public String editJadwal() {
+        
+        System.out.println(">>>>> " + jadwalDetail.getKaryaAkhir().getMahasiswa().getNim());
+        return "UbahJadwal";
     }
     
     public String formatSlotWaktu(SlotWaktu slot) {
         return SlotWaktuFormat.format(slot);
     }
     
+    public String formatVersiJadwal(Date versi) {
+        if (versi == null) {
+            return "";
+        } else {
+            return VersiFormat.format(versi);
+        }
+    }
+    
     public String saveJadwal() {
         Mahasiswa m = new Mahasiswa(typedNim);
         KaryaAkhir ka = karyaAkhirDao.findByOwner(m);
-        newJadwal.setKaryaAkhir(ka);
-        jadwalDao.save(newJadwal);
-        return "PengelolaanJadwal";
+        jadwalDetail.setKaryaAkhir(ka);
+        jadwalDetail.setIdPeriode(getSelectedPeriode());
+        
+        if (getSelectedJadwalVersion() == null) {
+            setSelectedJadwalVersion(
+                new Date(System.currentTimeMillis())
+            );
+        }
+        jadwalDetail.setGenerateDate(getSelectedJadwalVersion());
+        jadwalDao.save(jadwalDetail);
+        
+        reloadJadwalVersions();
+        reloadJadwal();
+        
+        return "PengelolaanJadwal?faces-redirect=true";
+    }
+    
+    public String updateJadwal() {
+        System.out.println("Masuk update jadwal");
+        return "PengelolaanJadwal?faces-redirect=true";
     }
     // End of business logic
     
@@ -158,7 +214,7 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
     private boolean renderHidden = false;
     
     public void periodeListener(AjaxBehaviorEvent e) {
-        // do nothing, tapi kepakenya ini
+        reloadJadwalVersions();
     }
     
     public void cariListener(AjaxBehaviorEvent e) {
@@ -179,6 +235,10 @@ public class PengelolaanJadwalMBean implements java.io.Serializable {
             strs.add(m.getNim());
         }
         return strs;
+    }
+    
+    public void onRowSelect(SelectEvent e) {
+        this.jadwalDetail = ((Jadwal) e.getObject());
     }
     // End of ajax
 }
