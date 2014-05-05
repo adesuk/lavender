@@ -1,8 +1,8 @@
 package ac.id.itb.ppl.lavender.dao.jpa;
 
+import ac.id.itb.ppl.lavender.dao.RuanganDao;
 import ac.id.itb.ppl.lavender.model.Ruangan;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
@@ -11,8 +11,8 @@ import javax.persistence.*;
  * @author Edbert
  */
 @Stateless
-@LocalBean
-public class RuanganDaoImpl extends JpaDao { 
+public class RuanganDaoImpl extends JpaDao implements RuanganDao { 
+    @Override
     public List<Ruangan> findAll() {
         Query query = em.createQuery(
             "select r from Ruangan as r");
@@ -20,6 +20,7 @@ public class RuanganDaoImpl extends JpaDao {
         return ruangans;
     }
     
+    @Override
     public Ruangan find(String id) {
         return em.find(Ruangan.class, id);
     }

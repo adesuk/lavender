@@ -1,8 +1,7 @@
 package ac.id.itb.ppl.lavender.converter;
 
-import ac.id.itb.ppl.lavender.dao.RuanganDao;
-import ac.id.itb.ppl.lavender.model.Ruangan;
-import java.io.Serializable;
+import ac.id.itb.ppl.lavender.dao.DosenDao;
+import ac.id.itb.ppl.lavender.model.Dosen;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -12,19 +11,19 @@ import javax.inject.Named;
 
 /**
  *
- * @author edbert
+ * @author Edbert
  */
-@Named(value = "ruanganConverter")
+@Named(value = "inisialDosenConverter")
 @RequestScoped
-public class RuanganConverter implements Converter, Serializable {
-    @Inject private RuanganDao ruanganDao;
-
+public class InisialDosenConverter implements Converter {
+    @Inject private DosenDao dosenDao;
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value == null || value.equals("")) {
             return null;
         } else {
-            return ruanganDao.find(value);
+            return dosenDao.find(value);
         }
     }
 
@@ -33,7 +32,7 @@ public class RuanganConverter implements Converter, Serializable {
         if (value == null) {
             return "";
         } else {
-            return ((Ruangan) value).getNamaRuangan();
+            return ((Dosen) value).getInisialDosen();
         }
     }
 }

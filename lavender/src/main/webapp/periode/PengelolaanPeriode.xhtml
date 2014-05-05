@@ -18,16 +18,16 @@
 
                   <!-- Periode Jadwal -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-2">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Periode jadwal" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                       <p:selectOneMenu value="#{pengelolaanPeriode.selectedPeriode}"
                                        converter="#{periodeConverter}"
                                        style="width: 100%">
                         <f:selectItem itemLabel="All" />
                         <f:selectItems value="#{pengelolaanPeriode.periodes1}"
-                                       var="item" itemLabel="#{pengelolaanJadwal.formatnya(item)}"
+                                       var="item" itemLabel="#{pengelolaanJadwal.formatPeriode(item)}"
                                        itemValue="#{item}" />
                       </p:selectOneMenu>
                     </div>
@@ -35,10 +35,10 @@
 
                   <!-- Keyword -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-2">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Nama periode" />
                     </h:outputLabel>
-                    <div class="col-md-3">
+                    <div class="col-sm-3">
                       <p:inputText id="namaPeriode" style="width: 100%"
                                    value="#{pengelolaanPeriode.keyword}" />
                     </div>
@@ -51,9 +51,9 @@
                         <p:commandButton value="Cari" actionListener="#{pengelolaanPeriode.reloadPeriodes2()}" 
                                          update="jadwalArea"
                                          style="width: 90px; margin: 5px" />
-                        <p:commandButton value="Add" action="TambahPeriode.xhtml"
+                        <p:commandButton value="Tambah" action="TambahPeriode.xhtml"
                                          style="width: 90px; margin: 5px" />
-                        <p:commandButton value="Delete"
+                        <p:commandButton value="Hapus"
                                          action="#{pengelolaanPeriode.deletePeriode()}"
                                          update="jadwalArea"
                                          style="width: 90px; margin: 5px" />
@@ -92,7 +92,9 @@
                           <f:facet name="input">
                             <p:calendar value="#{periode.periodeAwal}"
                                         pattern="dd/MM/yyyy"
-                                        style="width:100%" />
+                                        style="width:100%"
+                                        binding="#{startDateComponent}"
+                                        required="true" />
                           </f:facet>
                         </p:cellEditor>
                       </p:column>
@@ -106,11 +108,15 @@
                           <f:facet name="input">
                             <p:calendar value="#{periode.periodeAkhir}"
                                         pattern="dd/MM/yyyy"
-                                        style="width:100%" />
+                                        style="width:100%"
+                                        required="true">
+                              <f:validator validatorId="dateRangeValidator" />
+                              <f:attribute name="startDateComponent" value="#{startDateComponent}" />
+                            </p:calendar>
                           </f:facet>
                         </p:cellEditor>
                       </p:column>
-                      <p:column headerText="Tipe Periode">
+                      <p:column headerText="Tipe Pelaksanaan">
                         <f:facet name="output">
                           <h:outputText value="#{periode.tipeJadwal}" />
                         </f:facet>

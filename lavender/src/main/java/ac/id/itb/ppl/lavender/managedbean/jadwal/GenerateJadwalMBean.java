@@ -1,15 +1,19 @@
-package ac.id.itb.ppl.lavender.managedbean;
+package ac.id.itb.ppl.lavender.managedbean.jadwal;
 
-import ac.id.itb.ppl.lavender.dao.jpa.DosenDaoImpl;
-import ac.id.itb.ppl.lavender.dao.jpa.PeriodeDaoImpl;
-import ac.id.itb.ppl.lavender.dao.jpa.RuanganDaoImpl;
-import ac.id.itb.ppl.lavender.dao.jpa.SlotWaktuDaoImpl;
+import ac.id.itb.ppl.lavender.dao.DosenDao;
+import ac.id.itb.ppl.lavender.dao.PeriodeDao;
+import ac.id.itb.ppl.lavender.dao.RuanganDao;
+import ac.id.itb.ppl.lavender.dao.SlotWaktuDao;
 import ac.id.itb.ppl.lavender.genetika.ControlerGenerateJadwal;
-import ac.id.itb.ppl.lavender.model.*;
-import ac.id.itb.ppl.lavender.util.PeriodeFormat;
+import ac.id.itb.ppl.lavender.model.Dosen;
+import ac.id.itb.ppl.lavender.model.KaryaAkhir;
+import ac.id.itb.ppl.lavender.model.Periode;
+import ac.id.itb.ppl.lavender.model.Ruangan;
+import ac.id.itb.ppl.lavender.model.SlotWaktu;
+import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import java.io.Serializable;
 import java.util.List;
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -21,16 +25,12 @@ import javax.faces.event.AjaxBehaviorEvent;
 @Named(value = "generateJadwal")
 @SessionScoped
 public class GenerateJadwalMBean implements Serializable {
-    private static final long serialVersionUID = -91232124123L;
+    private static final long serialVersionUID = -9123212412884303L;
     
-    @EJB
-    private PeriodeDaoImpl periodeDao;
-    @EJB
-    private RuanganDaoImpl ruanganDao;
-    @EJB
-    private DosenDaoImpl dosenDao;
-    @EJB
-    private SlotWaktuDaoImpl slotWaktuDao;
+    @Inject private PeriodeDao periodeDao;
+    @Inject private RuanganDao ruanganDao;
+    @Inject private DosenDao dosenDao;
+    @Inject private SlotWaktuDao slotWaktuDao;
     private List<Periode> periodes;
     private Periode selectedPeriode;
     private List<Ruangan> ruangans;

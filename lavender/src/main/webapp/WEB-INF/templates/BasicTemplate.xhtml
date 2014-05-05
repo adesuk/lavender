@@ -10,7 +10,8 @@
     <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" />
     <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styles.css" />
   </h:head>
-  <h:body styleClass="metro">
+  <h:body>
+    <ui:insert name="event"></ui:insert>
     <div class="container">
       <div id="header">
         <ui:insert name="header">

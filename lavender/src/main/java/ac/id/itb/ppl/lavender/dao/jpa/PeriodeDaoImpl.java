@@ -14,8 +14,7 @@ import javax.persistence.*;
  * @author edbert
  */
 @Stateless
-@LocalBean
-public class PeriodeDaoImpl extends JpaDao {
+public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
     public Periode find(Integer id) {
         return em.find(Periode.class, id);
     }

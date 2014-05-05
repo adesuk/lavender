@@ -15,19 +15,22 @@
                 <h:form styleClass="form-horizontal">
                   <h2>Pengelolaan Jadwal</h2>
                   <hr />
+                  
+                  <p:messages id="messages" showDetail="true" autoUpdate="true"
+                              closable="true" />
 
                   <!-- Periode Jadwal -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-2">
+                    <h:outputLabel styleClass="col-sm-2">
                       <h:outputText value="Periode jadwal" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                       <p:selectOneMenu value="#{pengelolaanJadwal.selectedPeriode}"
                                        converter="#{periodeConverter}"
                                        style="width: 100%">
                         <f:selectItem itemLabel="Pilih Periode" />
                         <f:selectItems value="#{pengelolaanJadwal.periodes}"
-                                       var="item" itemLabel="#{pengelolaanJadwal.formatnya(item)}"
+                                       var="item" itemLabel="#{pengelolaanJadwal.formatPeriode(item)}"
                                        itemValue="#{item}" />
                         <p:ajax event="change" listener="#{pengelolaanJadwal.periodeListener}" 
                                 update="namaPeriode,jenisJadwal,versiJadwal" />
@@ -37,28 +40,32 @@
 
                   <!-- Nama Periode -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-2">
+                    <h:outputLabel styleClass="col-sm-2">
                       <h:outputText value="Nama periode" />
                     </h:outputLabel>
-                    <div class="col-md-10">
-                      <h:outputText id="namaPeriode" styleClass="form-control-static"
-                                    value="#{pengelolaanJadwal.selectedPeriode.namaPeriode}" />
+                    <div class="col-sm-10">
+                      <p class="form-control-static">
+                        <h:outputText id="namaPeriode"
+                                      value="#{pengelolaanJadwal.selectedPeriode.namaPeriode}" />
+                      </p>
                     </div>
                   </div>
 
                   <!-- Jenis Jadwal -->
                   <div class="form-group">
-                    <h:outputLabel value="Jenis jadwal" styleClass="col-md-2" />
-                    <div class="col-md-4">
-                      <h:outputText id="jenisJadwal" 
-                                    value="#{pengelolaanJadwal.getTipeJadwalRealName(pengelolaanJadwal.selectedPeriode.tipeJadwal)}" />
+                    <h:outputLabel value="Jenis jadwal" styleClass="col-sm-2" />
+                    <div class="col-sm-4">
+                      <p class="form-control-static">
+                        <h:outputText id="jenisJadwal" 
+                                      value="#{pengelolaanJadwal.getTipeJadwalRealName(pengelolaanJadwal.selectedPeriode.tipeJadwal)}" />
+                      </p>
                     </div>
                   </div>
 
                   <!-- Versi jadwal -->
                   <div class="form-group">
-                    <h:outputLabel value="Versi" styleClass="col-md-2" />
-                    <div class="col-md-4">
+                    <h:outputLabel value="Versi" styleClass="col-sm-2" />
+                    <div class="col-sm-4">
                       <p:selectOneMenu id="versiJadwal"
                                        value="#{pengelolaanJadwal.selectedJadwalVersion}">
                         <f:selectItems value="#{pengelolaanJadwal.jadwalVersions}"
@@ -73,17 +80,17 @@
                     <div class="col-md-12">
                       <h:panelGrid columns="4" styleClass="pull-right">
                         <p:commandButton value="Cari"
-                                         style="width: 90px; margin: 5px">
-                          <p:ajax listener="#{pengelolaanJadwal.cariListener}"
-                                  update="tabelJadwal" />
-                        </p:commandButton>
-                        <p:commandButton value="Add" immediate="true"
-                                         action="#{pengelolaanJadwal.createJadwal()}"
+                                         style="width: 90px; margin: 5px"
+                                         actionListener="#{pengelolaanJadwal.cariListener}"
+                                         immediate="true"
+                                         update="jadwal" />
+                        <p:commandButton value="Tambah" immediate="true"
+                                         action="#{pengelolaanJadwal.createJadwal}"
                                          style="width: 90px; margin: 5px" />
-                        <p:commandButton value="Edit" style="margin: 0 5px; width: 90px;"
+                        <p:commandButton value="Ubah" style="margin: 0 5px; width: 90px;"
                                          action="#{pengelolaanJadwal.editJadwal}" 
                                          immediate="true"/>
-                        <p:button value="Delete" style="margin: 0 5px; width: 90px;" />
+                        <p:button value="Hapus" style="margin: 0 5px; width: 90px;" />
                       </h:panelGrid>
                     </div>
                   </div>

@@ -1,13 +1,12 @@
 package ac.id.itb.ppl.lavender.dao.jpa;
 
+import ac.id.itb.ppl.lavender.dao.JadwalDao;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -17,8 +16,8 @@ import javax.persistence.TemporalType;
  * @author Edbert
  */
 @Stateless
-@LocalBean
-public class JadwalDaoImpl extends JpaDao {
+public class JadwalDaoImpl extends JpaDao implements JadwalDao {
+    @Override
     public List<Jadwal> findJadwalByPeriodeAndVersi(Periode periode, Date versi) {
         if (periode == null) {
             throw new NullPointerException("Periode tidak boleh null");
@@ -32,10 +31,12 @@ public class JadwalDaoImpl extends JpaDao {
         return result;
     }
     
+    @Override
     public Jadwal find(Integer id) {
         return em.find(Jadwal.class, id);
     }
     
+    @Override
     public List<Date> findJadwalVersions(Periode periode) {
         Query query = em.createNativeQuery(
             "select distinct generate_date from jadwal where id_periode = ?")
@@ -49,6 +50,7 @@ public class JadwalDaoImpl extends JpaDao {
         return versions;
     }
     
+    @Override
     public void save(Jadwal jadwal) {
         Query query = em.createNativeQuery("select max(id_jadwal) from jadwal");
         List<BigDecimal> temp = query.getResultList();

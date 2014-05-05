@@ -3,7 +3,6 @@ package ac.id.itb.ppl.lavender.dao.jpa;
 import ac.id.itb.ppl.lavender.dao.DosenDao;
 import ac.id.itb.ppl.lavender.model.*;
 import java.util.*;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -13,7 +12,18 @@ import javax.persistence.TemporalType;
  * @author Edbert
  */
 @Stateless
-public class DosenDaoImpl extends JpaDao {
+public class DosenDaoImpl extends JpaDao implements DosenDao {
+    /**
+     * Mencari dosen berdasarkan inisialnya.
+     * 
+     * @param inisial
+     * @return 
+     */
+    @Override
+    public Dosen find(String inisial) {
+        return em.find(Dosen.class, inisial);
+    }
+    
     /**
      * Get dosen-dosen beserta topik dan waktu ketersediaannya sesuai dengan
      * rentang waktu periode masa seminar/sidang TA/Tesis.
@@ -21,8 +31,8 @@ public class DosenDaoImpl extends JpaDao {
      * @param periode
      * @return 
      */
+    @Override
     public List<Dosen> getDosenWithTopikAndKetersediaan(Periode periode) {
-        System.out.println(">>> Periode akhir: " + periode.getPeriodeAkhir());
         Query query = em.createQuery(
             "select distinct dosen from Dosen as dosen " +
             "inner join fetch dosen.ketersediaanWaktuDosens as kwd " +
@@ -30,16 +40,6 @@ public class DosenDaoImpl extends JpaDao {
             .setParameter("periodeAwal", periode.getPeriodeAwal(), TemporalType.DATE)
             .setParameter("periodeAkhir", periode.getPeriodeAkhir(), TemporalType.DATE);
         List<Dosen> dosens = query.getResultList();
-        
-//        Query query = em.createQuery(
-//            "select k from KetersediaanWaktuDosen as k left join k.dosen as d where k.tanggalDsnSedia between :start and :end")
-//            .setParameter("start", periode.getPeriodeAwal(), TemporalType.DATE)
-//            .setParameter("end", periode.getPeriodeAkhir(), TemporalType.DATE);
-//        List<KetersediaanWaktuDosen> kwds = query.getResultList();
-//        List<Dosen> dosens = new ArrayList<Dosen>(kwds.size());
-//        for (KetersediaanWaktuDosen kwd : kwds) {
-//            dosens.add(kwd.getDosen());
-//        }
         
         for (Dosen dosen : dosens) {
             for (KetersediaanWaktuDosen kwd : dosen.getKetersediaanWaktuDosens()) {
@@ -51,5 +51,18 @@ public class DosenDaoImpl extends JpaDao {
         }
         return dosens;
     }
-    //"left join fetch dosen.bidangKeahlian as bk"
+    
+    @Override
+    public List<Dosen> getDosenPengujisByMinatTopik(Topik topik) {
+        List<Dosen> pengujis;
+        if (topik == null) {
+            pengujis = new ArrayList<Dosen>(0);
+        } else {
+            Query query = em.createQuery(
+                "select distinct d from Dosen as d join fetch d.bidangKeahlian as t where t.idTopik = :idTopik order by d.inisialDosen")
+                .setParameter("idTopik", topik.getIdTopik());
+            pengujis = query.getResultList();
+        }
+        return pengujis;
+    }
 }
