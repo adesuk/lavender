@@ -45,7 +45,7 @@ public class KetersediaanWaktuDosen implements Serializable {
     private SlotWaktu slotWaktu;
     @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")
     @ManyToOne(optional = false)
-    private Dosen inisialDosen;
+    private Dosen dosen;
 
     public KetersediaanWaktuDosen() {
     }
@@ -70,12 +70,12 @@ public class KetersediaanWaktuDosen implements Serializable {
         this.slotWaktu = slotWaktu;
     }
 
-    public Dosen getInisialDosen() {
-        return inisialDosen;
+    public Dosen getDosen() {
+        return dosen;
     }
 
-    public void setInisialDosen(Dosen inisialDosen) {
-        this.inisialDosen = inisialDosen;
+    public void setDosen(Dosen dosen) {
+        this.dosen = dosen;
     }
 
     @Override
