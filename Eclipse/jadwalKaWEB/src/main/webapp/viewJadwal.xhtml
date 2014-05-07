@@ -12,8 +12,8 @@
           <div class="row">
             <div class="col-md-12">
               <f:view>
-                <h2><h:outputText value="Pengelolaan Jadwal Seminar/Sidang" /></h2>
-                <hr/>
+                <h2><h:outputText value="#{jadwalMBean.periodeType}" /></h2>
+                <h4><h:outputText value="#{jadwalMBean.periodeFormat}"/></h4>
                 <p:dataTable id="tabelJadwal" var="jadwal" value="#{jadwalMBean.jadwals}" > 
                 	<p:column headerText="Hari, Tanggal">  
             			<h:outputText value="#{jadwal.hariTanggal}" />  

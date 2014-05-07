@@ -3,18 +3,22 @@ package ac.id.itb.ppl.lavender.managedbean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Init;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import ac.id.itb.ppl.lavender.bean.JadwalBean;
-import ac.id.itb.ppl.lavender.model.Jadwal;
+import ac.id.itb.ppl.lavender.bean.PeriodeBean;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
+import ac.id.itb.ppl.lavender.util.PeriodeFormat;
+import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 
 @ManagedBean(name="jadwalMBean")
-@RequestScoped
+@ViewScoped
 public class JadwalMBean implements Serializable {
 	/**
 	 * 
@@ -23,15 +27,34 @@ public class JadwalMBean implements Serializable {
 
 	@EJB
 	private JadwalBean jadwalBean;
+	@EJB
+	private PeriodeBean periodeBean;
 	
 	private Periode periode;
+	private TipeEksekusi tipeEksekusi;
 	
-	public JadwalMBean() {
-		periode = new Periode();
-		periode.setIdPeriode(1);
+	@PostConstruct
+	public void init() {
+		periode = periodeBean.lastPeriode();
+		tipeEksekusi = new TipeEksekusi();
 	}
 	
-	public List<JadwalView> getJadwals() {
+	public List<JadwalView> getJadwals() {	
 		return jadwalBean.findJadwalByPeriode(periode.getIdPeriode());
+	}	
+	
+//	public List<JadwalView> getJadwalsByPeriode(long idPeriode) {
+//		return jadwalBean.findJadwalByPeriode(idPeriode);
+//	}
+	
+	public String getPeriodeFormat() {
+		return "Periode ".concat(PeriodeFormat.format(periode));
+	}
+
+	public String getPeriodeType() {
+		return "Jadwal ["
+				.concat(tipeEksekusi.getTipeEksekusi(
+							periode.getTipeJadwal().charAt(0)))
+				.concat("]");			
 	}
 }
