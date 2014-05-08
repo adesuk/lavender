@@ -14,7 +14,7 @@ import javax.ejb.Local;
 public interface DosenDao {
     Dosen find(String inisial);
     
-    List<Dosen> getDosenWithTopikAndKetersediaan(Periode periode);
+    List<Dosen> findDosenWithTopikAndKetersediaan(Periode periode);
     
-    List<Dosen> getDosenPengujisByMinatTopik(Topik topik);
+    List<Dosen> findDosenPengujisByMinatTopik(Topik topik);
 }

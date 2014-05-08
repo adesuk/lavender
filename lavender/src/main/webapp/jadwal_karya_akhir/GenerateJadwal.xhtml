@@ -24,9 +24,10 @@
                       <p:selectOneMenu value="#{generateJadwal.selectedPeriode}"
                                        converter="#{periodeConverter}">
                         <f:selectItems value="#{generateJadwal.periodes}"
-                                       var="item" itemLabel="#{generateJadwal.formatnya(item)}" 
-                                       itemValue="#{item}" />
-                        <f:ajax listener="#{generateJadwal.periodeListener}" render="namaPeriode" />
+                                       var="item" itemValue="#{item}"
+                                       itemLabel="#{generateJadwal.formatPeriode(item)}" />
+                        <p:ajax listener="#{generateJadwal.periodeListener}" 
+                                update="namaPeriode" />
                       </p:selectOneMenu>
                     </div>
                   </div>

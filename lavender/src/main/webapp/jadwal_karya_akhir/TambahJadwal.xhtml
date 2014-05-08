@@ -9,11 +9,7 @@
     <title>Facelet Title</title>
   </h:head>
   <h:body>
-    <f:metadata>
-      <f:viewParam id="idPeriode" name="idPeriode" value="#{tambahJadwal.idPeriode}">
-        <f:viewAction action="#{tambahJadwal.init}" />
-      </f:viewParam>
-    </f:metadata>
+
     <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
       <ui:define name="content">
         <f:view>
@@ -30,7 +26,7 @@
               <div class="col-sm-4">
                 <p class="form-control-static">
                   <h:outputText id="periode" 
-                                value="#{tambahJadwal.formatPeriode(tambahJadwal.selectedPeriode)}" />
+                                value="#{pengelolaanJadwal.formatPeriode(pengelolaanJadwal.periode)}" />
                 </p>
               </div>
             </div>
@@ -42,13 +38,13 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p:selectOneMenu id="nim" converter="#{nimMahasiswaConverter}"
-                                 value="#{tambahJadwal.selectedMahasiswa}">
+                                 value="#{pengelolaanJadwal.selectedMahasiswa}">
                   <f:selectItem itemLabel="Pilih mahasiswa" />
-                  <f:selectItems value="#{tambahJadwal.mahasiswas}"
+                  <f:selectItems value="#{pengelolaanJadwal.mahasiswas}"
                                  var="item" itemLabel="#{item.nim}"
                                  itemValue="#{item}" />
-                  <p:ajax listener="#{tambahJadwal.selectNimListener}"
-                          update="nama,karya,penguji1,penguji2" />
+                  <p:ajax listener="#{pengelolaanJadwal.selectNimListener}"
+                          update="nama, karya, penguji1" />
                 </p:selectOneMenu>
               </div>
             </div>
@@ -60,8 +56,8 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p class="form-control-static">
-                  <h:outputText id="nama" styleClass="form-control-static"
-                                value="#{tambahJadwal.jadwalDetail.karyaAkhir.mahasiswa.namaMhs}" />
+                  <h:outputText id="nama"
+                                value="#{pengelolaanJadwal.jadwalDetail.karyaAkhir.mahasiswa.namaMhs}" />
                 </p>
               </div>
             </div>
@@ -74,11 +70,11 @@
               <div class="col-sm-4">
                 <p class="form-control-static">
                   <h:outputText id="karya" 
-                                value="#{tambahJadwal.jadwalDetail.karyaAkhir.judulKa}" />
+                                value="#{pengelolaanJadwal.jadwalDetail.karyaAkhir.judulKa}" />
                 </p>
               </div>
             </div>
-
+            
             <!-- Penguji nya ini -->
             <div class="form-group">
               <h:outputLabel for="penguji1" styleClass="col-sm-2 control-label">
@@ -86,12 +82,14 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p:selectOneMenu id="penguji1"
-                                 value="#{tambahJadwal.jadwalDetail.dosenPenguji.get(0)}"
+                                 value="#{pengelolaanJadwal.selectedPengujis[0]}"
                                  converter="#{inisialDosenConverter}">
                   <f:selectItem itemLabel="Pilih penguji 1" />
-                  <f:selectItems value="#{tambahJadwal.relatedDosenPengujis}"
+                  <f:selectItems value="#{pengelolaanJadwal.pengujis1}"
                                  var="dosenPenguji" itemLabel="#{dosenPenguji.inisialDosen}"
                                  itemValue="#{dosenPenguji}" />
+                  <p:ajax listener="#{pengelolaanJadwal.handlePenguji1Change}"
+                          update="penguji2" />
                 </p:selectOneMenu>
               </div>
             </div>
@@ -102,23 +100,23 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p:selectOneMenu id="penguji2"
-                                 value="#{tambahJadwal.jadwalDetail.dosenPenguji.get(1)}"
+                                 value="#{pengelolaanJadwal.selectedPengujis[1]}"
                                  converter="#{inisialDosenConverter}">
                   <f:selectItem itemLabel="Pilih penguji 2" />
-                  <f:selectItems value="#{tambahJadwal.relatedDosenPengujis}"
+                  <f:selectItems value="#{pengelolaanJadwal.pengujis2}"
                                  var="dosenPenguji" itemLabel="#{dosenPenguji.inisialDosen}"
                                  itemValue="#{dosenPenguji}" />
                 </p:selectOneMenu>
               </div>
             </div>
-
+            
             <!-- Tanggal pelaksanaan eksekusi nya ini -->
             <div class="form-group">
               <h:outputLabel for="tanggal" styleClass="col-sm-2 control-label">
                 <h:outputText value="Tanggal pelaksanaan" /> <span class="required">*</span>
               </h:outputLabel>
               <div class="col-sm-4">
-                <p:calendar id="tanggal" value="#{tambahJadwal.jadwalDetail.tanggal}" 
+                <p:calendar id="tanggal" value="#{pengelolaanJadwal.jadwalDetail.tanggal}" 
                             title="Tanggal" pattern="dd/MM/yyyy" />
               </div>
             </div>
@@ -130,13 +128,13 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p:selectOneMenu id="slotWaktu" 
-                                 value="#{tambahJadwal.jadwalDetail.slotWaktu}" 
+                                 value="#{pengelolaanJadwal.jadwalDetail.slotWaktu}"
                                  required="true" 
                                  requiredMessage="The Slot Waktu field is required."
                                  converter="#{slotWaktuConverter}">
                   <f:selectItem itemLabel="Pilih waktu" />
-                  <f:selectItems value="#{tambahJadwal.slotWaktus}"
-                                 var="item" itemLabel="#{tambahJadwal.formatSlotWaktu(item)}" 
+                  <f:selectItems value="#{pengelolaanJadwal.slotWaktus}"
+                                 var="item" itemLabel="#{pengelolaanJadwal.formatSlotWaktu(item)}" 
                                  itemValue="#{item}" />
                 </p:selectOneMenu>
               </div>
@@ -149,10 +147,11 @@
               </h:outputLabel>
               <div class="col-sm-4">
                 <p:selectOneMenu id="ruangan" 
-                                 value="#{tambahJadwal.jadwalDetail.ruangan}"
+                                 value="#{pengelolaanJadwal.jadwalDetail.ruangan}"
+                                 required="true"
                                  converter="#{ruanganConverter}">
                   <f:selectItem itemLabel="Pilih ruangan" />
-                  <f:selectItems value="#{tambahJadwal.ruangans}" var="item"
+                  <f:selectItems value="#{pengelolaanJadwal.ruangans}" var="item"
                                  itemLabel="#{item.kdRuangan}"
                                  itemValue="#{item}"/>
                 </p:selectOneMenu>
@@ -165,11 +164,9 @@
                 <h:panelGrid columns="2">
                   <p:commandButton id="save" value="Simpan" 
                                    style="width: 90px; margin: 5px 5px 5px 0"
-                                   action="#{tambahJadwal.saveJadwal}"
-                                   immediate="true" />
+                                   actionListener="#{pengelolaanJadwal.saveJadwal}" />
                   <p:commandButton id="cancel" value="Batal" style="width: 90px; margin: 5px 0 5px 5px"
-                                   action="#{tambahJadwal.cancelPerubahanJadwal}"
-                                   immediate="true" />
+                                   actionListener="#{pengelolaanJadwal.cancelCreateJadwal}" />
                 </h:panelGrid>
               </div>
             </div>

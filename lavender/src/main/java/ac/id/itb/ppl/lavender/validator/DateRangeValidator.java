@@ -39,7 +39,7 @@ public class DateRangeValidator implements Validator {
         if (startDate.after(endDate)) {
             startDateComponent.setValid(false);
             throw new ValidatorException(new FacesMessage(
-                FacesMessage.SEVERITY_ERROR, "Start date may not be after end date.", null));
+                FacesMessage.SEVERITY_ERROR, "Periode awal tidak boleh setelah periode akhir.", null));
         }
     }
 

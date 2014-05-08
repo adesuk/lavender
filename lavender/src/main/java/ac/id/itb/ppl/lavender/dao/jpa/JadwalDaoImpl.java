@@ -52,6 +52,8 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
     
     @Override
     public void save(Jadwal jadwal) {
+        System.out.println(">>> masuk save jadwal <<<");
+        
         Query query = em.createNativeQuery("select max(id_jadwal) from jadwal");
         List<BigDecimal> temp = query.getResultList();
         System.out.println(temp);

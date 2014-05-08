@@ -35,7 +35,8 @@ public class KaryaAkhirDaoImpl extends JpaDao implements KaryaAkhirDao {
             "select ka from KaryaAkhir as ka " +
             "join fetch ka.mahasiswa as mhs " +
             "join fetch ka.dosenPembimbing as pemb " +
-            "where ka.statusKa = :status")
+            "where ka.statusKa = :status " +
+            "order by ka.idKa")
             .setParameter("status", tipeJadwal - 1);
         List<KaryaAkhir> karyaAkhirs = query.getResultList();
         return karyaAkhirs;

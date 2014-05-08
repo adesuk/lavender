@@ -49,6 +49,7 @@ public class TambahJadwalMBean implements Serializable {
     
     //<editor-fold defaultstate="collapsed" desc="Business logic">
     public void init() {
+        System.out.println("masuk init jadwal");
         jadwalDetail = new Jadwal();
         jadwalDetail.setIdPeriode(getSelectedPeriode());
         jadwalDetail.setRuangan(new Ruangan());
@@ -68,7 +69,7 @@ public class TambahJadwalMBean implements Serializable {
     }
     
     public void reloadRelatedDosenPengujis() {
-        relatedDosenPengujis = dosenDao.getDosenPengujisByMinatTopik(
+        relatedDosenPengujis = dosenDao.findDosenPengujisByMinatTopik(
             jadwalDetail.getKaryaAkhir().getTopik());
     }
     

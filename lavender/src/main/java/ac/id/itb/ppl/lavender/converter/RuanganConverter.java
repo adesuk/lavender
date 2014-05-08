@@ -21,19 +21,24 @@ public class RuanganConverter implements Converter, Serializable {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        //System.out.println(">>> get ruangan as object, input: " + value + " <<<");
         if (value == null || value.equals("")) {
             return null;
         } else {
-            return ruanganDao.find(value);
+            Ruangan r = ruanganDao.find(value);
+            //System.out.println(">>> ruangannya " + r + " <<<");
+            return r;
         }
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
+        //System.out.println(">>> get as string, input: " + (value != null ?  ((Ruangan) value).getKdRuangan()  : "") + " <<<");
         if (value == null) {
             return "";
         } else {
-            return ((Ruangan) value).getNamaRuangan();
+            String s = ((Ruangan) value).getKdRuangan();
+            return s;
         }
     }
 }

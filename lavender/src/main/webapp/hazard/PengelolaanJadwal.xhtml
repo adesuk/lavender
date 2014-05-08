@@ -5,9 +5,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-  <h:head>
-    <title>Facelet Title</title>
-  </h:head>
   <h:body>
     <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
       <ui:define name="content">
@@ -19,98 +16,88 @@
                   <h2>Pengelolaan Jadwal</h2>
                   <hr />
                   
-                  <!-- Alert nya ini -->
-                  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                  
-                  <!-- Periode nya ini -->
+                  <p:messages id="messages" showDetail="true" autoUpdate="true"
+                              closable="true" />
+
+                  <!-- Periode Jadwal -->
                   <div class="form-group">
-                    <h:outputLabel for="periode" styleClass="col-sm-2 control-label">
+                    <h:outputLabel styleClass="col-sm-2">
                       <h:outputText value="Periode jadwal" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-sm-3">
-                      <p:selectOneMenu id="periode"
-                                       value="#{pengelolaanJadwal.periode}"
+                    <div class="col-sm-4">
+                      <p:selectOneMenu value="#{pengelolaanJadwal.selectedPeriode}"
                                        converter="#{periodeConverter}"
                                        style="width: 100%">
-                        <f:selectItem itemLabel="Pilih periode" />
+                        <f:selectItem itemLabel="Pilih Periode" />
                         <f:selectItems value="#{pengelolaanJadwal.periodes}"
-                                       var="item" itemValue="#{item}"
-                                       itemLabel="#{pengelolaanJadwal.formatPeriode(item)}" />
-                        <p:ajax listener="#{pengelolaanJadwal.handlePeriodeChange}" 
-                                update="namaPeriode, jenisJadwal, versiJadwal" />
-                        
+                                       var="item" itemLabel="#{pengelolaanJadwal.formatPeriode(item)}"
+                                       itemValue="#{item}" />
+                        <p:ajax event="change" listener="#{pengelolaanJadwal.periodeListener}" 
+                                update="namaPeriode,jenisJadwal,versiJadwal" />
                       </p:selectOneMenu>
                     </div>
                   </div>
-                  
+
                   <!-- Nama Periode -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-2 control-label">
+                    <h:outputLabel styleClass="col-sm-2">
                       <h:outputText value="Nama periode" />
                     </h:outputLabel>
                     <div class="col-sm-10">
                       <p class="form-control-static">
                         <h:outputText id="namaPeriode"
-                                      value="#{pengelolaanJadwal.periode.namaPeriode}" />
+                                      value="#{pengelolaanJadwal.selectedPeriode.namaPeriode}" />
                       </p>
                     </div>
                   </div>
 
                   <!-- Jenis Jadwal -->
                   <div class="form-group">
-                    <h:outputLabel value="Jenis jadwal" styleClass="col-sm-2 control-label" />
+                    <h:outputLabel value="Jenis jadwal" styleClass="col-sm-2" />
                     <div class="col-sm-4">
                       <p class="form-control-static">
                         <h:outputText id="jenisJadwal" 
-                                      value="#{pengelolaanJadwal.getTipeJadwalRealName(pengelolaanJadwal.periode.tipeJadwal)}" />
+                                      value="#{pengelolaanJadwal.getTipeJadwalRealName(pengelolaanJadwal.selectedPeriode.tipeJadwal)}" />
                       </p>
                     </div>
                   </div>
-                  
-                  <!-- Versi jadwal nya ini -->
+
+                  <!-- Versi jadwal -->
                   <div class="form-group">
-                    <h:outputLabel for="versiJadwal" styleClass="col-sm-2 control-label">
-                      <h:outputText value="Versi jadwal" /> <span class="required">*</span>
-                    </h:outputLabel>
-                    <div class="col-sm-3">
+                    <h:outputLabel value="Versi" styleClass="col-sm-2" />
+                    <div class="col-sm-4">
                       <p:selectOneMenu id="versiJadwal"
-                                       value="#{pengelolaanJadwal.versiJadwal}"
-                                       style="width: 100%"
-                                       converter="#{versiJadwalConverter}">
-                        <f:selectItem itemLabel="Pilih versi jadwal" />
-                        <f:selectItems value="#{pengelolaanJadwal.versiJadwals}"
+                                       value="#{pengelolaanJadwal.selectedJadwalVersion}">
+                        <f:selectItems value="#{pengelolaanJadwal.jadwalVersions}"
                                        var="item" itemLabel="#{pengelolaanJadwal.formatVersiJadwal(item)}"
                                        itemValue="#{item}" />
-                        <p:ajax event="change" update="@this" />
                       </p:selectOneMenu>
                     </div>
                   </div>
-                  
+
                   <!-- Tombol-tombol itu -->
                   <div class="form-group">
-                    <div class="col-sm-12">
-                      <h:panelGrid columns="3" styleClass="pull-right">
+                    <div class="col-md-12">
+                      <h:panelGrid columns="4" styleClass="pull-right">
                         <p:commandButton value="Cari"
-                                         actionListener="#{pengelolaanJadwal.displayJadwal}" 
-                                         update="jadwalArea"
                                          style="width: 90px; margin: 5px"
-                                         immediate="true" />
-                        <p:commandButton value="Tambah"
-                                         actionListener="#{pengelolaanJadwal.createJadwalDetail}"
-                                         style="width: 90px; margin: 5px"
-                                         immediate="true" />
-                        <p:commandButton value="Hapus"
-                                         action="#{pengelolaanPeriode.deletePeriode()}"
-                                         update="jadwalArea"
+                                         actionListener="#{pengelolaanJadwal.cariListener}"
+                                         immediate="true"
+                                         update="jadwal" />
+                        <p:commandButton value="Tambah" immediate="true"
+                                         action="#{pengelolaanJadwal.createJadwal}"
                                          style="width: 90px; margin: 5px" />
+                        <p:commandButton value="Ubah" style="margin: 0 5px; width: 90px;"
+                                         action="#{pengelolaanJadwal.editJadwal}" 
+                                         immediate="true"/>
+                        <p:button value="Hapus" style="margin: 0 5px; width: 90px;" />
                       </h:panelGrid>
                     </div>
                   </div>
-                  
-                  
+
                   <!-- Tabel jadwal nya ini -->
                   <h:panelGroup layout="block" id="tabelJadwal">
-                    <p:dataTable id="jadwalArea" var="item" value="#{pengelolaanJadwal.jadwal}"
+                    <p:dataTable id="jadwal" var="item" value="#{pengelolaanJadwal.jadwal}"
                                  rowKey="#{item.idJadwal}"
                                  selection="#{pengelolaanJadwal.jadwalDetail}"
                                  selectionMode="single">
