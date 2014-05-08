@@ -19,7 +19,7 @@ public class Periode implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_PERIODE")
-	private long idPeriode;
+	private Long idPeriode;
 
 	@Column(name="NAMA_PERIODE")
 	private String namaPeriode;
@@ -51,11 +51,11 @@ public class Periode implements Serializable {
 	public Periode() {
 	}
 
-	public long getIdPeriode() {
+	public Long getIdPeriode() {
 		return this.idPeriode;
 	}
 
-	public void setIdPeriode(long idPeriode) {
+	public void setIdPeriode(Long idPeriode) {
 		this.idPeriode = idPeriode;
 	}
 
@@ -137,4 +137,28 @@ public class Periode implements Serializable {
 		return jadwal;
 	}
 
+	 @Override
+	    public int hashCode() {
+	        int hash = 0;
+	        hash += (idPeriode != null ? idPeriode.hashCode() : 0);
+	        return hash;
+	    }
+
+	    @Override
+	    public boolean equals(Object object) {
+	        // TODO: Warning - this method won't work in the case the id fields are not set
+	        if (!(object instanceof Periode)) {
+	            return false;
+	        }
+	        Periode other = (Periode) object;
+	        if ((this.idPeriode == null && other.idPeriode != null) || (this.idPeriode != null && !this.idPeriode.equals(other.idPeriode))) {
+	            return false;
+	        }
+	        return true;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "ac.id.itb.ppl.lavender.model.Periode[ idPeriode=" + idPeriode + " ]";
+	    }
 }
