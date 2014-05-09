@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form>
+                  <h2><h:outputText value="Jadwal Kuliah nya ini..."/></h2>
+                  
+                  <p:dataTable value="#{jadwalKuliah.jadwalKuliah}" var="item">
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="IdJadwalKuliah"/>
+                      </f:facet>
+                      <h:outputText value="#{item.idJadwalKuliah}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="KodeMataKuliah"/>
+                      </f:facet>
+                      <h:outputText value="#{item.kodeMataKuliah}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="Hari"/>
+                      </f:facet>
+                      <h:outputText value="#{item.hari}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="WaktuMasuk"/>
+                      </f:facet>
+                      <h:outputText value="#{item.waktuMasuk}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                      </h:outputText>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="WaktuKeluar"/>
+                      </f:facet>
+                      <h:outputText value="#{item.waktuKeluar}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                      </h:outputText>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="KdRuangan"/>
+                      </f:facet>
+                      <h:outputText value="#{item.kdRuangan}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="IdPeriodeKuliah"/>
+                      </f:facet>
+                      <h:outputText value="#{item.idPeriodeKuliah}"/>
+                    </p:column>
+                  </p:dataTable>
+                </h:form>
+              </f:view>
+
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

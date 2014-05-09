@@ -1,4 +1,4 @@
-package ac.id.itb.ppl.lavender.managedbean;
+package ac.id.itb.ppl.lavender.managedbean.hazard;
 
 import ac.id.itb.ppl.lavender.dao.DosenDao;
 import ac.id.itb.ppl.lavender.dao.PeriodeDao;

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form>
+                  <h1><h:outputText value="List"/></h1>
+                  <p:dataTable value="#{ruanganKosong.rs}" var="item">
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="KdRuangan"/>
+                      </f:facet>
+                      <h:outputText value="#{item.kdRuangan}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="NamaRuangan"/>
+                      </f:facet>
+                      <h:outputText value="#{item.namaRuangan}"/>
+                    </p:column>
+                    <p:column>
+                      <f:facet name="header">
+                        <h:outputText value="KetersediaanWaktuRuangan"/>
+                      </f:facet>
+                      <ui:repeat value="#{item.ketersediaanWaktuRuangan}" var="kwr">
+                        <h:outputText value="#{kwr.tanggalRuanganSedia}">
+                          <f:convertDateTime pattern="dd MM yyyy" />
+                        </h:outputText>|
+                        <h:outputText value="#{kwr.ruangan.kdRuangan}" /> |
+                        <h:outputText value="#{kwr.slotWaktu.idSlot}"/><br />
+                      </ui:repeat>
+                    </p:column>
+                  </p:dataTable>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+
