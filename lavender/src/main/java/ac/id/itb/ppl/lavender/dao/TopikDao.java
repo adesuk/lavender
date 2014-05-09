@@ -12,5 +12,7 @@ import javax.ejb.Local;
 public interface TopikDao {
     List<Topik> findAll();
     
+    Topik find(Integer id);
+    
     List<Topik> findAllWithDosens();
 }

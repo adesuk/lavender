@@ -11,6 +11,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.Ruangan;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
+import ac.id.itb.ppl.lavender.util.AllConstants;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
@@ -38,16 +38,29 @@ public class GenerateJadwalMBean implements Serializable {
     @Inject private DosenDao dosenDao;
     @Inject private SlotWaktuDao slotWaktuDao;
     private List<Periode> periodes;
-    private Periode selectedPeriode;
+    private Periode periode;
     private List<Ruangan> ruangans;
     private List<Ruangan> selectedRuangans;
+    boolean buttonRender = false;
+    boolean generateRender = false;
     
     // Business logic
     public void handlePeriodeChange() {
-        if (periodes == null || periodes.isEmpty()) {
+        if (periode == null) {
             ruangans = new ArrayList<Ruangan>(0);
+            setButtonRender(false);
+            setGenerateRender(false);
         } else {
-            reloadRuangans();
+            char status = periodeDao.findStatusJadwal(periode);
+            if (status == AllConstants.SEDANG_DIGENERATE) {
+                ruangans = new ArrayList<Ruangan>(0);
+                setButtonRender(false);
+                setGenerateRender(true);
+            } else {
+                reloadRuangans();
+                setButtonRender(true);
+                setGenerateRender(false);
+            }
         }
     }
     
@@ -56,7 +69,11 @@ public class GenerateJadwalMBean implements Serializable {
     }
     
     public void reloadRuangans() {
-        ruangans = ruanganDao.findAll();
+        if (getPeriode() == null) {
+            ruangans = new ArrayList<Ruangan>(0);
+        } else {
+            ruangans = ruanganDao.findRuanganDanKetersediaanRuangans(getPeriode());
+        }
     }
     
     public String formatPeriode(Periode periode) {
@@ -64,19 +81,29 @@ public class GenerateJadwalMBean implements Serializable {
     }
     
     public void generateJadwal() {
+        if (getSelectedRuangans() == null || getSelectedRuangans().isEmpty()) {
+            return;
+        }
+        
         ControlerGenerateJadwal cgj = new ControlerGenerateJadwal();
-        List<Dosen> dosens = dosenDao.findDosenWithTopikAndKetersediaan(selectedPeriode);
+        List<Dosen> dosens = dosenDao.findDosenWithTopikAndKetersediaan(periode);
         List<KaryaAkhir> karyaAkhirs = null;
         List<SlotWaktu> slotWaktus = slotWaktuDao.findAll();
-        cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, selectedPeriode);
+        
+        // ganti status lagi generate jadwal ke tabel periode
+        periodeDao.changeGenerateStatusInProgress(periode);
+        
+        cgj.callGenetika(dosens, karyaAkhirs, getSelectedRuangans(), slotWaktus, periode);
         
         
         try {
             FacesContext.getCurrentInstance().getExternalContext()
-                .redirect("ProsesGenerateJadwal");
+                .redirect("ProsesGenerateJadwal.xhtml");
         } catch (IOException ioe) {
             LOGGER.log(Level.SEVERE, null, ioe);
         }
+        
+        // ganti status jadwal jadi udah di-generate
     }
     // End of business logic
     
@@ -88,15 +115,12 @@ public class GenerateJadwalMBean implements Serializable {
         return periodes;
     }
     
-    public Periode getSelectedPeriode() {
-        if (selectedPeriode == null && (periodes != null && !periodes.isEmpty())) {
-            selectedPeriode = periodes.get(0);
-        }
-        return selectedPeriode;
+    public Periode getPeriode() {
+        return periode;
     }
     
-    public void setSelectedPeriode(Periode selectedPeriode) {
-        this.selectedPeriode = selectedPeriode;
+    public void setPeriode(Periode periode) {
+        this.periode = periode;
     }
     
     public List<Ruangan> getRuangans() {
@@ -109,6 +133,22 @@ public class GenerateJadwalMBean implements Serializable {
     
     public void setSelectedRuangans(List<Ruangan> selectedRuangans) {
         this.selectedRuangans = selectedRuangans;
+    }
+    
+    public boolean getButtonRender() {
+        return buttonRender;
+    }
+    
+    public void setButtonRender(boolean buttonRender) {
+        this.buttonRender = buttonRender;
+    }
+    
+    public boolean getGenerateRender() {
+        return generateRender;
+    }
+    
+    public void setGenerateRender(boolean generateRender) {
+        this.generateRender = generateRender;
     }
     // End of getter dan setter
 }

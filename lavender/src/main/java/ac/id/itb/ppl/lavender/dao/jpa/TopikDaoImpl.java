@@ -17,6 +17,11 @@ public class TopikDaoImpl extends JpaDao implements TopikDao {
     }
     
     @Override
+    public Topik find(Integer id) {
+        return em.find(Topik.class, id);
+    }
+    
+    @Override
     public List<Topik> findAllWithDosens() {
         List<Topik> topiks = em.createQuery(
             "select t from Topik as t join left join fetch t.dosenList as d")

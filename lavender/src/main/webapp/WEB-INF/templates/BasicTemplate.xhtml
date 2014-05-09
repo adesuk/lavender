@@ -13,8 +13,8 @@
   <h:body>
     <ui:insert name="metadata"></ui:insert>
     <ui:insert name="events"></ui:insert>
-    <div class="container">
-      <div id="header">
+    <div id="header">
+      <div class="container">`
         <ui:insert name="header">
           <div>
             <img src="" style="width: 100px; height: 100px;" />
@@ -24,27 +24,28 @@
           <div><p style="text-align: right"><span id="curDateTime"></span></p></div>
         </ui:insert>
       </div>
+    </div>
 
-      <div id="nav">
-        <ui:insert name="nav">
-          <ui:include src="/WEB-INF/templates/DevNav.xhtml" />
-        </ui:insert>
-      </div>
+    <div id="nav">
+      <ui:insert name="nav">
+        <ui:include src="/WEB-INF/templates/DevNav.xhtml" />
+      </ui:insert>
+    </div>
 
-      <div id="content">
-        <ui:insert name="content">
+    <div id="content">
+      <ui:insert name="content">
 
-        </ui:insert>
-      </div>
+      </ui:insert>
+    </div>
 
-      <div id="footer">
-        <hr></hr>
+    <div id="footer">
+      <div class="container">
+        <hr />
         <ui:insert name="footer">
           <p style="text-align: center">&copy; 2014. Institut Teknologi Bandung. All rights reserved.</p>
         </ui:insert>
       </div>
     </div>
-    
     <script type="text/javascript">
       $(document).ready(function() {
         var dateTimeLabel = $("#curDateTime");

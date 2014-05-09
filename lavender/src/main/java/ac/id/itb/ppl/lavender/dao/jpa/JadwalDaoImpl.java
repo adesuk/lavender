@@ -1,6 +1,7 @@
 package ac.id.itb.ppl.lavender.dao.jpa;
 
 import ac.id.itb.ppl.lavender.dao.JadwalDao;
+import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import java.math.BigDecimal;
@@ -52,8 +53,6 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
     
     @Override
     public void save(Jadwal jadwal) {
-        System.out.println(">>> masuk save jadwal <<<");
-        
         Query query = em.createNativeQuery("select max(id_jadwal) from jadwal");
         List<BigDecimal> temp = query.getResultList();
         System.out.println(temp);
@@ -64,5 +63,10 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
         }
         //jadwal.setIdJadwal(1);
         em.persist(jadwal);
+    }
+    
+    @Override
+    public Jadwal update(Jadwal jadwal) {
+        return em.merge(jadwal);
     }
 }

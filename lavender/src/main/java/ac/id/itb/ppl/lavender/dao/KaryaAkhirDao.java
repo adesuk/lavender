@@ -17,7 +17,9 @@ public interface KaryaAkhirDao {
     
     List<KaryaAkhir> getToBeExecutedKaryaAkhirs(char tipeJadwal);
     
-    List<Mahasiswa> getAllMahasiswaYangIkutDiSelectedPeriode(char tipeJadwal);
-    
     List<KaryaAkhir> getAllMahasiswaYangAkanIkutSeminar(char tipeJadwal);
+    
+    List<KaryaAkhir> findKaryaAkhir(int tahunMasuk, String jenjang, String judul);
+    
+    KaryaAkhir update(KaryaAkhir karyaAkhir);
 }

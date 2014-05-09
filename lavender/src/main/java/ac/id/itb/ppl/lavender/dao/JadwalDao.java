@@ -19,4 +19,6 @@ public interface JadwalDao {
     List<Date> findJadwalVersions(Periode periode);
     
     void save(Jadwal jadwal);
+    
+    Jadwal update(Jadwal jadwal);
 }

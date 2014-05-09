@@ -21,4 +21,10 @@ public interface PeriodeDao {
     Periode update(Periode periode);
     
     void delete(Periode periode);
+    
+    void changeGenerateStatusInProgress(Periode periode);
+    
+    void changeGenerateStatusDone(Periode periode);
+    
+    char findStatusJadwal(Periode periode);
 }

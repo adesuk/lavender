@@ -6,31 +6,41 @@
       xmlns:p="http://primefaces.org/ui">
   <h:body>
     <ui:composition>
-      <h:form>
-        <p:menubar>
-          <p:menuitem value="Beranda" url="/faces/index.xhtml" icon="ui-icon-home" />
-          <p:submenu label="Jadwal">
-            <p:menuitem value="Generate Jadwal" icon="ui-icon-carat-1-e"
-                        url="/faces/jadwal_karya_akhir/GenerateJadwal.xhtml" />
-            <p:menuitem value="Pengelolaan Jadwal" icon="ui-icon-carat-1-e"
-                        url="/faces/jadwal_karya_akhir/PengelolaanJadwal.xhtml" />
-          </p:submenu>
-          <p:submenu label="Periode">
-            <p:menuitem value="Pengelolaan Periode" icon="ui-icon-carat-1-e"
-                        url="/faces/periode/PengelolaanPeriode.xhtml" />
-          </p:submenu>
-          <p:submenu label="Hazard!">
-            <p:menuitem value="Dosen penguji" icon="ui-icon-carat-1-e"
-                        url="/faces/hazard/Dosen.xhtml" />
-            <p:menuitem value="Karya akhir" icon="ui-icon-carat-1-e"
-                        url="/faces/hazard/KarAkh.xhtml" />
-            <p:menuitem value="Jadwal kuliah" icon="ui-icon-carat-1-e"
-                        url="/faces/hazard/Jk.xhtml" />
-            <p:menuitem value="ruangan kosong" icon="ui-icon-carat-1-e"
-                        url="/faces/hazard/RuanganKosong.xhtml" />
-          </p:submenu>
-        </p:menubar>
-      </h:form>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h:form>
+              <p:menubar>
+                <p:menuitem value="Beranda" url="/faces/index.xhtml" icon="ui-icon-home" />
+                <p:submenu label="Jadwal">
+                  <p:menuitem value="Generate Jadwal" icon="ui-icon-carat-1-e"
+                              url="/faces/jadwal_karya_akhir/GenerateJadwal.xhtml" />
+                  <p:menuitem value="Pengelolaan Jadwal" icon="ui-icon-carat-1-e"
+                              url="/faces/jadwal_karya_akhir/PengelolaanJadwal.xhtml" />
+                </p:submenu>
+                <p:submenu label="Periode">
+                  <p:menuitem value="Pengelolaan Periode" icon="ui-icon-carat-1-e"
+                              url="/faces/periode/PengelolaanPeriode.xhtml" />
+                </p:submenu>
+                <p:submenu label="Karya Akhir">
+                  <p:menuitem value="Penentuan Topik" icon="ui-icon-carat-1-e"
+                              url="/faces/karya_akhir/PenentuanTopikKaryaAkhir.xhtml" />
+                </p:submenu>
+                <p:submenu label="Hazard!">
+                  <p:menuitem value="Dosen penguji" icon="ui-icon-carat-1-e"
+                              url="/faces/hazard/Dosen.xhtml" />
+                  <p:menuitem value="Karya akhir" icon="ui-icon-carat-1-e"
+                              url="/faces/hazard/KarAkh.xhtml" />
+                  <p:menuitem value="Jadwal kuliah" icon="ui-icon-carat-1-e"
+                              url="/faces/hazard/Jk.xhtml" />
+                  <p:menuitem value="Ruangan kosong" icon="ui-icon-carat-1-e"
+                              url="/faces/hazard/RuanganKosong.xhtml" />
+                </p:submenu>
+              </p:menubar>
+            </h:form>
+          </div>
+        </div>
+      </div>
     </ui:composition>
   </h:body>
 </html>

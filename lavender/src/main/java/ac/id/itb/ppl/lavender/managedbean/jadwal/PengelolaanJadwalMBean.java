@@ -3,6 +3,7 @@ package ac.id.itb.ppl.lavender.managedbean.jadwal;
 import ac.id.itb.ppl.lavender.dao.DosenDao;
 import ac.id.itb.ppl.lavender.dao.JadwalDao;
 import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
+import ac.id.itb.ppl.lavender.dao.MahasiswaDao;
 import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.dao.RuanganDao;
 import ac.id.itb.ppl.lavender.dao.SlotWaktuDao;
@@ -20,6 +21,7 @@ import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,7 @@ public class PengelolaanJadwalMBean implements Serializable {
     private Date versiJadwal;
     private List<Jadwal> jadwal;
     private Jadwal jadwalDetail;
+    @Inject private MahasiswaDao mahasiswaDao;
     @Inject private SlotWaktuDao slotWaktuDao;
     @Inject private RuanganDao ruanganDao;
     @Inject private KaryaAkhirDao karyaAkhirDao;
@@ -83,7 +86,7 @@ public class PengelolaanJadwalMBean implements Serializable {
     
     public void reloadMahasiswas() {
         if (getPeriode() != null) {
-            mahasiswas = karyaAkhirDao.getAllMahasiswaYangIkutDiSelectedPeriode(
+            mahasiswas = mahasiswaDao.getAllMahasiswaYangIkutDiSelectedPeriode(
                 getPeriode().getTipeJadwal());
         }
     }
@@ -126,6 +129,7 @@ public class PengelolaanJadwalMBean implements Serializable {
         System.out.println(">>> masuk init jadwal <<<");
         System.out.println(">>> ini versinya " + versiJadwal + " <<<");
         
+        selectedMahasiswa = null;
         jadwalDetail = new Jadwal();
         jadwalDetail.setIdPeriode(getPeriode());
         //jadwalDetail.setRuangan(new Ruangan());
@@ -133,11 +137,13 @@ public class PengelolaanJadwalMBean implements Serializable {
         pengujis.add(null);
         pengujis.add(null);
         //jadwalDetail.setDosenPenguji(pengujis);
+        getSelectedPengujis()[0] = null;
+        getSelectedPengujis()[1] = null;
         reloadMahasiswas();
     }
     
     public void handlePeriodeChange() {
-        System.out.println(">>> masuk handlePeriodeChange <<<");
+//        System.out.println(">>> masuk handlePeriodeChange <<<");
         if (periode != null) {
             versiJadwals = jadwalDao.findJadwalVersions(periode);
             if (versiJadwals != null || versiJadwals.isEmpty()) {
@@ -185,15 +191,20 @@ public class PengelolaanJadwalMBean implements Serializable {
     }
     
     public void selectNimListener() {
-        KaryaAkhir karya = karyaAkhirDao.findByOwner(
-            getSelectedMahasiswa()
-        );
-        jadwalDetail.setKaryaAkhir(karya);
-        reloadPengujis1();
+        if (getSelectedMahasiswa() == null) {
+            jadwalDetail.setKaryaAkhir(null);
+        } else {
+            KaryaAkhir karya = karyaAkhirDao.findByOwner(
+                getSelectedMahasiswa()
+            );
+            jadwalDetail.setKaryaAkhir(karya);
+            reloadPengujis1();
+        }
     }
     
     public void handlePenguji1Change() {
-        if (selectedPengujis[0] == null) {
+//        System.out.println(">>> size si penguji " + jadwalDetail.getDosenPenguji().size() + " <<<");
+        if (getSelectedPengujis()[0] == null) {
             pengujis2 = new ArrayList<Dosen>(0);
         } else {
             reloadPengujis2();
@@ -244,6 +255,15 @@ public class PengelolaanJadwalMBean implements Serializable {
         KaryaAkhir ka = karyaAkhirDao.findByOwner(selectedMahasiswa);
         jadwalDetail.setKaryaAkhir(ka);
         jadwalDetail.setIdPeriode(getPeriode());
+        List<Dosen> pengujis = new ArrayList<Dosen>();
+        if (getSelectedPengujis()[0] != null) {
+            pengujis.add(getSelectedPengujis()[0]);
+        }
+        if (getSelectedPengujis()[1] != null) {
+            pengujis.add(getSelectedPengujis()[1]);
+        }
+        jadwalDetail.setDosenPenguji(pengujis);
+        System.out.println(">>> banyaknya si penguji " + jadwalDetail.getDosenPenguji().size());
         
         if (getVersiJadwal() == null) {
             setVersiJadwal(
@@ -251,7 +271,7 @@ public class PengelolaanJadwalMBean implements Serializable {
             );
         }
         jadwalDetail.setGenerateDate(getVersiJadwal());
-        //jadwalDao.save(jadwalDetail);
+        jadwalDao.save(jadwalDetail);
         
         reloadVersiJadwals();
         reloadJadwal();
@@ -264,8 +284,19 @@ public class PengelolaanJadwalMBean implements Serializable {
         }
     }
     
+    public void updateJadwal() {
+        jadwalDao.update(jadwalDetail);
+    }
+    
     public void cancelCreateJadwal() {
+        jadwalDetail = null;
         
+        try {
+            FacesContext.getCurrentInstance().getExternalContext()
+                .redirect("PengelolaanJadwal.xhtml");
+        } catch (IOException ioe) {
+            LOGGER.log(Level.SEVERE, null, ioe);
+        }
     }
     
     

@@ -3,6 +3,7 @@ package ac.id.itb.ppl.lavender.managedbean.jadwal;
 import ac.id.itb.ppl.lavender.dao.DosenDao;
 import ac.id.itb.ppl.lavender.dao.JadwalDao;
 import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
+import ac.id.itb.ppl.lavender.dao.MahasiswaDao;
 import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.dao.RuanganDao;
 import ac.id.itb.ppl.lavender.dao.SlotWaktuDao;
@@ -53,6 +54,7 @@ public class PengelolaanJadwalMBean2 implements Serializable {
     private List<Date> jadwalVersions;
     private Date selectedJadwalVersion;
     // tambah jadwal
+    @Inject private MahasiswaDao mahasiswaDao;
     @Inject private KaryaAkhirDao karyaAkhirDao;
     @Inject private DosenDao dosenDao;
     @Inject private RuanganDao ruanganDao;
@@ -136,7 +138,7 @@ public class PengelolaanJadwalMBean2 implements Serializable {
     public void reloadMahasiswas() {
         System.out.println(">>> reload mahasiswas kepanggil <<<");
         if (getSelectedPeriode() != null) {
-            mahasiswas = karyaAkhirDao.getAllMahasiswaYangIkutDiSelectedPeriode(
+            mahasiswas = mahasiswaDao.getAllMahasiswaYangIkutDiSelectedPeriode(
                 getSelectedPeriode().getTipeJadwal());
         }
     }

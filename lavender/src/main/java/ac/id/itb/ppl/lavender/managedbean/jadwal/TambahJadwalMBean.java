@@ -63,7 +63,7 @@ public class TambahJadwalMBean implements Serializable {
     
     public void reloadMahasiswas() {
         if (getSelectedPeriode() != null) {
-            mahasiswas = karyaAkhirDao.getAllMahasiswaYangIkutDiSelectedPeriode(
+            mahasiswas = mahasiswaDao.getAllMahasiswaYangIkutDiSelectedPeriode(
                 getSelectedPeriode().getTipeJadwal());
         }
     }

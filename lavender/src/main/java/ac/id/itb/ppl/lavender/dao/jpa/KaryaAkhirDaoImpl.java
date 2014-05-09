@@ -43,15 +43,6 @@ public class KaryaAkhirDaoImpl extends JpaDao implements KaryaAkhirDao {
     }
     
     @Override
-    public List<Mahasiswa> getAllMahasiswaYangIkutDiSelectedPeriode(char tipeJadwal) {
-        List<Mahasiswa> mhss = em.createQuery(
-            "select m from Mahasiswa as m inner join fetch m.karyaAkhirList as k on k.statusKa = :status")
-            .setParameter("status", tipeJadwal - 1) // dikurangin sama satu karena kita pengen ambil yang belum ikut eksekusi di tipe jadwal
-            .getResultList();
-        return mhss;
-    }
-    
-    @Override
     public List<KaryaAkhir> getAllMahasiswaYangAkanIkutSeminar(char tipeJadwal) {
         if (tipeJadwal != AllConstants.SEMINAR_TA_1 || tipeJadwal != AllConstants.SEMINAR_TESIS) {
             return new ArrayList<KaryaAkhir>(0);
@@ -62,5 +53,36 @@ public class KaryaAkhirDaoImpl extends JpaDao implements KaryaAkhirDao {
             .setParameter("status", tipeJadwal - 1) // dikurangin sama satu karena kita pengen ambil yang belum ikut seminar ta 1 atau seminar tesis
             .getResultList();
         return karyaAkhirs;
+    }
+    
+    @Override
+    public List<KaryaAkhir> findKaryaAkhir(int tahunMasuk, String jenjang, String judul) {
+        String nim = "135";
+        if (jenjang.equals("S1")) {
+            //nim = "135";
+        } else if (jenjang.equals("S2")) {
+            nim = "235";
+        }
+        
+        nim += (tahunMasuk + "").substring(2, 4);
+        
+        System.out.println(">>> NIM: " + nim + " <<<");
+                
+        Query query = em.createQuery(
+            "select k from KaryaAkhir k " +
+            "join fetch k.mahasiswa m " +
+            "left join fetch k.topik t " +
+            "where m.nim like :nim " +
+            "and lower(k.judulKa) like lower(:judul) " +
+            "and k.statusKa <> 3 and k.statusKa <> 5 order by m.nim")
+            .setParameter("nim", nim + "%")
+            .setParameter("judul", "%" + judul + "%");
+        List<KaryaAkhir> karyaAkhirs = query.getResultList();
+        return karyaAkhirs;
+    }
+    
+    @Override
+    public KaryaAkhir update(KaryaAkhir karyaAkhir) {
+        return em.merge(karyaAkhir);
     }
 }
