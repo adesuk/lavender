@@ -29,15 +29,15 @@ public class PeriodeConverter implements Converter, java.io.Serializable {
 	    @Override
 	    public Object getAsObject(FacesContext context, UIComponent component, String value) {
 	        if (value == null) {
-	        	System.out.println("getAsObject null");
+//	        	System.out.println("getAsObject null");
 	            return null;
 	        } else if (value.equals("All")) {
-	        	System.out.println("getAsObject all null");
+//	        	System.out.println("getAsObject all null");
 	        	return null;
 	        } else {
-	        	System.out.println("getAsObject Periode Bean");
-	        	Periode p = periodeBean.find(Long.valueOf(value));
-	        	System.out.println(p.getIdPeriode()+ ","+ p.getNamaPeriode());
+//	        	System.out.println("getAsObject Periode Bean");
+//	        	Periode p = periodeBean.find(Long.valueOf(value));
+//	        	System.out.println(p.getIdPeriode()+ ","+ p.getNamaPeriode());
 	            return periodeBean.find(Long.valueOf(value));
 	        }
 	    }
@@ -45,10 +45,10 @@ public class PeriodeConverter implements Converter, java.io.Serializable {
 	    @Override
 	    public String getAsString(FacesContext context, UIComponent component, Object value) {
 	        if (value == null) {
-	        	System.out.println("getAsString null");
+//	        	System.out.println("getAsString null");
 	            return null;
 	        } else {
-	        	System.out.println("getAsString long to string"+ ((Periode) value).getIdPeriode());
+//	        	System.out.println("getAsString long to string"+ ((Periode) value).getIdPeriode());
 	            return Long.toString(((Periode) value).getIdPeriode());
 	        	
 //	        	return Long.toString((long)value);

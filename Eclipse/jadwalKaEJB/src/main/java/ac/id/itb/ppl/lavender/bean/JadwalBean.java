@@ -11,8 +11,10 @@ import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
+import ac.id.itb.ppl.lavender.util.AllConstants;
 import ac.id.itb.ppl.lavender.util.DateFormat;
 import ac.id.itb.ppl.lavender.util.SlotWaktuFormat;
+import ac.id.itb.ppl.lavender.util.StatusJadwal;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -46,7 +48,26 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 	
 	public List<JadwalView> findJadwalByPeriode(long idPeriode) {
 		List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.periode.idPeriode=?1")
-				.setParameter(1, idPeriode).getResultList();
+				.setParameter(1, idPeriode)
+				.getResultList();
+		return processJadwalView(listJadwal);
+	}
+
+	public List<JadwalView> findJadwalByPeriodeAndPelaksanaan(long idPeriode, int status) {
+		if (status == AllConstants.BELUM_TERLAKSANA || status == AllConstants.SUDAH_TERLAKSANA) {
+			List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.periode.idPeriode=?1 "
+				+ "and j.statusPelaksanaan=?2")
+				.setParameter(1, idPeriode)
+				.setParameter(2, status)
+				.getResultList();
+			return processJadwalView(listJadwal);
+		}
+		else {
+			return findJadwalByPeriode(idPeriode);
+		}
+	}
+	
+	private List<JadwalView> processJadwalView(List<Jadwal> listJadwal) {
 		List<JadwalView> listJadwalView = new ArrayList<JadwalView>();
 		
 		for (Jadwal jadwal : listJadwal) {
@@ -79,7 +100,8 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 					jadwal.getKaryaAkhir().getMahasiswa().getNim(),
 					jadwal.getKaryaAkhir().getMahasiswa().getNamaMhs(), 
 					jadwal.getKaryaAkhir().getJudulKa(), pembimbing1, pembimbing2, 
-					penguji1, penguji2, jadwal.getRuangan().getNamaRuangan());
+					penguji1, penguji2, jadwal.getRuangan().getNamaRuangan(),
+					jadwal.getStatusPelaksanaan(), jadwal.getStatusHasilPelaksanaan());
 			listJadwalView.add(jd);
 		}
 		

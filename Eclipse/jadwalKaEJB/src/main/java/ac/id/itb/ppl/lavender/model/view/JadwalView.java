@@ -12,10 +12,14 @@ public class JadwalView {
 	private String penguji1;
 	private String penguji2;
 	private String ruangan;
+	private Integer statusPelaksanaan;
+	private Integer statusHasilPelaksanaan;
 	
 	public JadwalView(long idJadwal, String hariTanggal, String pukul,
 			String nim, String nama, String judul, String pembimbing1,
-			String pembimbing2, String penguji1, String penguji2, String ruangan) {
+			String pembimbing2, String penguji1, String penguji2,
+			String ruangan, Integer statusPelaksanaan,
+			Integer statusHasilPelaksanaan) {
 		super();
 		this.idJadwal = idJadwal;
 		this.hariTanggal = hariTanggal;
@@ -28,8 +32,10 @@ public class JadwalView {
 		this.penguji1 = penguji1;
 		this.penguji2 = penguji2;
 		this.ruangan = ruangan;
+		this.statusPelaksanaan = statusPelaksanaan;
+		this.statusHasilPelaksanaan = statusHasilPelaksanaan;
 	}
-	
+
 	public long getIdJadwal() {
 		return idJadwal;
 	}
@@ -95,6 +101,22 @@ public class JadwalView {
 	}
 	public void setRuangan(String ruangan) {
 		this.ruangan = ruangan;
+	}
+
+	public Integer getStatusPelaksanaan() {
+		return statusPelaksanaan;
+	}
+
+	public void setStatusPelaksanaan(Integer statusPelaksanaan) {
+		this.statusPelaksanaan = statusPelaksanaan;
+	}
+
+	public Integer getStatusHasilPelaksanaan() {
+		return statusHasilPelaksanaan;
+	}
+
+	public void setStatusHasilPelaksanaan(Integer statusHasilPelaksanaan) {
+		this.statusHasilPelaksanaan = statusHasilPelaksanaan;
 	}
 	
 	

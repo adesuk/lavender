@@ -30,10 +30,10 @@ public class Jadwal implements Serializable {
     private Date generateDate;
 
 	@Column(name="STATUS_HASIL_PELAKSANAAN")
-	private BigInteger statusHasilPelaksanaan;
+	private Integer statusHasilPelaksanaan;
 
 	@Column(name="STATUS_PELAKSANAAN")
-	private BigInteger statusPelaksanaan;
+	private Integer statusPelaksanaan;
 
 	@Temporal(TemporalType.DATE)
 	private Date tanggal;
@@ -93,19 +93,19 @@ public class Jadwal implements Serializable {
 		this.generateDate = generateDate;
 	}
 
-	public BigInteger getStatusHasilPelaksanaan() {
+	public Integer getStatusHasilPelaksanaan() {
 		return this.statusHasilPelaksanaan;
 	}
 
-	public void setStatusHasilPelaksanaan(BigInteger statusHasilPelaksanaan) {
+	public void setStatusHasilPelaksanaan(Integer statusHasilPelaksanaan) {
 		this.statusHasilPelaksanaan = statusHasilPelaksanaan;
 	}
 
-	public BigInteger getStatusPelaksanaan() {
+	public Integer getStatusPelaksanaan() {
 		return this.statusPelaksanaan;
 	}
 
-	public void setStatusPelaksanaan(BigInteger statusPelaksanaan) {
+	public void setStatusPelaksanaan(Integer statusPelaksanaan) {
 		this.statusPelaksanaan = statusPelaksanaan;
 	}
 

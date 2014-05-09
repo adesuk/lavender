@@ -64,8 +64,8 @@ public class GeneratorJadwal {
             element.setRuangan(dataJadwal.getGenRuangan());
             element.setSlotWaktu(dataJadwal.getGenWaktu());
             element.setTanggal(dataJadwal.getGenDate());
-            element.setStatusHasilPelaksanaan(BigInteger.valueOf(0));
-            element.setStatusPelaksanaan(BigInteger.valueOf(0));
+            element.setStatusHasilPelaksanaan(Integer.valueOf(0));
+            element.setStatusPelaksanaan(Integer.valueOf(0));
             jadwalS.add(element);
          }
          

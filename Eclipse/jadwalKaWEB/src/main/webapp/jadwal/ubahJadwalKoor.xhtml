@@ -45,57 +45,75 @@
                     <h:outputLabel value="Jenis jadwal" styleClass="col-md-2" />
                     <div class="col-md-4">
                       <h:outputText id="jenisJadwal" 
-                                    value="#{jadwalKoorMBean.getTipeJadwalRealName(jadwalKoorMBean.periode.tipeJadwal)}" />
+                      		value="#{jadwalKoorMBean.getTipeJadwalRealName(jadwalKoorMBean.periode.tipeJadwal)}" />
                     </div>
                   </div>
-                           
-              	 <!-- Tombol-tombol itu -->
-                  <div class="form-group">                  	
+                  
+                  <!-- Status Terlaksana -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Status Terlaksana" />
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="statusTerlaksana" value="#{jadwalKoorMBean.statusTerlaksana}">
+                        <f:selectItems value="#{jadwalKoorMBean.statusTerlaksanaList}"                        	
+                                       var="status" itemLabel="#{status.label}"
+                                       itemValue="#{status.value}" />
+                        <p:ajax event="change"/>                                                    
+                      </p:selectOneMenu>
+                    </div>
+                    <!-- Tombol Search -->
                     <div class="col-md-offset-7 col-md-15">
                       <p:commandButton value="Cari" style="margin: 0 5px; width: 90px;">
                         <f:ajax event="click" render="@form tabelJadwal"
-                                listener="#{jadwalKoorMBean.cariListener}" />
+                                listener="#{jadwalKoorMBean.cariStatusJadwal}" />
                       </p:commandButton>
                     </div>
-                  </div>                              
-                  
-                
-                
+                  </div>     
                                 
-                <p:dataTable id="tabelJadwal" var="jd" value="#{jadwalKoorMBean.jadwal}" > 
-                	<p:column headerText="Hari, Tanggal">  
-            			<h:outputText value="#{jd.hariTanggal}" />  
-        			</p:column>
-        			<p:column headerText="Pukul">  
-            			<h:outputText value="#{jd.pukul}" />  
-        			</p:column> 
+                <p:dataTable id="tabelJadwal" var="jadwal" value="#{jadwalKoorMBean.jadwalsKoor}" >
         			<p:column headerText="NIM">  
-            			<h:outputText value="#{jd.nim}" />  
+            			<h:outputText value="#{jadwal.nim}" />  
         			</p:column> 
         			<p:column headerText="Nama">  
-            			<h:outputText value="#{jd.nama}" />  
+            			<h:outputText value="#{jadwal.nama}" />  
         			</p:column>
         			<p:column headerText="Judul">  
-            			<h:outputText value="#{jd.judul}" />  
+            			<h:outputText value="#{jadwal.judul}" />  
         			</p:column>
         			<p:column headerText="Pembimbing 1">  
-            			<h:outputText value="#{jd.pembimbing1}" />  
+            			<h:outputText value="#{jadwal.pembimbing1}" />  
         			</p:column>
         			<p:column headerText="Pembimbing 2">  
-            			<h:outputText value="#{jd.pembimbing2}" />  
+            			<h:outputText value="#{jadwal.pembimbing2}" />  
         			</p:column>
         			<p:column headerText="Penguji 1">  
-            			<h:outputText value="#{jd.penguji1}" />  
+            			<h:outputText value="#{jadwal.penguji1}" />  
         			</p:column>
         			<p:column headerText="Penguji 2">  
-            			<h:outputText value="#{jd.penguji2}" />  
+            			<h:outputText value="#{jadwal.penguji2}" />  
         			</p:column>
         			<p:column headerText="Ruangan">  
-            			<h:outputText value="#{jd.ruangan}" />  
+            			<h:outputText value="#{jadwal.ruangan}" />  
+        			</p:column>
+        			<p:column headerText="Terlaksana">  
+            			<h:outputText value="#{jadwalKoorMBean.valueTerlaksana(jadwal.statusPelaksanaan)}" />  
+        			</p:column>
+        			<p:column headerText="Hasil">  
+            			<h:outputText value="#{jadwalKoorMBean.valueHasil(jadwal.statusHasilPelaksanaan)}" />  
+        			</p:column> 
+        			<p:column headerText="">
+        				<p:commandButton id="editJadwalButton" value="Edit" 
+        					onclick="PF('dlg1').show();" type="button" style="margin: 0 5px; width: 90px;"/>
         			</p:column>
                 </p:dataTable>
-               </h:form>
-             
+               
+               <!-- Panel Edit -->               
+               <p:dialog id="editJadwal" header="Ubah Jadwal" widgetVar="dlg1" modal="true">
+               		<h:outputText value="Hallo Berhasil !!!!"/>
+               </p:dialog>
+               
+               </h:form>   
             </div>
           </div>
         </div>
