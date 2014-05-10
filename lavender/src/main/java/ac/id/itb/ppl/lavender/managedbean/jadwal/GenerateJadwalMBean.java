@@ -1,6 +1,7 @@
 package ac.id.itb.ppl.lavender.managedbean.jadwal;
 
 import ac.id.itb.ppl.lavender.dao.DosenDao;
+import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
 import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.dao.RuanganDao;
 import ac.id.itb.ppl.lavender.dao.SlotWaktuDao;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 /**
@@ -37,6 +39,7 @@ public class GenerateJadwalMBean implements Serializable {
     @Inject private RuanganDao ruanganDao;
     @Inject private DosenDao dosenDao;
     @Inject private SlotWaktuDao slotWaktuDao;
+    @Inject private KaryaAkhirDao karyaAkhirDao;
     private List<Periode> periodes;
     private Periode periode;
     private List<Ruangan> ruangans;
@@ -81,27 +84,49 @@ public class GenerateJadwalMBean implements Serializable {
     }
     
     public void generateJadwal() {
-        if (getSelectedRuangans() == null || getSelectedRuangans().isEmpty()) {
+        //System.out.println(">>> Masuk generate jadwal <<<");
+        if (periode == null) {
+            FacesContext.getCurrentInstance()
+                .addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Periode harus dipilih!", "Pilih periode yang akan digenerate jadwalnya!"));
+            return;
+        }
+        
+        List<Ruangan> selectedRuangans = new ArrayList<Ruangan>();
+        for (Ruangan r : ruangans) {
+            if (r.getSelected()) {
+                selectedRuangans.add(r);
+                //System.out.println(">>> ada yang kepilih <<<");
+            }
+        }
+        
+        if (selectedRuangans.isEmpty()) {
+            FacesContext.getCurrentInstance()
+                .addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Harus ada ruangan yang dipilih!", "Pilih ruangan yang akan digunakan untuk pelaksanaan seminar/sidang minimal 1!"));
             return;
         }
         
         ControlerGenerateJadwal cgj = new ControlerGenerateJadwal();
         List<Dosen> dosens = dosenDao.findDosenWithTopikAndKetersediaan(periode);
-        List<KaryaAkhir> karyaAkhirs = null;
+        List<KaryaAkhir> karyaAkhirs = karyaAkhirDao.findToBeExecutedKaryaAkhirs(periode.getTipeJadwal());
         List<SlotWaktu> slotWaktus = slotWaktuDao.findAll();
+        
         
         // ganti status lagi generate jadwal ke tabel periode
         periodeDao.changeGenerateStatusInProgress(periode);
         
-        cgj.callGenetika(dosens, karyaAkhirs, getSelectedRuangans(), slotWaktus, periode);
+        //cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, periode);
         
         
-        try {
+        /*try {
             FacesContext.getCurrentInstance().getExternalContext()
-                .redirect("ProsesGenerateJadwal.xhtml");
+                .redirect("GenerateJadwal.xhtml");
         } catch (IOException ioe) {
             LOGGER.log(Level.SEVERE, null, ioe);
-        }
+        }*/
         
         // ganti status jadwal jadi udah di-generate
     }

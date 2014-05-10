@@ -29,7 +29,7 @@ public class KarAkhManagedBean implements java.io.Serializable {
         //if (karyaAkhirs == null || karyaAkhirs.isEmpty()) {
         Periode periode = periodeDao.find(1);
         //System.out.println(">>> Periode " + periode.getTipeJadwal() + " +++ " + (int)periode.getTipeJadwal().charValue() + " <<<");
-            karyaAkhirs = karyaAkhirDao.getToBeExecutedKaryaAkhirs(periode.getTipeJadwal());
+            karyaAkhirs = karyaAkhirDao.findToBeExecutedKaryaAkhirs(periode.getTipeJadwal());
         //}
         return karyaAkhirs;
     }

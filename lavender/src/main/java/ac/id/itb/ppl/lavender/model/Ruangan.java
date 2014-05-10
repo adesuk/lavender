@@ -51,6 +51,8 @@ public class Ruangan implements Serializable {
     private List<JadwalKuliah> jadwalKuliahList;
     @Transient
     private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
+    @Transient
+    private boolean selected;
 
     public Ruangan() {
     }
@@ -99,6 +101,14 @@ public class Ruangan implements Serializable {
 
     public void setKetersediaanWaktuRuangan(List<KetersediaanRuangan> ketersediaanWaktuRuangan) {
         this.ketersediaanWaktuRuangan = ketersediaanWaktuRuangan;
+    }
+    
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
     
     @Override

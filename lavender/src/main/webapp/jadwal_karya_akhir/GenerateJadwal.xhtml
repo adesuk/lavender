@@ -14,6 +14,10 @@
               <f:view>
                 <h2><h:outputText value="Generate Jadwal Seminar/Sidang" /></h2>
                 <hr />
+
+                <!-- Alert! -->
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
                 <h:form styleClass="form-horizontal">
                   <!-- Periode nya ini -->
                   <div class="form-group">
@@ -33,7 +37,7 @@
                       </p:selectOneMenu>
                     </div>
                   </div>
-                  
+
                   <!-- Nama Periode nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
@@ -54,10 +58,15 @@
                     </h:outputLabel>
                     <div class="col-sm-4">
                       <p:dataTable id="ruangans" var="ruangan" value="#{generateJadwal.ruangans}"
-                                   rowKey="#{ruangan.kdRuangan}"
-                                   selection="#{generateJadwal.selectedRuangans}"
-                                   selectionMode="multiple"
-                                   scrollable="true" scrollHeight="250">
+                                   scrollable="true" scrollHeight="200">
+                        <p:column headerText="" width="40">
+                          <f:facet name="header">
+                            <h:outputText value="" />
+                          </f:facet>
+                          <p:selectBooleanCheckbox value="#{ruangan.selected}">
+                            <p:ajax event="change" update="@this" />
+                          </p:selectBooleanCheckbox>
+                        </p:column>
                         <p:column sortBy="#{ruangan.kdRuangan}" headerText="Kode Ruangan">
                           <h:outputText value="#{ruangan.kdRuangan}" />
                         </p:column>
@@ -65,8 +74,6 @@
                           <h:outputText value="#{ruangan.ketersediaanWaktuRuangan.size() == 0 ? '' : ruangan.ketersediaanWaktuRuangan.size()}" />
                         </p:column>
                       </p:dataTable>
-                      <p:tooltip id="toolTipRuangan" for="ruangans" 
-                                 value="Tekan Ctrl untuk multiple selection" />
                     </div>
                   </div>
 
@@ -74,12 +81,13 @@
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <h:panelGroup id="tombol">
-                      <h:commandButton styleClass="btn btn-primary" value="Generate"
-                                       action="#{generateJadwal.generateJadwal}"
-                                       rendered="#{generateJadwal.buttonRender}" />
-                      <h:outputLabel rendered="#{generateJadwal.generateRender}">
-                        <h:outputText value="Jadwal sedang di-generate..." />
-                      </h:outputLabel>
+                        <h:commandButton styleClass="btn btn-primary" value="Generate"
+                                         action="#{generateJadwal.generateJadwal}"
+                                         rendered="#{generateJadwal.buttonRender}"
+                                         immediate="true" />
+                        <h:outputLabel rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
+                          <h:outputText value="Jadwal sedang di-generate..." />
+                        </h:outputLabel>
                       </h:panelGroup>
                     </div>
                   </div>

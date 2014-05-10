@@ -67,6 +67,10 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
     
     @Override
     public Jadwal update(Jadwal jadwal) {
-        return em.merge(jadwal);
+        Jadwal ja = em.merge(jadwal);
+//        Query query = em.createNativeQuery("delete from menguji where id_jadwal = ?")
+//            .setParameter(1, jadwal.getIdJadwal());
+//        query.executeUpdate();
+        return ja;
     }
 }

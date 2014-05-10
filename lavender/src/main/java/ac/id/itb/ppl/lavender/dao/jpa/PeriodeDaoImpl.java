@@ -60,6 +60,7 @@ public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
     public void changeGenerateStatusInProgress(Periode periode) {
         periode.setStatusJadwal(AllConstants.SEDANG_DIGENERATE);
         em.merge(periode);
+        //System.out.println(">>> status berubah, jadi \"lagi digenerate\" <<<");
     }
     
     @Override

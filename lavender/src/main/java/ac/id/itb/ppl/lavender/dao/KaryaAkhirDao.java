@@ -15,7 +15,7 @@ public interface KaryaAkhirDao {
     
     KaryaAkhir findByOwner(Mahasiswa mahasiswa);
     
-    List<KaryaAkhir> getToBeExecutedKaryaAkhirs(char tipeJadwal);
+    List<KaryaAkhir> findToBeExecutedKaryaAkhirs(char tipeJadwal);
     
     List<KaryaAkhir> getAllMahasiswaYangAkanIkutSeminar(char tipeJadwal);
     

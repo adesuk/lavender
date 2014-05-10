@@ -114,7 +114,7 @@ public class DosenDaoImpl extends JpaDao implements DosenDao {
             .setParameter("inisialDosens", Arrays.asList(inisialDosens));
         
         List<Dosen> temp = query.getResultList();
-        System.out.println(">>> jumlah inisial dosen: " + temp.size() + " <<<");
+        //System.out.println(">>> jumlah inisial dosen: " + temp.size() + " <<<");
         
         for (Dosen d : temp) {
             if (d.getBidangKeahlian() == null || d.getBidangKeahlian().isEmpty()) {
@@ -134,8 +134,8 @@ public class DosenDaoImpl extends JpaDao implements DosenDao {
                 }
             }
         }
-        System.out.println(">>> Ngecekin isi si dosens <<<");
-        System.out.println(">>> Dosens size: " + dosens.size() + " <<<");
+        //System.out.println(">>> Ngecekin isi si dosens <<<");
+        //System.out.println(">>> Dosens size: " + dosens.size() + " <<<");
 //        for (Dosen d : dosens) {
 //            System.out.print(new StringBuilder()
 //                .append("inisial : ").append(d.getInisialDosen()).append(" - ")

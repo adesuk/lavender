@@ -30,7 +30,7 @@ public class KaryaAkhirDaoImpl extends JpaDao implements KaryaAkhirDao {
     }
     
     @Override
-    public List<KaryaAkhir> getToBeExecutedKaryaAkhirs(char tipeJadwal) {
+    public List<KaryaAkhir> findToBeExecutedKaryaAkhirs(char tipeJadwal) {
         Query query = em.createQuery(
             "select ka from KaryaAkhir as ka " +
             "join fetch ka.mahasiswa as mhs " +
