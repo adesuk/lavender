@@ -1,4 +1,4 @@
-package ac.id.itb.ppl.lavender.util;
+package ac.id.itb.ppl.lavender.formatter;
 
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import java.text.SimpleDateFormat;
@@ -17,8 +17,6 @@ public class SlotWaktuFormat {
         
         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm", indonesia);
         return new StringBuilder()
-            .append(slotWaktu.getIdSlot())
-            .append(". ")
             .append(sdf1.format(date1))
             .append("-")
             .append(sdf1.format(date2))

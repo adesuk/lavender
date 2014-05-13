@@ -11,62 +11,64 @@
   <h:body>
     <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
       <ui:define name="content">
-        <f:view>
-          <h:form>
-            <h1><h:outputText value="List"/></h1>
-            <p:dataTable value="#{dosenBean.dosens}" var="item">
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="InisialDosen"/>
-                </f:facet>
-                <h:outputText value="#{item.inisialDosen}"/>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="NamaDosen"/>
-                </f:facet>
-                <h:outputText value="#{item.namaDosen}"/>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="Status"/>
-                </f:facet>
-                <h:outputText value="#{item.status}"/>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="GelarDepan"/>
-                </f:facet>
-                <h:outputText value="#{item.gelarDepan}"/>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="GelarBelakang"/>
-                </f:facet>
-                <h:outputText value="#{item.gelarBelakang}"/>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="Bidang Keahlian"/>
-                </f:facet>
-                <ui:repeat value="#{item.bidangKeahlian}" var="topik">
-                  <h:outputText value="#{topik.namaTopik}" />,
-                </ui:repeat>
-              </p:column>
-              <p:column>
-                <f:facet name="header">
-                  <h:outputText value="Ketersediaan Waktunya"/>
-                </f:facet>
-                <ui:repeat value="#{item.ketersediaanWaktuDosens}" var="tezz">
-                  <h:outputText value="#{tezz.tanggalDsnSedia}" >
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                  </h:outputText>:
-                  <h:outputText value="#{tezz.slotWaktu.idSlot}"/><br />
-                </ui:repeat>
-              </p:column>
-            </p:dataTable>
-          </h:form>
-        </f:view>
+        <div class="container">
+          <f:view>
+            <h:form>
+              <h1><h:outputText value="List"/></h1>
+              <p:dataTable value="#{dosenBean.dosens}" var="item">
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="InisialDosen"/>
+                  </f:facet>
+                  <h:outputText value="#{item.inisialDosen}"/>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="NamaDosen"/>
+                  </f:facet>
+                  <h:outputText value="#{item.namaDosen}"/>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="Status"/>
+                  </f:facet>
+                  <h:outputText value="#{item.status}"/>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="GelarDepan"/>
+                  </f:facet>
+                  <h:outputText value="#{item.gelarDepan}"/>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="GelarBelakang"/>
+                  </f:facet>
+                  <h:outputText value="#{item.gelarBelakang}"/>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="Bidang Keahlian"/>
+                  </f:facet>
+                  <ui:repeat value="#{item.bidangKeahlian}" var="topik">
+                    <h:outputText value="#{topik.namaTopik}" />, <br />
+                  </ui:repeat>
+                </p:column>
+                <p:column>
+                  <f:facet name="header">
+                    <h:outputText value="Ketersediaan Waktunya"/>
+                  </f:facet>
+                  <ui:repeat value="#{item.ketersediaanWaktuDosens}" var="tezz">
+                    <h:outputText value="#{tezz.tanggalDsnSedia}" >
+                      <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>:
+                    <h:outputText value="#{tezz.slotWaktu.idSlot}"/><br />
+                  </ui:repeat>
+                </p:column>
+              </p:dataTable>
+            </h:form>
+          </f:view>
+        </div>
       </ui:define>
     </ui:composition>
   </h:body>

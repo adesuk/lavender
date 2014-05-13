@@ -6,61 +6,100 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
   <h:head>
-    <title>Facelet Title</title>
+
   </h:head>
   <h:body>
     <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="events">
+        <f:event listener="#{pengelolaanPeriode.initializePeriode}" type="preRenderView" />
+      </ui:define>
+      
       <ui:define name="content">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
               <f:view>
-                <h:form class="form-horizontal" id="dialogInputForm">
+                <h:form class="form-horizontal" id="periodeInputForm">
+                  <h2><h:outputText value="Tambah Periode" /></h2>
+                  <hr />
+                  
+                  <p:messages autoUpdate="true" />
+
+                  <!-- Nama periode nya ini -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-offset-2 col-md-3">
-                      <h:outputText value="Nama periode" /> <span class="required">*</span>
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Nama periode" />
                     </h:outputLabel>
-                    <div class="col-md-4">
-                      <p:inputText value="#{pengelolaanPeriode.periode.namaPeriode}" />
+                    <div class="col-sm-3">
+                      <p:inputText id="namaPeriode" 
+                                   value="#{pengelolaanPeriode.periode.namaPeriode}" />
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="namaPeriode" />
                     </div>
                   </div>
 
+                  <!-- Periode awal nya ini -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-offset-2 col-md-3">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Periode awal" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-md-4">
+                    <div class="col-sm-3">
                       <p:calendar id="periodeAwal" 
                                   value="#{pengelolaanPeriode.periode.periodeAwal}"
-                                  pattern="dd/MM/yyyy" />
+                                  pattern="dd/MM/yyyy" required="true"
+                                  binding="#{startDateComponent}" />
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="periodeAwal" />
                     </div>
                   </div>
 
+                  <!-- Periode akhir nya ini -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-offset-2 col-md-3">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Periode akhir" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-md-4">
+                    <div class="col-sm-3">
                       <p:calendar id="periodeAkhir" 
                                   value="#{pengelolaanPeriode.periode.periodeAkhir}"
-                                  pattern="dd/MM/yyyy" />
+                                  pattern="dd/MM/yyyy"
+                                  required="true">
+                        <f:validator validatorId="dateRangeValidator" />
+                        <f:attribute name="startDateComponent" value="#{startDateComponent}" />
+                      </p:calendar>
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="periodeAkhir" />
                     </div>
                   </div>
 
+                  <!-- Tipe jadwal nya ini -->
                   <div class="form-group">
-                    <h:outputLabel styleClass="col-md-offset-2 col-md-3">
-                      <h:outputText value="Tipe jadwal" /> <span class="required">*</span>
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Tipe Pelaksanaan" /> <span class="required">*</span>
                     </h:outputLabel>
-                    <div class="col-md-4">
-                      <p:inputText value="#{pengelolaanPeriode.periode.tipeJadwal}" />  
+                    <div class="col-sm-3">
+                      <p:selectOneMenu value="#{pengelolaanPeriode.periode.tipeJadwal}">
+                        <f:selectItems value="#{pengelolaanPeriode.tipeJadwals}" />
+                      </p:selectOneMenu>
                     </div>
                   </div>
 
+                  <!-- Tombol-tombol nya ini-->
                   <div class="form-group">
-                    <div class="col-md-offset-5 col-md-4">
-                      <p:commandButton value="Simpan" styleClass="ui-priority-primary"
-                                       action="#{pengelolaanPeriode.savePeriode()}">
-                      </p:commandButton>
+                    <div class="col-sm-offset-2 col-sm-3">
+                      <h:panelGrid columns="2">
+                        <p:commandButton id="save" value="Simpan" 
+                                         style="width: 90px; margin: 5px 5px 5px 0"
+                                         action="#{pengelolaanPeriode.savePeriode}"
+                                         validateClient="true"
+                                         update="periodeInputForm" />
+                        <p:commandButton id="cancel" value="Batal"
+                                         style="width: 90px; margin: 5px 0 5px 5px"
+                                         action="#{pengelolaanPeriode.cancel}"
+                                         immediate="true" />
+                      </h:panelGrid>
                     </div>
                   </div>
                 </h:form>

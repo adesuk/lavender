@@ -1,12 +1,12 @@
-package ac.id.itb.ppl.lavender.managedbean;
+package ac.id.itb.ppl.lavender.managedbean.hazard;
 
-import ac.id.itb.ppl.lavender.dao.jpa.KaryaAkhirDaoImpl;
-import ac.id.itb.ppl.lavender.dao.jpa.PeriodeDaoImpl;
+import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
+import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
 import ac.id.itb.ppl.lavender.model.Periode;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -16,10 +16,10 @@ import javax.inject.Named;
 @Named(value = "karAkh")
 @SessionScoped
 public class KarAkhManagedBean implements java.io.Serializable {
-    @EJB
-    private KaryaAkhirDaoImpl karyaAkhirDao;
-    @EJB
-    private PeriodeDaoImpl periodeDao;
+    @Inject
+    private KaryaAkhirDao karyaAkhirDao;
+    @Inject
+    private PeriodeDao periodeDao;
     private List<KaryaAkhir> karyaAkhirs;
     
     public KarAkhManagedBean() {
@@ -29,7 +29,7 @@ public class KarAkhManagedBean implements java.io.Serializable {
         //if (karyaAkhirs == null || karyaAkhirs.isEmpty()) {
         Periode periode = periodeDao.find(1);
         //System.out.println(">>> Periode " + periode.getTipeJadwal() + " +++ " + (int)periode.getTipeJadwal().charValue() + " <<<");
-            karyaAkhirs = karyaAkhirDao.getToBeExecutedKaryaAkhirs(periode.getTipeJadwal());
+            karyaAkhirs = karyaAkhirDao.findToBeExecutedKaryaAkhirs(periode.getTipeJadwal());
         //}
         return karyaAkhirs;
     }

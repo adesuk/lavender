@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form styleClass="form-horizontal">
+                  <h2><h:outputText value="Penentuan Topik Karya Akhir"/></h2>
+                  <hr />
+                  
+                  <!-- Tahun masuk nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel for="tahunMasuk" styleClass="col-sm-2 control-label">
+                      <h:outputText value="Tahun masuk" />
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:selectOneMenu id="tahunMasuk" style="width: 100%"
+                                       value="#{topikKaryaAkhir.tahun}">
+                        <f:selectItems value="#{topikKaryaAkhir.tahuns}" var="tahun"
+                                       itemLabel="#{tahun}" itemValue="#{tahun}" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+                  
+                  <!-- Jenjang nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel for="jenjang" styleClass="col-sm-2 control-label">
+                      <h:outputText value="Jenjang" />
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:selectOneMenu id="jenjang" style="width: 100%">
+                        <f:selectItem itemLabel="S1" itemValue="S1" />
+                        <f:selectItem itemLabel="S2" itemValue="S2" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+                  
+                  <!-- Judul nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel for="judul" styleClass="col-sm-2 control-label">
+                      <h:outputText value="Judul" />
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:inputText id="judul" style="width: 100%"
+                                   value="#{topikKaryaAkhir.judul}" />
+                    </div>
+                  </div>
+                  
+                  <!-- Tombol search -->
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <h:panelGrid columns="3" styleClass="pull-right">
+                        <p:commandButton value="Cari" 
+                                         actionListener="#{topikKaryaAkhir.displayKaryaAkhirs()}" 
+                                         update="karyaAkhirsArea"
+                                         style="width: 90px; margin: 5px" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+                  
+                  <!-- Tabel karya akhir -->
+                    <p:dataTable id="karyaAkhirsArea" var="item"
+                                 value="#{topikKaryaAkhir.karyaAkhirs}">
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="NIM"/>
+                        </f:facet>
+                        <h:outputText value="#{item.mahasiswa.nim}" />
+                      </p:column>
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="Nama Mahasiswa"/>
+                        </f:facet>
+                        <h:outputText value="#{item.mahasiswa.namaMhs}" />
+                      </p:column>
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="Topik"/>
+                        </f:facet>
+                        <h:outputText value="#{item.topik == null ? '-' : item.topik.namaTopik}" />
+                      </p:column>
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="JudulKa"/>
+                        </f:facet>
+                        <h:outputText value="#{item.judulKa}" />
+                      </p:column>
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="StatusKa" />
+                        </f:facet>
+                        <h:outputText value="#{item.statusKa}" />
+                      </p:column>
+                      <p:column>
+                        <f:facet name="header">
+                          <h:outputText value="" />
+                        </f:facet>
+                        <p:commandButton value="Edit"
+                                         actionListener="#{topikKaryaAkhir.edit(item)}" />
+                      </p:column>
+                    </p:dataTable>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

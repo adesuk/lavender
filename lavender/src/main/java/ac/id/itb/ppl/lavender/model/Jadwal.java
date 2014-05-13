@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -65,7 +66,7 @@ public class Jadwal implements Serializable {
     @Size(max = 50)
     @Column(name = "DOSEN_BENTROK")
     private String dosenBentrok;
-    @ManyToMany(mappedBy = "jadwalList")
+    @ManyToMany(mappedBy = "jadwalList", cascade = CascadeType.PERSIST)
     private List<Dosen> dosenPenguji;
     @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT")
     @ManyToOne(optional = false)

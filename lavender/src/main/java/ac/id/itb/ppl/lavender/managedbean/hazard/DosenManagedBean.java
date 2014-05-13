@@ -1,11 +1,12 @@
-package ac.id.itb.ppl.lavender.managedbean;
+package ac.id.itb.ppl.lavender.managedbean.hazard;
 
-import ac.id.itb.ppl.lavender.dao.jpa.DosenDaoImpl;
-import ac.id.itb.ppl.lavender.dao.jpa.PeriodeDaoImpl;
+import ac.id.itb.ppl.lavender.dao.DosenDao;
+import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.model.Dosen;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -15,17 +16,14 @@ import javax.inject.Named;
 @Named(value = "dosenBean")
 @SessionScoped
 public class DosenManagedBean implements java.io.Serializable{
-    @EJB private DosenDaoImpl dosenDao;
-    @EJB private PeriodeDaoImpl periodeDao;
+    @Inject private DosenDao dosenDao;
+    @Inject private PeriodeDao periodeDao;
     private List<Dosen> dosens;
     
     public DosenManagedBean() {
     }
     
     public List<Dosen> getDosens() {
-        if (dosens == null || dosens.isEmpty()) {
-            dosens = dosenDao.getDosenWithTopikAndKetersediaan(periodeDao.find(1));
-        }
-        return dosens;
+        return dosenDao.findDosenWithTopikAndKetersediaan(periodeDao.find(1));
     }
 }

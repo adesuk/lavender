@@ -1,4 +1,4 @@
-package ac.id.itb.ppl.lavender.util;
+package ac.id.itb.ppl.lavender.formatter;
 
 import ac.id.itb.ppl.lavender.model.Periode;
 import java.text.SimpleDateFormat;
