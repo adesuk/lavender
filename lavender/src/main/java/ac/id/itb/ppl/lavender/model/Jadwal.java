@@ -66,7 +66,8 @@ public class Jadwal implements Serializable {
     @Size(max = 50)
     @Column(name = "DOSEN_BENTROK")
     private String dosenBentrok;
-    @ManyToMany(mappedBy = "jadwalList", cascade = CascadeType.PERSIST)
+    //@ManyToMany(mappedBy = "jadwalList", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "jadwalList")
     private List<Dosen> dosenPenguji;
     @JoinColumn(name = "ID_SLOT", referencedColumnName = "ID_SLOT")
     @ManyToOne(optional = false)

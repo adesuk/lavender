@@ -4,6 +4,7 @@ import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
 import ac.id.itb.ppl.lavender.dao.TopikDao;
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
 import ac.id.itb.ppl.lavender.model.Topik;
+import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -23,6 +25,7 @@ import javax.inject.Named;
 @Named(value = "topikKaryaAkhir")
 @SessionScoped
 public class TopikKaryaAkhirMBean implements Serializable {
+    
     private static final long serialVersionUID = -9001237248551290L;
     private static final Logger LOGGER = Logger.getLogger(TopikKaryaAkhirMBean.class.getName());
     
@@ -67,12 +70,7 @@ public class TopikKaryaAkhirMBean implements Serializable {
         
         reloadKaryaAkhirs();
         
-        try {
-            FacesContext.getCurrentInstance().getExternalContext()
-                .redirect("PenentuanTopikKaryaAkhir.xhtml");
-        } catch (IOException ioe) {
-            LOGGER.log(Level.SEVERE, null, ioe);
-        }
+        RequestContext.getCurrentInstance().execute("showInfo()");
     }
     
     public void cancel() {
@@ -129,6 +127,10 @@ public class TopikKaryaAkhirMBean implements Serializable {
     
     public void setTopik(Topik topik) {
         this.topik = topik;
+    }
+    
+    public String getTipeStatusKaryaName(Character tipeStatusKarya) {
+        return new TipeEksekusi().getName(tipeStatusKarya);
     }
     //</editor-fold>
 }

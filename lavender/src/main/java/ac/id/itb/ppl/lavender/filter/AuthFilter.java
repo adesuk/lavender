@@ -1,5 +1,8 @@
 package ac.id.itb.ppl.lavender.filter;
 
+import ac.id.itb.ppl.lavender.managedbean.login.LoginBean;
+import ac.id.itb.ppl.lavender.model.User;
+import ac.id.itb.ppl.lavender.util.RoleType;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +33,7 @@ public class AuthFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
-    @Override
+    /*@Override
     public void doFilter(ServletRequest request, ServletResponse response,
         FilterChain chain) throws IOException, ServletException {
         try {
@@ -54,7 +57,53 @@ public class AuthFilter implements Filter {
         } catch (ServletException se) {
             LOGGER.log(Level.SEVERE, null, se);
         }
-    } //doFilter
+    } //doFilter*/
+    
+    @Override
+    /**
+     * Checks if user is logged in. If not it redirects to the login.xhtml page.
+     */
+    public void doFilter(ServletRequest request, ServletResponse response,
+        FilterChain chain) throws IOException, ServletException {
+        // Get the loginBean from session attribute
+        LoginBean loginBean = 
+            (LoginBean) ((HttpServletRequest)request)
+                .getSession()
+                .getAttribute("loginBean");
+         
+        // For the first application request there is no loginBean in the session so user needs to log in
+        // For other requests loginBean is present but we need to check if user has logged in successfully
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        User user = loginBean != null ? loginBean.getUser() : null;
+        String path = req.getRequestURI().substring(req.getContextPath().length());
+        
+        // page yang bisa diakses siapa saja
+        if (path.indexOf("/index.xhtml") >= 0 || path.indexOf("/login.xhtml") >= 0
+                || path.indexOf("/public/") >= 0 || 
+                path.contains("javax.faces.resource") ) {
+            chain.doFilter(request, response);
+            return;
+        }
+        
+        if (user != null) {
+            if ((path.indexOf("/jadwal_karya_akhir/") >= 0 ||
+                path.indexOf("/karya_akhir/") >= 0 ||
+                path.indexOf("/periode/") >= 0 ||
+                    "partial/ajax".equals(req.getHeader("Faces-Request"))) &&
+                user.getRole().getId().equals(RoleType.KOORDINATOR.getName())) {
+                // ga ada masalah dengan link yg bisa diakses koordinator
+                chain.doFilter(request, response);
+            } else if ((path.startsWith("/hazard/")) &&
+                user.getRole().getId().equals(RoleType.DOSEN.getName())) {
+                chain.doFilter(request, response);
+            } else { // bermasalah
+                res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+        } else {
+            res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page
+        }
+    }
 
     @Override
     public void destroy() {

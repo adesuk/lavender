@@ -19,6 +19,8 @@
                   <h2><h:outputText value="Penentuan Topik Karya Akhir" /></h2>
                   <hr />
                   
+                  <p:messages autoUpdate="true" showDetail="true" id="msg" />
+                  
                   <!-- NIM -->
                   <div class="form-group">
                     <h:outputLabel for="nim" value="NIM"
@@ -46,12 +48,14 @@
                   <!-- Topik -->
                   <div class="form-group">
                     <h:outputLabel for="topiknya" styleClass="col-sm-2 control-label"> 
-                      <h:outputText value="Topik" />
+                      <h:outputText value="Topik" /> <span class="required">*</span>
                     </h:outputLabel>
                     <div class="col-sm-4">
                       <p:selectOneMenu id="topiknya" value="#{topikKaryaAkhir.karyaAkhir.topik}"
                                        converter="#{topikConverter}"
-                                       style="width: 100%">
+                                       style="width: 100%"
+                                       required="true"
+                                       requiredMessage="Pilih topik karya akhir">
                         <f:selectItem itemLabel="- Pilih topik -" />
                         <f:selectItems value="#{topikKaryaAkhir.topiks}"
                                        var="topik" itemLabel="#{topik.namaTopik}"
@@ -80,24 +84,22 @@
                     <div class="col-sm-4">
                       <p class="form-control-static">
                         <h:outputText id="status" 
-                                      value="-" />
+                                      value="#{topikKaryaAkhir.getTipeStatusKaryaName(topikKaryaAkhir.karyaAkhir.statusKa)}" />
                       </p>
                     </div>
                   </div>
                   
-                  <!-- Tombol-tombol nya ini-->
+                  <!-- Tombol-tombol -->
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-3">
                       <h:panelGrid columns="2">
                         <p:commandButton id="save" value="Simpan" 
                                          style="width: 90px; margin: 5px 5px 5px 0"
                                          action="#{topikKaryaAkhir.save}"
-                                         validateClient="true"
-                                         />
+                                         validateClient="true" />
                         <p:commandButton id="cancel" value="Batal"
                                          style="width: 90px; margin: 5px 0 5px 5px"
-                                         action="#{topikKaryaAkhir.cancel}"
-                                         />
+                                         action="#{topikKaryaAkhir.cancel}" />
                       </h:panelGrid>
                     </div>
                   </div>
@@ -106,6 +108,32 @@
             </div>
           </div>
         </div>
+        
+        <div id="info" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Perubahan sudah disimpan.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton
+                                 action="PenentuanTopikKaryaAkhir.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showInfo() {
+            $("#info").modal();
+          }
+        </script>
       </ui:define>
     </ui:composition>
   </h:body>

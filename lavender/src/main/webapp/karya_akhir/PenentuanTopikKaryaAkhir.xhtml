@@ -92,15 +92,15 @@
                       </p:column>
                       <p:column>
                         <f:facet name="header">
-                          <h:outputText value="JudulKa"/>
+                          <h:outputText value="Judul Karya Akhir"/>
                         </f:facet>
                         <h:outputText value="#{item.judulKa}" />
                       </p:column>
                       <p:column>
                         <f:facet name="header">
-                          <h:outputText value="StatusKa" />
+                          <h:outputText value="Status Karya Akhir" />
                         </f:facet>
-                        <h:outputText value="#{item.statusKa}" />
+                        <h:outputText value="#{topikKaryaAkhir.getTipeStatusKaryaName(item.statusKa)}" />
                       </p:column>
                       <p:column>
                         <f:facet name="header">
