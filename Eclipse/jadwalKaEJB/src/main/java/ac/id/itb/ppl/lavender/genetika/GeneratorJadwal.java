@@ -9,6 +9,7 @@ import ac.id.itb.ppl.lavender.model.Jadwal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,23 +50,24 @@ public class GeneratorJadwal {
                             "ID_KA"+"\t"+
                             "ID_PEMBIMBING"+"\t"+
                             "ID_DOSEN");
+         Date genDate = Calendar.getInstance().getTime();
          for (int i = 0; i<result.size(); i++){
             Kromosom dataJadwal = result.getKromosom(i);
             System.out.println(dataJadwal.genWaktu.getIdSlot() + "\t"+
                                dataJadwal.genDate.toString() + "\t"+
                                dataJadwal.genRuangan.getKdRuangan() +"\t"+
                                dataJadwal.getGenKA().getIdKa()+"\t"+
-                               dataJadwal.getGenKA().getDosensPembimbing().get(0).getInisialDosen()+"\t"+
+                               dataJadwal.getGenKA().getDosenPembimbing().get(0).getInisialDosen()+"\t"+
                                dataJadwal.getGenDosenPenguji().get(0).getInisialDosen());
             Jadwal element = new Jadwal();
-            element.setDosensPenguji(dataJadwal.getGenDosenPenguji());
-            element.setGenerateDate(Calendar.getInstance().getTime());
+            element.setDosenPenguji(dataJadwal.getGenDosenPenguji());
+            element.setGenerateDate(genDate);
             element.setKaryaAkhir(dataJadwal.getGenKA());
             element.setRuangan(dataJadwal.getGenRuangan());
             element.setSlotWaktu(dataJadwal.getGenWaktu());
             element.setTanggal(dataJadwal.getGenDate());
-            element.setStatusHasilPelaksanaan(Integer.valueOf(0));
-            element.setStatusPelaksanaan(Integer.valueOf(0));
+            element.setStatusHasilPelaksanaan(BigInteger.valueOf(0));
+            element.setStatusPelaksanaan(BigInteger.valueOf(0));
             jadwalS.add(element);
          }
          

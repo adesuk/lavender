@@ -1,119 +1,156 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the PERIODE_KULIAH database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@Table(name="PERIODE_KULIAH")
-@NamedQuery(name="PeriodeKuliah.findAll", query="SELECT p FROM PeriodeKuliah p")
+@Table(name = "PERIODE_KULIAH")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "PeriodeKuliah.findAll", query = "SELECT p FROM PeriodeKuliah p"),
+    @NamedQuery(name = "PeriodeKuliah.findByIdPeriodeKuliah", query = "SELECT p FROM PeriodeKuliah p WHERE p.idPeriodeKuliah = :idPeriodeKuliah"),
+    @NamedQuery(name = "PeriodeKuliah.findByWaktuMulaiKuliah", query = "SELECT p FROM PeriodeKuliah p WHERE p.waktuMulaiKuliah = :waktuMulaiKuliah"),
+    @NamedQuery(name = "PeriodeKuliah.findByWaktuAkhirKuliah", query = "SELECT p FROM PeriodeKuliah p WHERE p.waktuAkhirKuliah = :waktuAkhirKuliah"),
+    @NamedQuery(name = "PeriodeKuliah.findByVersi", query = "SELECT p FROM PeriodeKuliah p WHERE p.versi = :versi"),
+    @NamedQuery(name = "PeriodeKuliah.findByTahunAkademik", query = "SELECT p FROM PeriodeKuliah p WHERE p.tahunAkademik = :tahunAkademik"),
+    @NamedQuery(name = "PeriodeKuliah.findBySemester", query = "SELECT p FROM PeriodeKuliah p WHERE p.semester = :semester")})
 public class PeriodeKuliah implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_PERIODE_KULIAH")
+    private Integer idPeriodeKuliah;
+    @Column(name = "WAKTU_MULAI_KULIAH")
+    @Temporal(TemporalType.DATE)
+    private Date waktuMulaiKuliah;
+    @Column(name = "WAKTU_AKHIR_KULIAH")
+    @Temporal(TemporalType.DATE)
+    private Date waktuAkhirKuliah;
+    @Column(name = "VERSI")
+    @Temporal(TemporalType.DATE)
+    private Date versi;
+    @Size(max = 9)
+    @Column(name = "TAHUN_AKADEMIK")
+    private String tahunAkademik;
+    @Column(name = "SEMESTER")
+    private Short semester;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPeriodeKuliah")
+    private List<JadwalKuliah> jadwalKuliahList;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_PERIODE_KULIAH")
-	private long idPeriodeKuliah;
+    public PeriodeKuliah() {
+    }
 
-	@Column(name="SEMESTER")
-	private BigDecimal semester;
+    public PeriodeKuliah(Integer idPeriodeKuliah) {
+        this.idPeriodeKuliah = idPeriodeKuliah;
+    }
 
-	@Column(name="TAHUN_AKADEMIK")
-	private String tahunAkademik;
+    public Integer getIdPeriodeKuliah() {
+        return idPeriodeKuliah;
+    }
 
-	@Temporal(TemporalType.DATE)
-	private Date versi;
+    public void setIdPeriodeKuliah(Integer idPeriodeKuliah) {
+        this.idPeriodeKuliah = idPeriodeKuliah;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="WAKTU_AKHIR_KULIAH")
-	private Date waktuAkhirKuliah;
+    public Date getWaktuMulaiKuliah() {
+        return waktuMulaiKuliah;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="WAKTU_MULAI_KULIAH")
-	private Date waktuMulaiKuliah;
+    public void setWaktuMulaiKuliah(Date waktuMulaiKuliah) {
+        this.waktuMulaiKuliah = waktuMulaiKuliah;
+    }
 
-	//bi-directional many-to-one association to JadwalKuliah
-	@OneToMany(mappedBy="periodeKuliah")
-	private List<JadwalKuliah> jadwalKuliahs;
+    public Date getWaktuAkhirKuliah() {
+        return waktuAkhirKuliah;
+    }
 
-	public PeriodeKuliah() {
-	}
+    public void setWaktuAkhirKuliah(Date waktuAkhirKuliah) {
+        this.waktuAkhirKuliah = waktuAkhirKuliah;
+    }
 
-	public long getIdPeriodeKuliah() {
-		return this.idPeriodeKuliah;
-	}
+    public Date getVersi() {
+        return versi;
+    }
 
-	public void setIdPeriodeKuliah(long idPeriodeKuliah) {
-		this.idPeriodeKuliah = idPeriodeKuliah;
-	}
+    public void setVersi(Date versi) {
+        this.versi = versi;
+    }
 
-	public BigDecimal getSemester() {
-		return this.semester;
-	}
+    public String getTahunAkademik() {
+        return tahunAkademik;
+    }
 
-	public void setSemester(BigDecimal semester) {
-		this.semester = semester;
-	}
+    public void setTahunAkademik(String tahunAkademik) {
+        this.tahunAkademik = tahunAkademik;
+    }
 
-	public String getTahunAkademik() {
-		return this.tahunAkademik;
-	}
+    public Short getSemester() {
+        return semester;
+    }
 
-	public void setTahunAkademik(String tahunAkademik) {
-		this.tahunAkademik = tahunAkademik;
-	}
+    public void setSemester(Short semester) {
+        this.semester = semester;
+    }
 
-	public Date getVersi() {
-		return this.versi;
-	}
+    @XmlTransient
+    public List<JadwalKuliah> getJadwalKuliahList() {
+        return jadwalKuliahList;
+    }
 
-	public void setVersi(Date versi) {
-		this.versi = versi;
-	}
+    public void setJadwalKuliahList(List<JadwalKuliah> jadwalKuliahList) {
+        this.jadwalKuliahList = jadwalKuliahList;
+    }
 
-	public Date getWaktuAkhirKuliah() {
-		return this.waktuAkhirKuliah;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPeriodeKuliah != null ? idPeriodeKuliah.hashCode() : 0);
+        return hash;
+    }
 
-	public void setWaktuAkhirKuliah(Date waktuAkhirKuliah) {
-		this.waktuAkhirKuliah = waktuAkhirKuliah;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PeriodeKuliah)) {
+            return false;
+        }
+        PeriodeKuliah other = (PeriodeKuliah) object;
+        if ((this.idPeriodeKuliah == null && other.idPeriodeKuliah != null) || (this.idPeriodeKuliah != null && !this.idPeriodeKuliah.equals(other.idPeriodeKuliah))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Date getWaktuMulaiKuliah() {
-		return this.waktuMulaiKuliah;
-	}
-
-	public void setWaktuMulaiKuliah(Date waktuMulaiKuliah) {
-		this.waktuMulaiKuliah = waktuMulaiKuliah;
-	}
-
-	public List<JadwalKuliah> getJadwalKuliahs() {
-		return this.jadwalKuliahs;
-	}
-
-	public void setJadwalKuliahs(List<JadwalKuliah> jadwalKuliahs) {
-		this.jadwalKuliahs = jadwalKuliahs;
-	}
-
-	public JadwalKuliah addJadwalKuliah(JadwalKuliah jadwalKuliah) {
-		getJadwalKuliahs().add(jadwalKuliah);
-		jadwalKuliah.setPeriodeKuliah(this);
-
-		return jadwalKuliah;
-	}
-
-	public JadwalKuliah removeJadwalKuliah(JadwalKuliah jadwalKuliah) {
-		getJadwalKuliahs().remove(jadwalKuliah);
-		jadwalKuliah.setPeriodeKuliah(null);
-
-		return jadwalKuliah;
-	}
-
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.PeriodeKuliah[ idPeriodeKuliah=" + idPeriodeKuliah + " ]";
+    }
+    
 }

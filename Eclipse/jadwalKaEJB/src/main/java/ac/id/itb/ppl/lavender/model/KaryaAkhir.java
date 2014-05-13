@@ -1,135 +1,160 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the KARYA_AKHIR database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@Table(name="KARYA_AKHIR")
-@NamedQuery(name="KaryaAkhir.findAll", query="SELECT k FROM KaryaAkhir k")
+@Table(name = "KARYA_AKHIR")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "KaryaAkhir.findAll", query = "SELECT k FROM KaryaAkhir k"),
+    @NamedQuery(name = "KaryaAkhir.findByIdKa", query = "SELECT k FROM KaryaAkhir k WHERE k.idKa = :idKa"),
+    @NamedQuery(name = "KaryaAkhir.findByJudulKa", query = "SELECT k FROM KaryaAkhir k WHERE k.judulKa = :judulKa"),
+    @NamedQuery(name = "KaryaAkhir.findByStatusKa", query = "SELECT k FROM KaryaAkhir k WHERE k.statusKa = :statusKa")})
 public class KaryaAkhir implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_KA")
+    private Integer idKa;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(name = "JUDUL_KA")
+    private String judulKa;
+    @Column(name = "STATUS_KA")
+    private Character statusKa;
+    @ManyToMany(mappedBy = "karyaAkhirList")
+    private List<Dosen> dosenPembimbing;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "karyaAkhir")
+    private List<Jadwal> jadwalList;
+    @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")
+    @ManyToOne
+    private Topik topik;
+    @JoinColumn(name = "NIM", referencedColumnName = "NIM")
+    @ManyToOne(optional = false)
+    private Mahasiswa mahasiswa;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_KA")
-	private long idKa;
+    public KaryaAkhir() {
+    }
 
-	@Column(name="JUDUL_KA")
-	private String judulKa;
+    public KaryaAkhir(Integer idKa) {
+        this.idKa = idKa;
+    }
 
-	@Column(name="STATUS_KA")
-	private String statusKa;
+    public KaryaAkhir(Integer idKa, String judulKa) {
+        this.idKa = idKa;
+        this.judulKa = judulKa;
+    }
 
-	//bi-directional many-to-one association to Jadwal
-	@OneToMany(mappedBy="karyaAkhir")
-	private List<Jadwal> jadwals;
+    public Integer getIdKa() {
+        return idKa;
+    }
 
-	//bi-directional many-to-one association to Mahasiswa
-	@ManyToOne
-	@JoinColumn(name="NIM")
-	private Mahasiswa mahasiswa;
+    public void setIdKa(Integer idKa) {
+        this.idKa = idKa;
+    }
 
-	//bi-directional many-to-one association to Topik
-	@ManyToOne
-	@JoinColumn(name="ID_TOPIK")
-	private Topik topik;
+    public String getJudulKa() {
+        return judulKa;
+    }
 
-	//bi-directional many-to-many association to Dosen
-	@ManyToMany
-	@JoinTable(
-		name="MEMBIMBING"
-		, joinColumns={
-			@JoinColumn(name="ID_KA")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="INISIAL_DOSEN")
-			}
-		)
-	private List<Dosen> dosens;
+    public void setJudulKa(String judulKa) {
+        this.judulKa = judulKa;
+    }
 
-	public KaryaAkhir() {
-	}
+    public Character getStatusKa() {
+        return statusKa;
+    }
 
-	public long getIdKa() {
-		return this.idKa;
-	}
+    public void setStatusKa(Character statusKa) {
+        this.statusKa = statusKa;
+    }
 
-	public void setIdKa(long idKa) {
-		this.idKa = idKa;
-	}
+    @XmlTransient
+    public List<Dosen> getDosenPembimbing() {
+        return dosenPembimbing;
+    }
 
-	public String getJudulKa() {
-		return this.judulKa;
-	}
+    public void setDosenPembimbing(List<Dosen> dosenPembimbing) {
+        this.dosenPembimbing = dosenPembimbing;
+    }
 
-	public void setJudulKa(String judulKa) {
-		this.judulKa = judulKa;
-	}
+    @XmlTransient
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
 
-	public String getStatusKa() {
-		return this.statusKa;
-	}
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
 
-	public void setStatusKa(String statusKa) {
-		this.statusKa = statusKa;
-	}
+    public Topik getTopik() {
+        return topik;
+    }
 
-	public List<Jadwal> getJadwals() {
-		return this.jadwals;
-	}
+    public void setTopik(Topik topik) {
+        this.topik = topik;
+    }
 
-	public void setJadwals(List<Jadwal> jadwals) {
-		this.jadwals = jadwals;
-	}
+    public Mahasiswa getMahasiswa() {
+        return mahasiswa;
+    }
 
-	public Jadwal addJadwal(Jadwal jadwal) {
-		getJadwals().add(jadwal);
-		jadwal.setKaryaAkhir(this);
+    public void setMahasiswa(Mahasiswa mahasiswa) {
+        this.mahasiswa = mahasiswa;
+    }
 
-		return jadwal;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idKa != null ? idKa.hashCode() : 0);
+        return hash;
+    }
 
-	public Jadwal removeJadwal(Jadwal jadwal) {
-		getJadwals().remove(jadwal);
-		jadwal.setKaryaAkhir(null);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof KaryaAkhir)) {
+            return false;
+        }
+        KaryaAkhir other = (KaryaAkhir) object;
+        if ((this.idKa == null && other.idKa != null) || (this.idKa != null && !this.idKa.equals(other.idKa))) {
+            return false;
+        }
+        return true;
+    }
 
-		return jadwal;
-	}
-
-	public Mahasiswa getMahasiswa() {
-		return this.mahasiswa;
-	}
-
-	public void setMahasiswa(Mahasiswa mahasiswa) {
-		this.mahasiswa = mahasiswa;
-	}
-
-	public Topik getTopik() {
-		return this.topik;
-	}
-
-	public void setTopik(Topik topik) {
-		this.topik = topik;
-	}
-
-	public List<Dosen> getDosensPembimbing() {
-		return this.dosens;
-	}
-
-	public void setDosensPembimbing(List<Dosen> dosens) {
-		this.dosens = dosens;
-	}
-
-	@Override
-	public String toString() {
-		return idKa+ "-"+ judulKa;
-	}
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.KaryaAkhir[ idKa=" + idKa + " ]";
+    }
+    
 }

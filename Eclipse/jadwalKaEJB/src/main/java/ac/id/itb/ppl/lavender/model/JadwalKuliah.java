@@ -1,126 +1,175 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the JADWAL_KULIAH database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@Table(name="JADWAL_KULIAH")
-@NamedQuery(name="JadwalKuliah.findAll", query="SELECT j FROM JadwalKuliah j")
+@Table(name = "JADWAL_KULIAH")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "JadwalKuliah.findAll", query = "SELECT j FROM JadwalKuliah j"),
+    @NamedQuery(name = "JadwalKuliah.findByIdJadwalKuliah", query = "SELECT j FROM JadwalKuliah j WHERE j.idJadwalKuliah = :idJadwalKuliah"),
+    @NamedQuery(name = "JadwalKuliah.findByKodeMataKuliah", query = "SELECT j FROM JadwalKuliah j WHERE j.kodeMataKuliah = :kodeMataKuliah"),
+    @NamedQuery(name = "JadwalKuliah.findByHari", query = "SELECT j FROM JadwalKuliah j WHERE j.hari = :hari"),
+    @NamedQuery(name = "JadwalKuliah.findByWaktuMasuk", query = "SELECT j FROM JadwalKuliah j WHERE j.waktuMasuk = :waktuMasuk"),
+    @NamedQuery(name = "JadwalKuliah.findByWaktuKeluar", query = "SELECT j FROM JadwalKuliah j WHERE j.waktuKeluar = :waktuKeluar")})
 public class JadwalKuliah implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_JADWAL_KULIAH")
+    private Integer idJadwalKuliah;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "KODE_MATA_KULIAH")
+    private String kodeMataKuliah;
+    @Size(max = 3)
+    @Column(name = "HARI")
+    private String hari;
+    @Column(name = "WAKTU_MASUK")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date waktuMasuk;
+    @Column(name = "WAKTU_KELUAR")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date waktuKeluar;
+    @ManyToMany(mappedBy = "jadwalKuliahList")
+    private List<Dosen> dosenList;
+    @JoinColumn(name = "KD_RUANGAN", referencedColumnName = "KD_RUANGAN")
+    @ManyToOne(optional = false)
+    private Ruangan kdRuangan;
+    @JoinColumn(name = "ID_PERIODE_KULIAH", referencedColumnName = "ID_PERIODE_KULIAH")
+    @ManyToOne(optional = false)
+    private PeriodeKuliah idPeriodeKuliah;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_JADWAL_KULIAH")
-	private long idJadwalKuliah;
+    public JadwalKuliah() {
+    }
 
-	@Column(name="HARI")
-	private String hari;
+    public JadwalKuliah(Integer idJadwalKuliah) {
+        this.idJadwalKuliah = idJadwalKuliah;
+    }
 
-	@Column(name="KODE_MATA_KULIAH")
-	private String kodeMataKuliah;
+    public JadwalKuliah(Integer idJadwalKuliah, String kodeMataKuliah) {
+        this.idJadwalKuliah = idJadwalKuliah;
+        this.kodeMataKuliah = kodeMataKuliah;
+    }
 
-	@Column(name="WAKTU_KELUAR")
-	private Timestamp waktuKeluar;
+    public Integer getIdJadwalKuliah() {
+        return idJadwalKuliah;
+    }
 
-	@Column(name="WAKTU_MASUK")
-	private Timestamp waktuMasuk;
+    public void setIdJadwalKuliah(Integer idJadwalKuliah) {
+        this.idJadwalKuliah = idJadwalKuliah;
+    }
 
-	//bi-directional many-to-one association to PeriodeKuliah
-	@ManyToOne
-	@JoinColumn(name="ID_PERIODE_KULIAH")
-	private PeriodeKuliah periodeKuliah;
+    public String getKodeMataKuliah() {
+        return kodeMataKuliah;
+    }
 
-	//bi-directional many-to-one association to Ruangan
-	@ManyToOne
-	@JoinColumn(name="KD_RUANGAN")
-	private Ruangan ruangan;
+    public void setKodeMataKuliah(String kodeMataKuliah) {
+        this.kodeMataKuliah = kodeMataKuliah;
+    }
 
-	//bi-directional many-to-many association to Dosen
-	@ManyToMany
-	@JoinTable(
-		name="MENGAJAR"
-		, joinColumns={
-			@JoinColumn(name="ID_JADWAL_KULIAH")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="INISIAL_DOSEN")
-			}
-		)
-	private List<Dosen> dosens;
+    public String getHari() {
+        return hari;
+    }
 
-	public JadwalKuliah() {
-	}
+    public void setHari(String hari) {
+        this.hari = hari;
+    }
 
-	public long getIdJadwalKuliah() {
-		return this.idJadwalKuliah;
-	}
+    public Date getWaktuMasuk() {
+        return waktuMasuk;
+    }
 
-	public void setIdJadwalKuliah(long idJadwalKuliah) {
-		this.idJadwalKuliah = idJadwalKuliah;
-	}
+    public void setWaktuMasuk(Date waktuMasuk) {
+        this.waktuMasuk = waktuMasuk;
+    }
 
-	public String getHari() {
-		return this.hari;
-	}
+    public Date getWaktuKeluar() {
+        return waktuKeluar;
+    }
 
-	public void setHari(String hari) {
-		this.hari = hari;
-	}
+    public void setWaktuKeluar(Date waktuKeluar) {
+        this.waktuKeluar = waktuKeluar;
+    }
 
-	public String getKodeMataKuliah() {
-		return this.kodeMataKuliah;
-	}
+    @XmlTransient
+    public List<Dosen> getDosenList() {
+        return dosenList;
+    }
 
-	public void setKodeMataKuliah(String kodeMataKuliah) {
-		this.kodeMataKuliah = kodeMataKuliah;
-	}
+    public void setDosenList(List<Dosen> dosenList) {
+        this.dosenList = dosenList;
+    }
 
-	public Timestamp getWaktuKeluar() {
-		return this.waktuKeluar;
-	}
+    public Ruangan getKdRuangan() {
+        return kdRuangan;
+    }
 
-	public void setWaktuKeluar(Timestamp waktuKeluar) {
-		this.waktuKeluar = waktuKeluar;
-	}
+    public void setKdRuangan(Ruangan kdRuangan) {
+        this.kdRuangan = kdRuangan;
+    }
 
-	public Timestamp getWaktuMasuk() {
-		return this.waktuMasuk;
-	}
+    public PeriodeKuliah getIdPeriodeKuliah() {
+        return idPeriodeKuliah;
+    }
 
-	public void setWaktuMasuk(Timestamp waktuMasuk) {
-		this.waktuMasuk = waktuMasuk;
-	}
+    public void setIdPeriodeKuliah(PeriodeKuliah idPeriodeKuliah) {
+        this.idPeriodeKuliah = idPeriodeKuliah;
+    }
 
-	public PeriodeKuliah getPeriodeKuliah() {
-		return this.periodeKuliah;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idJadwalKuliah != null ? idJadwalKuliah.hashCode() : 0);
+        return hash;
+    }
 
-	public void setPeriodeKuliah(PeriodeKuliah periodeKuliah) {
-		this.periodeKuliah = periodeKuliah;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof JadwalKuliah)) {
+            return false;
+        }
+        JadwalKuliah other = (JadwalKuliah) object;
+        if ((this.idJadwalKuliah == null && other.idJadwalKuliah != null) || (this.idJadwalKuliah != null && !this.idJadwalKuliah.equals(other.idJadwalKuliah))) {
+            return false;
+        }
+        return true;
+    }
 
-	public Ruangan getRuangan() {
-		return this.ruangan;
-	}
-
-	public void setRuangan(Ruangan ruangan) {
-		this.ruangan = ruangan;
-	}
-
-	public List<Dosen> getDosens() {
-		return this.dosens;
-	}
-
-	public void setDosens(List<Dosen> dosens) {
-		this.dosens = dosens;
-	}
-
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.JadwalKuliah[ idJadwalKuliah=" + idJadwalKuliah + " ]";
+    }
+    
 }

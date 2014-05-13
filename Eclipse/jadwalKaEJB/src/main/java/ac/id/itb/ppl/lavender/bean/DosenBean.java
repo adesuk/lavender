@@ -37,7 +37,7 @@ public class DosenBean extends AbstractBean<Dosen> implements DosenRemote {
 
 	public List<KaryaAkhir> getKaryaAkhir(String dosenID) {
 		Dosen dosen = find(dosenID);
-		List<KaryaAkhir> listKaryaAkhir = dosen.getKaryaAkhirs();
+		List<KaryaAkhir> listKaryaAkhir = dosen.getKaryaAkhirList();
 		for (KaryaAkhir ka : listKaryaAkhir) {
 			System.out.println(ka.getJudulKa());
 		}

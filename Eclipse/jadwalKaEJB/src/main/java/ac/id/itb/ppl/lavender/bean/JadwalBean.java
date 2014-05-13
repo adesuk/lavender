@@ -41,21 +41,21 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 	}
 
 	public List<Jadwal> searchJadwal(Periode p) {
-		return em.createQuery("select j from Jadwal j, Periode p where p.idPeriode=j.periode.idPeriode "
+		return em.createQuery("select j from Jadwal j, Periode p where p.idPeriode=j.idPeriode.idPeriode "
 				+ "and p.idPeriode=?")
 				.setParameter(1, p.getIdPeriode()).getResultList();	
 	}
 	
-	public List<JadwalView> findJadwalByPeriode(long idPeriode) {
-		List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.periode.idPeriode=?1")
+	public List<JadwalView> findJadwalByPeriode(Integer idPeriode) {
+		List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.idPeriode.idPeriode=?1")
 				.setParameter(1, idPeriode)
 				.getResultList();
 		return processJadwalView(listJadwal);
 	}
 
-	public List<JadwalView> findJadwalByPeriodeAndPelaksanaan(long idPeriode, int status) {
+	public List<JadwalView> findJadwalByPeriodeAndPelaksanaan(Integer idPeriode, int status) {
 		if (status == AllConstants.BELUM_TERLAKSANA || status == AllConstants.SUDAH_TERLAKSANA) {
-			List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.periode.idPeriode=?1 "
+			List<Jadwal> listJadwal = em.createQuery("SELECT j FROM Jadwal j where j.idPeriode.idPeriode=?1 "
 				+ "and j.statusPelaksanaan=?2")
 				.setParameter(1, idPeriode)
 				.setParameter(2, status)
@@ -75,7 +75,7 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 			//dosen pembimbing
 			String pembimbing1 = "";
 			String pembimbing2 = "";
-			List<Dosen> pembimbing = jadwal.getKaryaAkhir().getDosensPembimbing();
+			List<Dosen> pembimbing = jadwal.getKaryaAkhir().getDosenPembimbing();
 			if (pembimbing.size() == 1) {
 				pembimbing1 = pembimbing.get(0).getInisialDosen();
 			}
@@ -86,7 +86,7 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 			//dosen penguji
 			String penguji1 = "";
 			String penguji2 = "";			
-			List<Dosen> penguji = jadwal.getDosensPenguji();
+			List<Dosen> penguji = jadwal.getDosenPenguji();
 			if (penguji.size() == 1) {
 				penguji1 = penguji.get(0).getInisialDosen();
 			}
@@ -101,7 +101,7 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote {
 					jadwal.getKaryaAkhir().getMahasiswa().getNamaMhs(), 
 					jadwal.getKaryaAkhir().getJudulKa(), pembimbing1, pembimbing2, 
 					penguji1, penguji2, jadwal.getRuangan().getNamaRuangan(),
-					jadwal.getStatusPelaksanaan(), jadwal.getStatusHasilPelaksanaan());
+					jadwal.getStatusPelaksanaan().intValue(), jadwal.getStatusHasilPelaksanaan().intValue());
 			listJadwalView.add(jd);
 		}
 		

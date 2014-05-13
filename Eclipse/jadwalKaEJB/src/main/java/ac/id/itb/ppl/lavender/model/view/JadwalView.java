@@ -1,7 +1,7 @@
 package ac.id.itb.ppl.lavender.model.view;
 
 public class JadwalView {
-	private long idJadwal;
+	private Integer idJadwal;
 	private String hariTanggal;
 	private String pukul;
 	private String nim;
@@ -15,7 +15,7 @@ public class JadwalView {
 	private Integer statusPelaksanaan;
 	private Integer statusHasilPelaksanaan;
 	
-	public JadwalView(long idJadwal, String hariTanggal, String pukul,
+	public JadwalView(Integer idJadwal, String hariTanggal, String pukul,
 			String nim, String nama, String judul, String pembimbing1,
 			String pembimbing2, String penguji1, String penguji2,
 			String ruangan, Integer statusPelaksanaan,
@@ -36,10 +36,10 @@ public class JadwalView {
 		this.statusHasilPelaksanaan = statusHasilPelaksanaan;
 	}
 
-	public long getIdJadwal() {
+	public Integer getIdJadwal() {
 		return idJadwal;
 	}
-	public void setIdJadwal(long idJadwal) {
+	public void setIdJadwal(Integer idJadwal) {
 		this.idJadwal = idJadwal;
 	}
 	public String getHariTanggal() {

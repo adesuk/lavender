@@ -1,156 +1,203 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the DOSEN database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@NamedQuery(name="Dosen.findAll", query="SELECT d FROM Dosen d")
+@Table(name = "DOSEN")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Dosen.findAll", query = "SELECT d FROM Dosen d"),
+    @NamedQuery(name = "Dosen.findByInisialDosen", query = "SELECT d FROM Dosen d WHERE d.inisialDosen = :inisialDosen"),
+    @NamedQuery(name = "Dosen.findByNamaDosen", query = "SELECT d FROM Dosen d WHERE d.namaDosen = :namaDosen"),
+    @NamedQuery(name = "Dosen.findByStatus", query = "SELECT d FROM Dosen d WHERE d.status = :status"),
+    @NamedQuery(name = "Dosen.findByGelarDepan", query = "SELECT d FROM Dosen d WHERE d.gelarDepan = :gelarDepan"),
+    @NamedQuery(name = "Dosen.findByGelarBelakang", query = "SELECT d FROM Dosen d WHERE d.gelarBelakang = :gelarBelakang")})
 public class Dosen implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "INISIAL_DOSEN")
+    private String inisialDosen;
+    @Size(max = 50)
+    @Column(name = "NAMA_DOSEN")
+    private String namaDosen;
+    @Size(max = 10)
+    @Column(name = "STATUS")
+    private String status;
+    @Size(max = 30)
+    @Column(name = "GELAR_DEPAN")
+    private String gelarDepan;
+    @Size(max = 30)
+    @Column(name = "GELAR_BELAKANG")
+    private String gelarBelakang;
+    @JoinTable(name = "MENGAJAR", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_JADWAL_KULIAH", referencedColumnName = "ID_JADWAL_KULIAH")})
+    @ManyToMany
+    private List<JadwalKuliah> jadwalKuliahList;
+    @JoinTable(name = "REFERENCE", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_TOPIK", referencedColumnName = "ID_TOPIK")})
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Topik> bidangKeahlian;
+    @JoinTable(name = "MENGUJI", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_JADWAL", referencedColumnName = "ID_JADWAL")})
+    @ManyToMany
+    private List<Jadwal> jadwalList;
+    @JoinTable(name = "MEMBIMBING", joinColumns = {
+        @JoinColumn(name = "INISIAL_DOSEN", referencedColumnName = "INISIAL_DOSEN")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_KA", referencedColumnName = "ID_KA")})
+    @ManyToMany
+    private List<KaryaAkhir> karyaAkhirList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dosen", fetch = FetchType.LAZY)
+    private List<KetersediaanWaktuDosen> ketersediaanWaktuDosens;
 
-	@Id
-	@Column(name="INISIAL_DOSEN")
-	private String inisialDosen;
+    public Dosen() {
+    }
 
-	@Column(name="GELAR_BELAKANG")
-	private String gelarBelakang;
+    public Dosen(String inisialDosen) {
+        this.inisialDosen = inisialDosen;
+    }
 
-	@Column(name="GELAR_DEPAN")
-	private String gelarDepan;
+    public String getInisialDosen() {
+        return inisialDosen;
+    }
 
-	@Column(name="NAMA_DOSEN")
-	private String namaDosen;
+    public void setInisialDosen(String inisialDosen) {
+        this.inisialDosen = inisialDosen;
+    }
 
-	@Column(name="STATUS")
-	private String status;
+    public String getNamaDosen() {
+        return namaDosen;
+    }
 
-	//bi-directional many-to-one association to KetersediaanWaktuDosen
-	@OneToMany(mappedBy="dosen")
-	private List<KetersediaanDosen> ketersediaanWaktuDosens;
+    public void setNamaDosen(String namaDosen) {
+        this.namaDosen = namaDosen;
+    }
 
-	//bi-directional many-to-many association to KaryaAkhir
-	@ManyToMany(mappedBy="dosens")
-	private List<KaryaAkhir> karyaAkhirs;
+    public String getStatus() {
+        return status;
+    }
 
-	//bi-directional many-to-many association to JadwalKuliah
-	@ManyToMany(mappedBy="dosens")
-	private List<JadwalKuliah> jadwalKuliahs;
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	//bi-directional many-to-many association to Jadwal
-	@ManyToMany(mappedBy="dosens")
-	private List<Jadwal> jadwals;
+    public String getGelarDepan() {
+        return gelarDepan;
+    }
 
-	//bi-directional many-to-many association to Topik
-	@ManyToMany(mappedBy="dosens", cascade=CascadeType.ALL)
-	private List<Topik> topiks;
+    public void setGelarDepan(String gelarDepan) {
+        this.gelarDepan = gelarDepan;
+    }
 
-	public Dosen() {
-	}
+    public String getGelarBelakang() {
+        return gelarBelakang;
+    }
 
-	public String getInisialDosen() {
-		return this.inisialDosen;
-	}
+    public void setGelarBelakang(String gelarBelakang) {
+        this.gelarBelakang = gelarBelakang;
+    }
 
-	public void setInisialDosen(String inisialDosen) {
-		this.inisialDosen = inisialDosen;
-	}
+    @XmlTransient
+    public List<JadwalKuliah> getJadwalKuliahList() {
+        return jadwalKuliahList;
+    }
 
-	public String getGelarBelakang() {
-		return this.gelarBelakang;
-	}
+    public void setJadwalKuliahList(List<JadwalKuliah> jadwalKuliahList) {
+        this.jadwalKuliahList = jadwalKuliahList;
+    }
 
-	public void setGelarBelakang(String gelarBelakang) {
-		this.gelarBelakang = gelarBelakang;
-	}
+    @XmlTransient
+    public List<Topik> getBidangKeahlian() {
+        return bidangKeahlian;
+    }
 
-	public String getGelarDepan() {
-		return this.gelarDepan;
-	}
+    public void setBidangKeahlian(List<Topik> bidangKeahlian) {
+        this.bidangKeahlian = bidangKeahlian;
+    }
 
-	public void setGelarDepan(String gelarDepan) {
-		this.gelarDepan = gelarDepan;
-	}
+    @XmlTransient
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
 
-	public String getNamaDosen() {
-		return this.namaDosen;
-	}
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
 
-	public void setNamaDosen(String namaDosen) {
-		this.namaDosen = namaDosen;
-	}
+    @XmlTransient
+    public List<KaryaAkhir> getKaryaAkhirList() {
+        return karyaAkhirList;
+    }
 
-	public String getStatus() {
-		return this.status;
-	}
+    public void setKaryaAkhirList(List<KaryaAkhir> karyaAkhirList) {
+        this.karyaAkhirList = karyaAkhirList;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    @XmlTransient
+    public List<KetersediaanWaktuDosen> getKetersediaanWaktuDosens() {
+        return ketersediaanWaktuDosens;
+    }
 
-	public List<KetersediaanDosen> getKetersediaanWaktuDosens() {
-		return this.ketersediaanWaktuDosens;
-	}
+    public void setKetersediaanWaktuDosens(List<KetersediaanWaktuDosen> ketersediaanWaktuDosens) {
+        this.ketersediaanWaktuDosens = ketersediaanWaktuDosens;
+    }
 
-	public void setKetersediaanWaktuDosens(List<KetersediaanDosen> ketersediaanWaktuDosens) {
-		this.ketersediaanWaktuDosens = ketersediaanWaktuDosens;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (inisialDosen != null ? inisialDosen.hashCode() : 0);
+        return hash;
+    }
 
-	public KetersediaanDosen addKetersediaanWaktuDosen(KetersediaanDosen ketersediaanWaktuDosen) {
-		getKetersediaanWaktuDosens().add(ketersediaanWaktuDosen);
-		ketersediaanWaktuDosen.setDosen(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Dosen)) {
+            return false;
+        }
+        Dosen other = (Dosen) object;
+        if ((this.inisialDosen == null && other.inisialDosen != null) || (this.inisialDosen != null && !this.inisialDosen.equals(other.inisialDosen))) {
+            return false;
+        }
+        return true;
+    }
 
-		return ketersediaanWaktuDosen;
-	}
-
-	public KetersediaanDosen removeKetersediaanWaktuDosen(KetersediaanDosen ketersediaanWaktuDosen) {
-		getKetersediaanWaktuDosens().remove(ketersediaanWaktuDosen);
-		ketersediaanWaktuDosen.setDosen(null);
-
-		return ketersediaanWaktuDosen;
-	}
-
-	public List<KaryaAkhir> getKaryaAkhirs() {
-		return this.karyaAkhirs;
-	}
-
-	public void setKaryaAkhirs(List<KaryaAkhir> karyaAkhirs) {
-		this.karyaAkhirs = karyaAkhirs;
-	}
-
-	public List<JadwalKuliah> getJadwalKuliahs() {
-		return this.jadwalKuliahs;
-	}
-
-	public void setJadwalKuliahs(List<JadwalKuliah> jadwalKuliahs) {
-		this.jadwalKuliahs = jadwalKuliahs;
-	}
-
-	public List<Jadwal> getJadwals() {
-		return this.jadwals;
-	}
-
-	public void setJadwals(List<Jadwal> jadwals) {
-		this.jadwals = jadwals;
-	}
-
-	public List<Topik> getBidangKeahlian() {
-		return this.topiks;
-	}
-
-	public void setBidangKeahlian(List<Topik> topiks) {
-		this.topiks = topiks;
-	}
-
-	@Override
-	public String toString() {
-		return inisialDosen+ "-"+ namaDosen;
-	}
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.Dosen[ inisialDosen=" + inisialDosen + " ]";
+    }
+    
 }

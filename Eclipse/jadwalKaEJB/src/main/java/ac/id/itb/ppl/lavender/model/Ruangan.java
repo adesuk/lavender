@@ -1,107 +1,139 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the RUANGAN database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@NamedQuery(name="Ruangan.findAll", query="SELECT r FROM Ruangan r")
+@Table(name = "RUANGAN")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Ruangan.findAll", query = "SELECT r FROM Ruangan r"),
+    @NamedQuery(name = "Ruangan.findByKdRuangan", query = "SELECT r FROM Ruangan r WHERE r.kdRuangan = :kdRuangan"),
+    @NamedQuery(name = "Ruangan.findByNamaRuangan", query = "SELECT r FROM Ruangan r WHERE r.namaRuangan = :namaRuangan")})
 public class Ruangan implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "KD_RUANGAN")
+    private String kdRuangan;
+    @Size(max = 5)
+    @Column(name = "NAMA_RUANGAN")
+    private String namaRuangan;
+    @OneToMany(mappedBy = "ruangan")
+    private List<Jadwal> jadwalList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kdRuangan")
+    private List<JadwalKuliah> jadwalKuliahList;
+    @Transient
+    private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
+    @Transient
+    private boolean selected;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="KD_RUANGAN")
-	private String kdRuangan;
+    public Ruangan() {
+    }
 
-	@Column(name="NAMA_RUANGAN")
-	private String namaRuangan;
+    public Ruangan(String kdRuangan) {
+        this.kdRuangan = kdRuangan;
+    }
 
-	//bi-directional many-to-one association to Jadwal
-	@OneToMany(mappedBy="ruangan")
-	private List<Jadwal> jadwals;
+    public String getKdRuangan() {
+        return kdRuangan;
+    }
 
-	//bi-directional many-to-one association to JadwalKuliah
-	@OneToMany(mappedBy="ruangan")
-	private List<JadwalKuliah> jadwalKuliahs;
+    public void setKdRuangan(String kdRuangan) {
+        this.kdRuangan = kdRuangan;
+    }
 
-	@Transient
-	private List<KetersediaanRuangan> ketersediaanWaktuRuangan;
-	
-	public Ruangan() {
-	}
+    public String getNamaRuangan() {
+        return namaRuangan;
+    }
 
-	public String getKdRuangan() {
-		return this.kdRuangan;
-	}
+    public void setNamaRuangan(String namaRuangan) {
+        this.namaRuangan = namaRuangan;
+    }
 
-	public void setKdRuangan(String kdRuangan) {
-		this.kdRuangan = kdRuangan;
-	}
+    @XmlTransient
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
 
-	public String getNamaRuangan() {
-		return this.namaRuangan;
-	}
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
 
-	public void setNamaRuangan(String namaRuangan) {
-		this.namaRuangan = namaRuangan;
-	}
+    @XmlTransient
+    public List<JadwalKuliah> getJadwalKuliahList() {
+        return jadwalKuliahList;
+    }
 
-	public List<Jadwal> getJadwals() {
-		return this.jadwals;
-	}
+    public void setJadwalKuliahList(List<JadwalKuliah> jadwalKuliahList) {
+        this.jadwalKuliahList = jadwalKuliahList;
+    }
 
-	public void setJadwals(List<Jadwal> jadwals) {
-		this.jadwals = jadwals;
-	}
+    public List<KetersediaanRuangan> getKetersediaanWaktuRuangan() {
+        return ketersediaanWaktuRuangan;
+    }
 
-	public List<KetersediaanRuangan> getKetersediaanWaktuRuangan() {
-		return ketersediaanWaktuRuangan;
-	}
+    public void setKetersediaanWaktuRuangan(List<KetersediaanRuangan> ketersediaanWaktuRuangan) {
+        this.ketersediaanWaktuRuangan = ketersediaanWaktuRuangan;
+    }
+    
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (kdRuangan != null ? kdRuangan.hashCode() : 0);
+        return hash;
+    }
 
-	public void setKetersediaanWaktuRuangan(List<KetersediaanRuangan> ketersediaanWaktuRuangan) {
-		this.ketersediaanWaktuRuangan = ketersediaanWaktuRuangan;
-	}
-	
-	public Jadwal addJadwal(Jadwal jadwal) {
-		getJadwals().add(jadwal);
-		jadwal.setRuangan(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Ruangan)) {
+            return false;
+        }
+        Ruangan other = (Ruangan) object;
+        if ((this.kdRuangan == null && other.kdRuangan != null) || (this.kdRuangan != null && !this.kdRuangan.equals(other.kdRuangan))) {
+            return false;
+        }
+        return true;
+    }
 
-		return jadwal;
-	}
-
-	public Jadwal removeJadwal(Jadwal jadwal) {
-		getJadwals().remove(jadwal);
-		jadwal.setRuangan(null);
-
-		return jadwal;
-	}
-
-	public List<JadwalKuliah> getJadwalKuliahs() {
-		return this.jadwalKuliahs;
-	}
-
-	public void setJadwalKuliahs(List<JadwalKuliah> jadwalKuliahs) {
-		this.jadwalKuliahs = jadwalKuliahs;
-	}
-
-	public JadwalKuliah addJadwalKuliah(JadwalKuliah jadwalKuliah) {
-		getJadwalKuliahs().add(jadwalKuliah);
-		jadwalKuliah.setRuangan(this);
-
-		return jadwalKuliah;
-	}
-
-	public JadwalKuliah removeJadwalKuliah(JadwalKuliah jadwalKuliah) {
-		getJadwalKuliahs().remove(jadwalKuliah);
-		jadwalKuliah.setRuangan(null);
-
-		return jadwalKuliah;
-	}
-
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.Ruangan[ kdRuangan=" + kdRuangan + " ]";
+    }
+    
 }

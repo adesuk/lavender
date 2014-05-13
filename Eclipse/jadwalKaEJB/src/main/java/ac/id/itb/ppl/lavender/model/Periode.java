@@ -1,164 +1,202 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The persistent class for the PERIODE database table.
- * 
+ *
+ * @author Edbert
  */
 @Entity
-@NamedQuery(name="Periode.findAll", query="SELECT p FROM Periode p")
+@Table(name = "PERIODE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Periode.findAll", query = "SELECT p FROM Periode p"),
+    @NamedQuery(name = "Periode.findByIdPeriode", query = "SELECT p FROM Periode p WHERE p.idPeriode = :idPeriode"),
+    @NamedQuery(name = "Periode.findByNamaPeriode", query = "SELECT p FROM Periode p WHERE p.namaPeriode = :namaPeriode"),
+    @NamedQuery(name = "Periode.findByPeriodeAwal", query = "SELECT p FROM Periode p WHERE p.periodeAwal = :periodeAwal"),
+    @NamedQuery(name = "Periode.findByPeriodeAkhir", query = "SELECT p FROM Periode p WHERE p.periodeAkhir = :periodeAkhir"),
+    @NamedQuery(name = "Periode.findByTipeJadwal", query = "SELECT p FROM Periode p WHERE p.tipeJadwal = :tipeJadwal"),
+    @NamedQuery(name = "Periode.findByStatusVerifikasi", query = "SELECT p FROM Periode p WHERE p.statusVerifikasi = :statusVerifikasi"),
+    @NamedQuery(name = "Periode.findByStatusRilis", query = "SELECT p FROM Periode p WHERE p.statusRilis = :statusRilis"),
+    @NamedQuery(name = "Periode.findByStatusJadwal", query = "SELECT p FROM Periode p WHERE p.statusJadwal = :statusJadwal")})
 public class Periode implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_PERIODE")
+    private Integer idPeriode;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "NAMA_PERIODE")
+    private String namaPeriode;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PERIODE_AWAL")
+    @Temporal(TemporalType.DATE)
+    private Date periodeAwal;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PERIODE_AKHIR")
+    @Temporal(TemporalType.DATE)
+    private Date periodeAkhir;
+    @Column(name = "TIPE_JADWAL")
+    private Character tipeJadwal;
+    @Column(name = "STATUS_VERIFIKASI")
+    private BigInteger statusVerifikasi;
+    @Column(name = "STATUS_RILIS")
+    private BigInteger statusRilis;
+    @Column(name = "STATUS_JADWAL")
+    private Character statusJadwal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPeriode")
+    private List<Jadwal> jadwalList;
+    @Transient
+    private boolean selected;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_PERIODE")
-	private Long idPeriode;
+    public Periode() {
+    }
 
-	@Column(name="NAMA_PERIODE")
-	private String namaPeriode;
+    public Periode(Integer idPeriode) {
+        this.idPeriode = idPeriode;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="PERIODE_AKHIR")
-	private Date periodeAkhir;
+    public Periode(Integer idPeriode, String namaPeriode, Date periodeAwal, Date periodeAkhir) {
+        this.idPeriode = idPeriode;
+        this.namaPeriode = namaPeriode;
+        this.periodeAwal = periodeAwal;
+        this.periodeAkhir = periodeAkhir;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="PERIODE_AWAL")
-	private Date periodeAwal;
+    public Integer getIdPeriode() {
+        return idPeriode;
+    }
 
-	@Column(name="STATUS_JADWAL")
-	private String statusJadwal;
+    public void setIdPeriode(Integer idPeriode) {
+        this.idPeriode = idPeriode;
+    }
 
-	@Column(name="STATUS_RILIS")
-	private BigDecimal statusRilis;
+    public String getNamaPeriode() {
+        return namaPeriode;
+    }
 
-	@Column(name="STATUS_VERIFIKASI")
-	private BigDecimal statusVerifikasi;
+    public void setNamaPeriode(String namaPeriode) {
+        this.namaPeriode = namaPeriode;
+    }
 
-	@Column(name="TIPE_JADWAL")
-	private String tipeJadwal;
+    public Date getPeriodeAwal() {
+        return periodeAwal;
+    }
 
-	//bi-directional many-to-one association to Jadwal
-	@OneToMany(mappedBy="periode")
-	private List<Jadwal> jadwals;
+    public void setPeriodeAwal(Date periodeAwal) {
+        this.periodeAwal = periodeAwal;
+    }
 
-	public Periode() {
-	}
+    public Date getPeriodeAkhir() {
+        return periodeAkhir;
+    }
 
-	public Long getIdPeriode() {
-		return this.idPeriode;
-	}
+    public void setPeriodeAkhir(Date periodeAkhir) {
+        this.periodeAkhir = periodeAkhir;
+    }
 
-	public void setIdPeriode(Long idPeriode) {
-		this.idPeriode = idPeriode;
-	}
+    public Character getTipeJadwal() {
+        return tipeJadwal;
+    }
 
-	public String getNamaPeriode() {
-		return this.namaPeriode;
-	}
+    public void setTipeJadwal(Character tipeJadwal) {
+        this.tipeJadwal = tipeJadwal;
+    }
 
-	public void setNamaPeriode(String namaPeriode) {
-		this.namaPeriode = namaPeriode;
-	}
+    public BigInteger getStatusVerifikasi() {
+        return statusVerifikasi;
+    }
 
-	public Date getPeriodeAkhir() {
-		return this.periodeAkhir;
-	}
+    public void setStatusVerifikasi(BigInteger statusVerifikasi) {
+        this.statusVerifikasi = statusVerifikasi;
+    }
 
-	public void setPeriodeAkhir(Date periodeAkhir) {
-		this.periodeAkhir = periodeAkhir;
-	}
+    public BigInteger getStatusRilis() {
+        return statusRilis;
+    }
 
-	public Date getPeriodeAwal() {
-		return this.periodeAwal;
-	}
+    public void setStatusRilis(BigInteger statusRilis) {
+        this.statusRilis = statusRilis;
+    }
 
-	public void setPeriodeAwal(Date periodeAwal) {
-		this.periodeAwal = periodeAwal;
-	}
+    public Character getStatusJadwal() {
+        return statusJadwal;
+    }
 
-	public String getStatusJadwal() {
-		return this.statusJadwal;
-	}
+    public void setStatusJadwal(Character statusJadwal) {
+        this.statusJadwal = statusJadwal;
+    }
 
-	public void setStatusJadwal(String statusJadwal) {
-		this.statusJadwal = statusJadwal;
-	}
+    @XmlTransient
+    public List<Jadwal> getJadwalList() {
+        return jadwalList;
+    }
 
-	public BigDecimal getStatusRilis() {
-		return this.statusRilis;
-	}
+    public void setJadwalList(List<Jadwal> jadwalList) {
+        this.jadwalList = jadwalList;
+    }
+    
+    public boolean getSelected() {
+        return selected;
+    }
+    
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
-	public void setStatusRilis(BigDecimal statusRilis) {
-		this.statusRilis = statusRilis;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idPeriode != null ? idPeriode.hashCode() : 0);
+        return hash;
+    }
 
-	public BigDecimal getStatusVerifikasi() {
-		return this.statusVerifikasi;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Periode)) {
+            return false;
+        }
+        Periode other = (Periode) object;
+        if ((this.idPeriode == null && other.idPeriode != null) || (this.idPeriode != null && !this.idPeriode.equals(other.idPeriode))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setStatusVerifikasi(BigDecimal statusVerifikasi) {
-		this.statusVerifikasi = statusVerifikasi;
-	}
-
-	public String getTipeJadwal() {
-		return this.tipeJadwal;
-	}
-
-	public void setTipeJadwal(String tipeJadwal) {
-		this.tipeJadwal = tipeJadwal;
-	}
-
-	public List<Jadwal> getJadwals() {
-		return this.jadwals;
-	}
-
-	public void setJadwals(List<Jadwal> jadwals) {
-		this.jadwals = jadwals;
-	}
-
-	public Jadwal addJadwal(Jadwal jadwal) {
-		getJadwals().add(jadwal);
-		jadwal.setPeriode(this);
-
-		return jadwal;
-	}
-
-	public Jadwal removeJadwal(Jadwal jadwal) {
-		getJadwals().remove(jadwal);
-		jadwal.setPeriode(null);
-
-		return jadwal;
-	}
-
-	 @Override
-	    public int hashCode() {
-	        int hash = 0;
-	        hash += (idPeriode != null ? idPeriode.hashCode() : 0);
-	        return hash;
-	    }
-
-	    @Override
-	    public boolean equals(Object object) {
-	        // TODO: Warning - this method won't work in the case the id fields are not set
-	        if (!(object instanceof Periode)) {
-	            return false;
-	        }
-	        Periode other = (Periode) object;
-	        if ((this.idPeriode == null && other.idPeriode != null) || (this.idPeriode != null && !this.idPeriode.equals(other.idPeriode))) {
-	            return false;
-	        }
-	        return true;
-	    }
-
-	    @Override
-	    public String toString() {
-	        return "ac.id.itb.ppl.lavender.model.Periode[ idPeriode=" + idPeriode + " ]";
-	    }
+    @Override
+    public String toString() {
+        return "ac.id.itb.ppl.lavender.model.Periode[ idPeriode=" + idPeriode + " ]";
+    }
+    
 }
