@@ -10,22 +10,18 @@
   </h:head>
   <h:body>
     <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
-      <ui:define name="events">
-        <f:event listener="#{pengelolaanPeriode.initializePeriode}" type="preRenderView" />
-      </ui:define>
-
       <ui:define name="content">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
               <f:view>
                 <h:form class="form-horizontal" id="periodeInputForm">
-                  <h2><h:outputText value="Tambah Periode" /></h2>
+                  <h2><h:outputText value="Ubah Periode" /></h2>
                   <hr />
 
                   <p:messages autoUpdate="true" id="msg" closable="true" />
 
-                  <!-- Nama periode -->
+                  <!-- Nama periode nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Nama periode" /> <span class="required">*</span>
@@ -34,14 +30,14 @@
                       <p:inputText id="namaPeriode" 
                                    value="#{pengelolaanPeriode.periode.namaPeriode}"
                                    required="true"
-                                   requiredMessage="Nama harus diisi." />
+                                   requiredMessage="Nama harus diisi."/>
                     </div>
                     <div class="col-sm-4">
                       <p:message for="namaPeriode" />
                     </div>
                   </div>
 
-                  <!-- Periode awal -->
+                  <!-- Periode awal nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Periode awal" /> <span class="required">*</span>
@@ -59,7 +55,7 @@
                     </div>
                   </div>
 
-                  <!-- Periode akhir -->
+                  <!-- Periode akhir nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Periode akhir" /> <span class="required">*</span>
@@ -69,7 +65,7 @@
                                   value="#{pengelolaanPeriode.periode.periodeAkhir}"
                                   pattern="dd/MM/yyyy"
                                   required="true"
-                                  requiredMessage="Periode akhir harus diisi"
+                                  requiredMessage="Periode akhir harus diisi."
                                   readonlyInput="true">
                         <f:validator validatorId="dateRangeValidator" />
                         <f:attribute name="startDateComponent" value="#{startDateComponent}" />
@@ -80,7 +76,7 @@
                     </div>
                   </div>
 
-                  <!-- Tipe jadwal -->
+                  <!-- Tipe jadwal nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
                       <h:outputText value="Tipe Pelaksanaan" /> <span class="required">*</span>
@@ -92,13 +88,13 @@
                     </div>
                   </div>
 
-                  <!-- Tombol-tombol -->
+                  <!-- Tombol-tombol nya ini-->
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-3">
                       <h:panelGrid columns="2">
                         <p:commandButton id="save" value="Simpan" 
                                          style="width: 90px; margin: 5px 5px 5px 0"
-                                         actionListener="#{pengelolaanPeriode.savePeriode}"
+                                         actionListener="#{pengelolaanPeriode.updatePeriode}"
                                          validateClient="true"
                                          update="periodeInputForm" />
                         <p:commandButton id="cancel" value="Batal"

@@ -9,19 +9,23 @@
     <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" />
     <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styles.css" />
+    <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap.js"></script>
+    <script type="text/javascript" src="#{request.contextPath}/resources/js/bootstrap.min.js"></script>
   </h:head>
   <h:body>
     <ui:insert name="metadata"></ui:insert>
     <ui:insert name="events"></ui:insert>
     <div id="header">
-      <div class="container">`
+      <div class="container">
         <ui:insert name="header">
-          <div>
-            <img src="" style="width: 100px; height: 100px;" />
-            <h1>Sistem Penjadwalan Seminar/Sidang</h1>
+          <div style="margin-top: 10px">
+            <img src="#{request.contextPath}/resources/images/logo-itb.png" style="width: 100px; height: 140px;" />
+            <h1 style="display: inline">Sistem Penjadwalan Seminar/Sidang</h1>
           </div>
-          <div><p style="text-align: right"><h:outputText value="#{not empty loginBean.user ? loginBean.user.name : ''}" /></p></div>
-          <div><p style="text-align: right"><span id="curDateTime"></span></p></div>
+          <hr style="margin: 5px" />
+          <div><p style="text-align: right;"><h:outputText value="#{not empty loginBean.user ? loginBean.user.firstName : '&nbsp;'}" /></p></div>
+          <hr style="margin: 5px" />
+          <div><p style="text-align: right;"><span id="curDateTime"></span></p></div>
         </ui:insert>
       </div>
     </div>

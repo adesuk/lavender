@@ -8,10 +8,12 @@ import java.util.Map;
  * @author edbert
  */
 public final class TipeEksekusi {
+    
     private final Map<String, Character> tipeEkseksusis;
     
     public TipeEksekusi() {
         tipeEkseksusis = new LinkedHashMap<String, Character>(5);
+        tipeEkseksusis.put("Proposal", AllConstants.PROPOSAL);
         tipeEkseksusis.put("Seminar Tugas Akhir 1", AllConstants.SEMINAR_TA_1);
         tipeEkseksusis.put("Seminar Tugas Akhir 2", AllConstants.SEMINAR_TA_2);
         tipeEkseksusis.put("Sidang Tugas Akhir", AllConstants.SIDANG_TA);
@@ -22,6 +24,15 @@ public final class TipeEksekusi {
     public Map<String, Character> getTipeEksekusis() {
         Map<String, Character> map = new LinkedHashMap<String, Character>(tipeEkseksusis.size());
         map.putAll(tipeEkseksusis);
-        return map; // kasihkan copy-annya
+        return map;
+    }
+    
+    public String getName(Character tipeJadwal) {
+        for (String s : tipeEkseksusis.keySet()) {
+            if (tipeEkseksusis.get(s) == tipeJadwal) {
+                return s;
+            }
+        }
+        return "";
     }
 }

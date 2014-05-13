@@ -56,89 +56,48 @@
                         <p:commandButton value="Hapus"
                                          action="#{pengelolaanPeriode.deletePeriode()}"
                                          update="jadwalArea"
-                                         style="width: 90px; margin: 5px" />
+                                         style="width: 90px; margin: 5px"
+                                         immediate="true" />
                       </h:panelGrid>
                     </div>
                   </div>
 
                   <!-- Table itu -->
                   <h:panelGroup layout="block" id="jadwalArea">
-                    <p:dataTable id="periodes" var="periode" value="#{pengelolaanPeriode.periodes2}"
-                                 editable="true">
-                      <p:ajax event="rowEdit" listener="#{pengelolaanPeriode.onEdit}" />
+                    <p:dataTable id="periodes" var="periode" 
+                                 style="font-size: 1em"
+                                 value="#{pengelolaanPeriode.periodes2}">
                       <p:column headerText="" width="40">
-                        <f:facet name="header">
-                          <h:outputText value="" />
-                        </f:facet>
-                        <p:selectBooleanCheckbox value="#{periode.selected}" />
+                        <p:selectBooleanCheckbox value="#{periode.selected}">
+                          <p:ajax event="change" update="@this" />
+                        </p:selectBooleanCheckbox>
                       </p:column>
-                      <p:column headerText="Nama Periode" width="300">
-                        <p:cellEditor>
-                          <f:facet name="output">
-                            <h:outputText value="#{periode.namaPeriode}" />
-                          </f:facet>
-                          <f:facet name="input">
-                            <p:inputText value="#{periode.namaPeriode}" style="width:100%" />
-                          </f:facet>
-                        </p:cellEditor>
+                      <p:column headerText="Nama Periode" width="350">
+                        <h:outputText value="#{periode.namaPeriode}" />
                       </p:column>
                       <p:column headerText="Periode Awal">
-                        <p:cellEditor>
-                          <f:facet name="output">
-                            <h:outputText value="#{periode.periodeAwal}">
-                              <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                          </f:facet>
-                          <f:facet name="input">
-                            <p:calendar value="#{periode.periodeAwal}"
-                                        pattern="dd/MM/yyyy"
-                                        style="width:100%"
-                                        binding="#{startDateComponent}"
-                                        required="true" />
-                          </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{periode.periodeAwal}">
+                          <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
                       </p:column>
                       <p:column headerText="Periode Akhir">
-                        <p:cellEditor>
-                          <f:facet name="output">
-                            <h:outputText value="#{periode.periodeAkhir}">
-                              <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                          </f:facet>
-                          <f:facet name="input">
-                            <p:calendar value="#{periode.periodeAkhir}"
-                                        pattern="dd/MM/yyyy"
-                                        style="width:100%"
-                                        required="true">
-                              <f:validator validatorId="dateRangeValidator" />
-                              <f:attribute name="startDateComponent" value="#{startDateComponent}" />
-                            </p:calendar>
-                          </f:facet>
-                        </p:cellEditor>
+                        <h:outputText value="#{periode.periodeAkhir}">
+                          <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
                       </p:column>
-                      <p:column headerText="Tipe Pelaksanaan">
-                        <f:facet name="output">
-                          <h:outputText value="#{periode.tipeJadwal}" />
-                        </f:facet>
-                        <f:facet name="input">
-
-                        </f:facet>
+                      <p:column headerText="Tipe Pelaksanaan" width="200">
+                        <h:outputText value="#{pengelolaanPeriode.getTipeJadwalName(periode.tipeJadwal)}" />
                       </p:column>
-                      <p:column headerText="Status Verifikasi">
-                        <f:facet name="output">
-                          <h:outputText value="#{periode.statusVerifikasi}" />
-                        </f:facet>
-                        <f:facet name="input">
-
-                        </f:facet>
+                      <p:column headerText="Status Verifikasi" width="80">
+                        <h:outputText value="#{periode.statusVerifikasi}" />
                       </p:column>
-                      <p:column headerText="Status Rilis">
-                        <f:facet name="output">
-                          <h:outputText value="#{periode.statusRilis}" />
-                        </f:facet>
+                      <p:column headerText="Status Rilis" width="80">
+                        <h:outputText value="#{periode.statusRilis}" />
                       </p:column>
-                      <p:column style="width: 5%">
-                        <p:rowEditor />
+                      <p:column headerText="" width="75">
+                        <p:commandButton value="Edit"
+                                         actionListener="#{pengelolaanPeriode.ubahPeriode(periode)}"
+                                         immediate="true"/>
                       </p:column>
                     </p:dataTable>
                   </h:panelGroup>
@@ -147,6 +106,56 @@
             </div>
           </div>
         </div>
+        
+        <div id="berhasilHapusDialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Periode sudah dihapus</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton action="PengelolaanPeriode.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="tidakAdaYangDihapusDialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Pilih minimal satu periode yang akan dihapus.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton type="button"
+                                 value="OK">
+                  <f:passThroughAttribute name="data-dismiss" value="modal" />
+                </p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showBerhasilHapusDialog() {
+            $("#berhasilHapusDialog").modal();
+          }
+          
+          function showTidakAdaYangDihapusDialog() {
+            $("#tidakAdaYangDihapusDialog").modal();
+          }
+        </script>
       </ui:define>>
     </ui:composition>
   </h:body>

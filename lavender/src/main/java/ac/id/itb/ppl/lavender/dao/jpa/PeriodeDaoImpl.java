@@ -5,6 +5,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.util.AllConstants;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import javax.persistence.*;
  */
 @Stateless
 public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
+    
     @Override
     public Periode find(Integer id) {
         return em.find(Periode.class, id);
@@ -60,7 +62,6 @@ public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
     public void changeGenerateStatusInProgress(Periode periode) {
         periode.setStatusJadwal(AllConstants.SEDANG_DIGENERATE);
         em.merge(periode);
-        //System.out.println(">>> status berubah, jadi \"lagi digenerate\" <<<");
     }
     
     @Override
@@ -79,4 +80,14 @@ public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
         
         return result.charAt(0);
     }
+    
+    /*@Override
+    public List<Periode> findUnfinishedPeriodes() {
+        Date now = new Date(System.currentTimeMillis());
+        Query query = em.createQuery(
+            "select p from Periode p where p.periodeAkhir >= :now order by p.periodeAkhir asc")
+            .setParameter("now", now, TemporalType.TIMESTAMP);
+        List<Periode> periodes = query.getResultList();
+        return periodes;
+    }*/
 }

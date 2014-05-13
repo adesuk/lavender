@@ -10,6 +10,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface PeriodeDao {
+    
     Periode find(Integer id);
     
     List<Periode> findAll();
@@ -27,4 +28,6 @@ public interface PeriodeDao {
     void changeGenerateStatusDone(Periode periode);
     
     char findStatusJadwal(Periode periode);
+    
+    //List<Periode> findUnfinishedPeriodes();
 }

@@ -16,9 +16,15 @@ public interface JadwalDao {
     
     Jadwal find(Integer id);
     
+    Jadwal findComplete(Integer id);
+    
     List<Date> findJadwalVersions(Periode periode);
+    
+    //List<Jadwal> findJadwalByPeriode(Periode periode);
     
     void save(Jadwal jadwal);
     
     Jadwal update(Jadwal jadwal);
+    
+    boolean delete(Jadwal jadwal);
 }

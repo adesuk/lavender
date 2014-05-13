@@ -17,10 +17,12 @@
             <div class="col-md-12">
               <f:view>
                 <!-- Form nya ini -->
-                <h:form styleClass="form-horizontal">
+                <h:form styleClass="form-horizontal" id="inputJadwalForm">
                   <h2><h:outputText value="Tambah Jadwal"/></h2>
                   <hr />
 
+                  <p:messages id="msg" autoUpdate="true" closable="true" />
+                  
                   <!-- Nampilin periode nya ini -->
                   <div class="form-group">
                     <h:outputLabel for="periode" styleClass="col-sm-2 control-label">
@@ -41,7 +43,9 @@
                     </h:outputLabel>
                     <div class="col-sm-4">
                       <p:selectOneMenu id="nim" converter="#{nimMahasiswaConverter}"
-                                       value="#{pengelolaanJadwal.selectedMahasiswa}">
+                                       value="#{pengelolaanJadwal.selectedMahasiswa}"
+                                       required="true"
+                                       requiredMessage="Pilih mahasiswa">
                         <f:selectItem itemLabel="Pilih mahasiswa" />
                         <f:selectItems value="#{pengelolaanJadwal.mahasiswas}"
                                        var="item" itemLabel="#{item.nim}"
@@ -120,7 +124,14 @@
                     </h:outputLabel>
                     <div class="col-sm-4">
                       <p:calendar id="tanggal" value="#{pengelolaanJadwal.jadwalDetail.tanggal}" 
-                                  title="Tanggal" pattern="dd/MM/yyyy" />
+                                  title="Tanggal" pattern="dd/MM/yyyy"
+                                  required="true" requiredMessage="Pilih tanggal pelaksanaan."
+                                  readonlyInput="true"
+                                  mindate="#{pengelolaanJadwal.periode.periodeAwal}"
+                                  maxdate="#{pengelolaanJadwal.periode.periodeAkhir}"/>
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="tanggal" />
                     </div>
                   </div>
 
@@ -133,13 +144,16 @@
                       <p:selectOneMenu id="slotWaktu" 
                                        value="#{pengelolaanJadwal.jadwalDetail.slotWaktu}"
                                        required="true" 
-                                       requiredMessage="The Slot Waktu field is required."
+                                       requiredMessage="Pilih waktu pelaksanaan."
                                        converter="#{slotWaktuConverter}">
                         <f:selectItem itemLabel="Pilih waktu" />
                         <f:selectItems value="#{pengelolaanJadwal.slotWaktus}"
                                        var="item" itemLabel="#{pengelolaanJadwal.formatSlotWaktu(item)}" 
                                        itemValue="#{item}" />
                       </p:selectOneMenu>
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="slotWaktu" />
                     </div>
                   </div>
 
@@ -152,12 +166,16 @@
                       <p:selectOneMenu id="ruangan" 
                                        value="#{pengelolaanJadwal.jadwalDetail.ruangan}"
                                        required="true"
+                                       requiredMessage="Pilih ruangan."
                                        converter="#{ruanganConverter}">
                         <f:selectItem itemLabel="Pilih ruangan" />
                         <f:selectItems value="#{pengelolaanJadwal.ruangans}" var="item"
                                        itemLabel="#{item.kdRuangan}"
                                        itemValue="#{item}"/>
                       </p:selectOneMenu>
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="ruangan" />
                     </div>
                   </div>
 
@@ -167,9 +185,12 @@
                       <h:panelGrid columns="2">
                         <p:commandButton id="save" value="Simpan" 
                                          style="width: 90px; margin: 5px 5px 5px 0"
-                                         actionListener="#{pengelolaanJadwal.saveJadwal}" />
+                                         actionListener="#{pengelolaanJadwal.saveJadwal}"
+                                         validateClient="true"
+                                         update="inputJadwalForm" />
                         <p:commandButton id="cancel" value="Batal" style="width: 90px; margin: 5px 0 5px 5px"
-                                         actionListener="#{pengelolaanJadwal.cancelCreateJadwal}" />
+                                         actionListener="#{pengelolaanJadwal.cancelCreateJadwal}"
+                                         immediate="true" />
                       </h:panelGrid>
                     </div>
                   </div>
@@ -178,6 +199,31 @@
             </div>
           </div>
         </div>
+        
+        <div id="info" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Jadwal sudah disimpan.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton action="PengelolaanJadwal.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showInfo() {
+            $("#info").modal();
+          }
+        </script>
       </ui:define>
     </ui:composition>
   </h:body>

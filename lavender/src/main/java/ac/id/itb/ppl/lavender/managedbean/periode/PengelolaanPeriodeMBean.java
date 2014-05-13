@@ -5,6 +5,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -35,6 +37,7 @@ public class PengelolaanPeriodeMBean implements Serializable {
     private Periode selectedPeriode;
     private String keyword;
     private List<Periode> periodes2;
+    private TipeEksekusi tipeEksekusi = new TipeEksekusi();
     
     // tambah periode
     private Periode periode;
@@ -59,16 +62,21 @@ public class PengelolaanPeriodeMBean implements Serializable {
     // keperluan tambah periode
     public void initializePeriode(ComponentSystemEvent e) {
         periode = new Periode();
+        periode.setStatusRilis(new BigInteger("0"));
+        periode.setStatusVerifikasi(new BigInteger("0"));
     }
     
     public void savePeriode() {
         periodeDao.save(periode); 
-        try {
-            FacesContext.getCurrentInstance().getExternalContext()
-                .redirect("PengelolaanPeriode.xhtml");
-        } catch (IOException ioe) {
-            ioe.printStackTrace(System.out);
-        }
+        /*FacesMessage m = new FacesMessage(
+            FacesMessage.SEVERITY_INFO, "Info", "Periode sudah disimpan"
+        );*/
+        RequestContext.getCurrentInstance().execute("showInfo()");
+    }
+    
+    public void updatePeriode() {
+        periodeDao.update(periode);
+        RequestContext.getCurrentInstance().execute("showInfo()");
     }
     
     public void cancel() {
@@ -110,7 +118,13 @@ public class PengelolaanPeriodeMBean implements Serializable {
     }
     
     public Map<String, Character> getTipeJadwals() {
-        return new TipeEksekusi().getTipeEksekusis();
+        Map<String, Character> map = tipeEksekusi.getTipeEksekusis();
+        map.remove("Proposal");
+        return map;
+    }
+    
+    public String getTipeJadwalName(Character tipeJadwal) {
+        return tipeEksekusi.getName(tipeJadwal);
     }
     
     // keperluan tambah periode
@@ -138,13 +152,30 @@ public class PengelolaanPeriodeMBean implements Serializable {
         }
     }
     
+    public void ubahPeriode(Periode periode) {
+        this.periode = periode;
+        try {
+            FacesContext.getCurrentInstance().getExternalContext()
+                .redirect("EditPeriode.xhtml");
+        } catch (IOException ioe) {
+            LOGGER.log(Level.SEVERE, null, ioe);
+        }
+    }
+    
     public void deletePeriode() {
+        boolean doDelete = false;
         for (Periode p : periodes2) {
             if (p.getSelected()) {
                 periodeDao.delete(p);
+                doDelete = true;
             }
         }
-        reloadPeriodes2();
+        if (doDelete) {
+            RequestContext.getCurrentInstance().execute("showBerhasilHapusDialog()");
+            reloadPeriodes2();
+        } else {
+            RequestContext.getCurrentInstance().execute("showTidakAdaYangDihapusDialog()");
+        }
     }
     
     public void onEdit(RowEditEvent event) {

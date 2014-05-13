@@ -11,3 +11,23 @@ tulis di sini yah... Mana tau jadi ilmu buat kita untuk pengembangan sopwer sela
 
 --- Themes JSF (PrimeFace) ---
 - http://www.primefaces.org/themes.html
+
+--- Date range validation ---
+- http://stackoverflow.com/questions/19093192/date-range-validation
+
+--- Date intersect ---
+- http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+
+--- Login-loginan di JSF ---
+Ga mungkin cuman gini doank:
+- http://help.eclipse.org/kepler/index.jsp?topic=%2Forg.eclipse.jst.jsf.doc.user%2Fhtml%2Fgettingstarted%2Ftutorial%2FJSFTools_tutorial_JSF20.html
+Yang paling mungkin
+- http://javaknowledge.info/authentication-based-secure-login-logout-using-jsf-2-0-and-primefaces-3-4-1/
+- http://www.itcuties.com/j2ee/jsf-2-login-filter-example/
+- http://stackoverflow.com/questions/12516349/jsf-how-control-access-and-rights-in-jsf
+
+--- IF ELSE di JSF ---
+- http://stackoverflow.com/questions/13591618/if-else-condition-in-jsf-form-need-to-know-right-approach
+
+--- Redirect page untuk keperluan advance ---
+- http://stackoverflow.com/questions/15070505/jsf-doesnt-redirect-to-parent-directory
