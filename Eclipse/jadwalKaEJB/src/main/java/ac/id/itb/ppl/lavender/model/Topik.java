@@ -1,7 +1,10 @@
 package ac.id.itb.ppl.lavender.model;
 
 import java.io.Serializable;
+
+import javax.annotation.Generated;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -15,9 +18,10 @@ public class Topik implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@SequenceGenerator(name="my_sequence", sequenceName="MY_SEQUENCE", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="my_sequence")
 	@Column(name="ID_TOPIK")
-	private long idTopik;
+	private Long idTopik;
 
 	@Column(name="BIDANG")
 	private String bidang;
@@ -45,11 +49,11 @@ public class Topik implements Serializable {
 	public Topik() {
 	}
 
-	public long getIdTopik() {
+	public Long getIdTopik() {
 		return this.idTopik;
 	}
 
-	public void setIdTopik(long idTopik) {
+	public void setIdTopik(Long idTopik) {
 		this.idTopik = idTopik;
 	}
 
@@ -99,4 +103,28 @@ public class Topik implements Serializable {
 		this.dosens = dosens;
 	}
 
+	 @Override
+	    public int hashCode() {
+	        int hash = 0;
+	        hash += (idTopik != null ? idTopik.hashCode() : 0);
+	        return hash;
+	    }
+
+	    @Override
+	    public boolean equals(Object object) {
+	        // TODO: Warning - this method won't work in the case the id fields are not set
+	        if (!(object instanceof Topik)) {
+	            return false;
+	        }
+	        Topik other = (Topik) object;
+	        if ((this.idTopik == null && other.idTopik != null) || (this.idTopik != null && !this.idTopik.equals(other.idTopik))) {
+	            return false;
+	        }
+	        return true;
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "ac.id.itb.ppl.lavender.model.Topik[ idTopik=" + idTopik + " ]";
+	    }
 }

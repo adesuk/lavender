@@ -6,29 +6,34 @@
   <packaging>ejb</packaging>
   
    <dependencies>
-        <dependency>
+    <!-- JPA for Java EE application servers  -->
+       
+       <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
-        </dependency>
-        <!-- JPA for Java EE application servers  -->
+       
+       </dependency>
+       
  		 <dependency>
-      <groupId>org.eclipse.persistence</groupId>
-      <artifactId>eclipselink</artifactId>
-      <version>2.5.0</version>
-      <scope>compile</scope>
-  </dependency>
+      		<groupId>org.eclipse.persistence</groupId>
+     		 <artifactId>eclipselink</artifactId>
+      		<version>2.5.0</version>
+      		<scope>compile</scope>
+      	 </dependency>
+      	 	
+      		
 
 		
    </dependencies>
    
    <repositories>
-  <repository>
+  	<repository>
       <id>EclipseLink Repo</id>
       <name>EclipseLink Repository</name>
       <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
-  </repository>
+  	</repository>
 </repositories>
    
    

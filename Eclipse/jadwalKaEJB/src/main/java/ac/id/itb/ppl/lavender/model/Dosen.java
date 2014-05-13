@@ -49,7 +49,7 @@ public class Dosen implements Serializable {
 	private List<Jadwal> jadwals;
 
 	//bi-directional many-to-many association to Topik
-	@ManyToMany(mappedBy="dosens")
+	@ManyToMany(mappedBy="dosens", cascade=CascadeType.ALL)
 	private List<Topik> topiks;
 
 	public Dosen() {

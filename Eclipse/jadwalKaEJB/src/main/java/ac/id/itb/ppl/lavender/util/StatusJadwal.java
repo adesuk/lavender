@@ -8,11 +8,11 @@ public class StatusJadwal {
 	private final Map<Integer, String> statusLulus;
 	
 	public StatusJadwal() {
-		statusTerlaksana = new LinkedHashMap<>(2);
+		statusTerlaksana = new LinkedHashMap<Integer, String>(2);
 		statusTerlaksana.put(AllConstants.BELUM_TERLAKSANA, "Belum Terlaksana");
 		statusTerlaksana.put(AllConstants.SUDAH_TERLAKSANA, "Sudah Terlaksana");
 		
-		statusLulus = new LinkedHashMap<>(2);
+		statusLulus = new LinkedHashMap<Integer, String>(2);
 		statusLulus.put(AllConstants.BELUM_LULUS, "Belum Lulus");
 		statusLulus.put(AllConstants.SUDAH_LULUS, "Sudah Lulus");
 	}

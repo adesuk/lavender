@@ -92,23 +92,23 @@ public class ControlerGenerateJadwal {
         try {
             // List Topik
             Topik T1 = new Topik();
-            T1.setIdTopik(1);
+            T1.setIdTopik((long)1);
             T1.setNamaTopik("Big Data");
 
             Topik T2 = new Topik();
-            T2.setIdTopik(2);
+            T2.setIdTopik((long) 2);
             T2.setNamaTopik("Software Quality");
 
             Topik T3 = new Topik();
-            T3.setIdTopik(3);
+            T3.setIdTopik((long)3);
             T3.setNamaTopik("Visualisasi Data");
 
             Topik T4 = new Topik();
-            T4.setIdTopik(4);
+            T4.setIdTopik((long)4);
             T4.setNamaTopik("Machine Learning");
 
             Topik T5 = new Topik();
-            T5.setIdTopik(5);
+            T5.setIdTopik((long)5);
             T5.setNamaTopik("Search Engine");
 
             // ############## LIST SLOT WAKTU
@@ -611,23 +611,23 @@ public class ControlerGenerateJadwal {
 
             // List Topik
             Topik T1 = new Topik();
-            T1.setIdTopik(1);
+            T1.setIdTopik((long)1);
             T1.setNamaTopik("Big Data");
 
             Topik T2 = new Topik();
-            T2.setIdTopik(2);
+            T2.setIdTopik((long)2);
             T2.setNamaTopik("Software Quality");
 
             Topik T3 = new Topik();
-            T3.setIdTopik(3);
+            T3.setIdTopik((long)3);
             T3.setNamaTopik("Visualisasi Data");
 
             Topik T4 = new Topik();
-            T4.setIdTopik(4);
+            T4.setIdTopik((long)4);
             T4.setNamaTopik("Machine Learning");
 
             Topik T5 = new Topik();
-            T5.setIdTopik(5);
+            T5.setIdTopik((long)5);
             T5.setNamaTopik("Search Engine");
 
             // ############## LIST SLOT WAKTU
