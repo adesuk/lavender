@@ -38,7 +38,7 @@ public class PeriodeConverter implements Converter, java.io.Serializable {
 //	        	System.out.println("getAsObject Periode Bean");
 //	        	Periode p = periodeBean.find(Long.valueOf(value));
 //	        	System.out.println(p.getIdPeriode()+ ","+ p.getNamaPeriode());
-	            return periodeBean.find(Long.valueOf(value));
+	            return periodeBean.find(Integer.valueOf(value));
 	        }
 	    }
 
@@ -49,7 +49,7 @@ public class PeriodeConverter implements Converter, java.io.Serializable {
 	            return null;
 	        } else {
 //	        	System.out.println("getAsString long to string"+ ((Periode) value).getIdPeriode());
-	            return Long.toString(((Periode) value).getIdPeriode());
+	            return Integer.toString(((Periode) value).getIdPeriode());
 	        	
 //	        	return Long.toString((long)value);
 	        }

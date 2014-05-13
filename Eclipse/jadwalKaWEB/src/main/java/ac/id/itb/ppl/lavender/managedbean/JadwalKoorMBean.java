@@ -1,18 +1,20 @@
 package ac.id.itb.ppl.lavender.managedbean;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import ac.id.itb.ppl.lavender.bean.JadwalBean;
 import ac.id.itb.ppl.lavender.bean.PeriodeBean;
+import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
 import ac.id.itb.ppl.lavender.util.PeriodeFormat;
@@ -96,9 +98,14 @@ public class JadwalKoorMBean implements Serializable {
 	private List<SelectItem> statusTerlaksanaList;
 	private List<SelectItem> terlaksanaList;
 	private List<SelectItem> hasilList;
+	private JadwalView jadwalView;
 	
 	public void cariStatusJadwal(AjaxBehaviorEvent e) {
 		reloadPelaksanaanJadwal();
+	}
+	
+	public void editListener(JadwalView jadwalView) {
+		this.jadwalView = jadwalView;
 	}
 	
 	public void reloadPelaksanaanJadwal() {
@@ -111,6 +118,22 @@ public class JadwalKoorMBean implements Serializable {
 	
 	public String valueHasil(Integer status) {
 		return statusJadwal.getStatusLulus(status);
+	}
+	
+	public void ubahListener() {
+//		System.out.println("Tes");
+//		System.out.println("Terlasakana : "+ statusJadwal.getStatusTerlaksana(jadwalView.getStatusPelaksanaan()));
+//		System.out.println("HAsil : "+ statusJadwal.getStatusLulus(jadwalView.getStatusHasilPelaksanaan()));
+		
+		Jadwal jd = jadwalBean.find(jadwalView.getIdJadwal());
+		jd.setStatusHasilPelaksanaan(new BigInteger(hasil.toString()));
+		jd.setStatusPelaksanaan(new BigInteger(terlaksana.toString()));
+		
+		jadwalBean.edit(jd);
+		reloadJadwal();
+		
+//		System.out.println("Terlasakana : "+ statusJadwal.getStatusTerlaksana(terlaksana));
+//		System.out.println("HAsil : "+ statusJadwal.getStatusLulus(hasil));
 	}
 	
 	// getList
@@ -148,6 +171,9 @@ public class JadwalKoorMBean implements Serializable {
 	
 	// Setter & Getter
 	public Integer getStatusTerlaksana() {
+		if (statusTerlaksana == null) {
+			statusTerlaksana = -1;
+		}
 		return statusTerlaksana;
 	}
 
@@ -177,6 +203,18 @@ public class JadwalKoorMBean implements Serializable {
 
 	public void setStatusJadwal(StatusJadwal statusJadwal) {
 		this.statusJadwal = statusJadwal;
+	}
+
+	public JadwalView getJadwalView() {
+		return jadwalView;
+	}
+
+	public void setJadwalView(JadwalView jadwalView) {
+		System.out.println(jadwalView.getNama());
+		System.out.println("Pelaksanaan : "+ jadwalView.getStatusPelaksanaan());
+		this.jadwalView = jadwalView;
+		terlaksana = jadwalView.getStatusPelaksanaan();
+		hasil = jadwalView.getStatusHasilPelaksanaan();
 	}
 
 	

@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">             
+              	 <h:form id="form" styleClass="form-horizontal">
+              	 <br/>
+              	 <!-- Periode Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Periode jadwal" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="periode" value="#{jadwalKoorMBean.periode}"
+                      		converter="periodeConverter" >
+                        <f:selectItems value="#{jadwalKoorMBean.allPeriodes}"
+                                       var="period" itemLabel="#{jadwalKoorMBean.formatnya(period)}"
+                                       itemValue="#{period}" />
+                        <p:ajax event="change" update="namaPeriode, jenisJadwal"/>                                       
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+                  <!-- Nama Periode -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Nama periode" />
+                    </h:outputLabel>
+                    <div class="col-md-10">
+                      <h:outputText id="namaPeriode" styleClass="form-control-static"
+                                    value="#{jadwalKoorMBean.periode.namaPeriode}" />
+                    </div>
+                  </div>
+
+                  <!-- Jenis Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel value="Jenis jadwal" styleClass="col-md-2" />
+                    <div class="col-md-4">
+                      <h:outputText id="jenisJadwal" 
+                      		value="#{jadwalKoorMBean.getTipeJadwalRealName(jadwalKoorMBean.periode.tipeJadwal)}" />
+                    </div>
+                  </div>
+                  
+                  <!-- Status Terlaksana -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Status Terlaksana" />
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="statusTerlaksana" value="#{jadwalKoorMBean.statusTerlaksana}">
+                        <f:selectItems value="#{jadwalKoorMBean.statusTerlaksanaList}"                        	
+                                       var="status" itemLabel="#{status.label}"
+                                       itemValue="#{status.value}" />
+                        <p:ajax event="change"/>                                                    
+                      </p:selectOneMenu>
+                    </div>
+                    <!-- Tombol Search -->
+                    <div class="col-md-offset-7 col-md-15">
+                      <p:commandButton value="Cari" style="margin: 0 5px; width: 90px;">
+                        <f:ajax event="click" render="@form tabelJadwal"
+                                listener="#{jadwalKoorMBean.cariStatusJadwal}" />
+                      </p:commandButton>
+                    </div>
+                  </div>     
+                                
+                <p:dataTable id="tabelJadwal" var="jadwal" value="#{jadwalKoorMBean.jadwalsKoor}" >
+        			<p:column headerText="NIM">  
+            			<h:outputText value="#{jadwal.nim}" />  
+        			</p:column> 
+        			<p:column headerText="Nama">  
+            			<h:outputText value="#{jadwal.nama}" />  
+        			</p:column>
+        			<p:column headerText="Judul">  
+            			<h:outputText value="#{jadwal.judul}" />  
+        			</p:column>
+        			<p:column headerText="Pembimbing 1">  
+            			<h:outputText value="#{jadwal.pembimbing1}" />  
+        			</p:column>
+        			<p:column headerText="Pembimbing 2">  
+            			<h:outputText value="#{jadwal.pembimbing2}" />  
+        			</p:column>
+        			<p:column headerText="Penguji 1">  
+            			<h:outputText value="#{jadwal.penguji1}" />  
+        			</p:column>
+        			<p:column headerText="Penguji 2">  
+            			<h:outputText value="#{jadwal.penguji2}" />  
+        			</p:column>
+        			<p:column headerText="Ruangan">  
+            			<h:outputText value="#{jadwal.ruangan}" />  
+        			</p:column>
+        			<p:column headerText="Terlaksana">  
+            			<h:outputText value="#{jadwalKoorMBean.valueTerlaksana(jadwal.statusPelaksanaan)}" />  
+        			</p:column>
+        			<p:column headerText="Hasil">  
+            			<h:outputText value="#{jadwalKoorMBean.valueHasil(jadwal.statusHasilPelaksanaan)}" />  
+        			</p:column> 
+        			<p:column>
+        				<p:commandButton update=":#{p:component('display')}" value="Edit" oncomplete="dialog.show();"
+        					style="margin: 0 5px; width: 90px;">
+        					<f:setPropertyActionListener target="#{jadwalKoorMBean.jadwalView}" value="#{jadwal}"/>
+        				</p:commandButton>        					
+        			</p:column>
+                </p:dataTable>
+               
+               <!-- Panel Edit -->               
+               <p:dialog id="editJadwal" header="Ubah Jadwal" widgetVar="dialog" modal="true">
+               	 <h:form id="formDialog">   
+	               	  <p:panelGrid id="display" columns="2" cellpadding="5">
+	               	  	             	  	
+	               	  	<h:outputLabel for="nim" value="Nim :" />
+						<h:outputText id="nim" value="#{jadwalKoorMBean.jadwalView.nim}" label="Nim" />
+	               	  	
+	               	  	<h:outputLabel for="nama" value="Nama :" />
+						<h:outputText id="nama" value="#{jadwalKoorMBean.jadwalView.nama}" label="Nama" />
+	               	  	
+	               	  	<h:outputLabel for="judul" value="Judul Karya Akhir :" />
+						<h:outputText id="judul" value="#{jadwalKoorMBean.jadwalView.judul}" label="Judul" />
+	                     
+	                    <h:outputLabel for="pembimbing1" value="Pembimbing 1 :" />
+						<h:outputText id="pembimbing1" value="#{jadwalKoorMBean.jadwalView.pembimbing1}" label="Pembimbing1" /> 
+	                     
+	                    <h:outputLabel for="pembimbing2" value="Pembimbing 2 :" />
+						<h:outputText id="pembimbing2" value="#{jadwalKoorMBean.jadwalView.pembimbing2}" label="Pembimbing2" /> 
+						
+						<h:outputLabel for="penguji" value="Penguji :" />
+						<h:outputText id="penguji" value="1. #{jadwalKoorMBean.jadwalView.penguji1} 2. #{jadwalKoorMBean.jadwalView.penguji2}" 
+							label="Penguji" />
+							
+						<h:outputLabel for="tanggal" value="Tanggal :" />
+						<h:outputText id="tanggal" value="#{jadwalKoorMBean.jadwalView.hariTanggal}" label="Pembimbing2" />	
+						
+						<h:outputLabel for="jam" value="Jam :" />
+						<h:outputText id="jam" value="#{jadwalKoorMBean.jadwalView.pukul}" label="Jam" />
+						
+						<h:outputLabel for="ruangan" value="Ruangan :" />
+						<h:outputText id="ruangan" value="#{jadwalKoorMBean.jadwalView.ruangan}" label="Ruangan" />
+						
+						<h:outputLabel for="terlaksana" value="Terlaksana :" />						
+						<p:selectOneMenu id="terlaksana" value="#{jadwalKoorMBean.terlaksana}">
+                        	<f:selectItems value="#{jadwalKoorMBean.terlaksanaList}"                        	
+                                       var="status" itemLabel="#{status.label}"
+                                       itemValue="#{status.value}" />
+                        	<p:ajax event="change"/>                                                    
+                      	</p:selectOneMenu>
+						
+						<h:outputLabel for="hasil" value="Hasil :" />						
+						<p:selectOneMenu id="hasil" value="#{jadwalKoorMBean.hasil}">
+                        	<f:selectItems value="#{jadwalKoorMBean.hasilList}"                        	
+                                       var="status" itemLabel="#{status.label}"
+                                       itemValue="#{status.value}" />
+                        	<p:ajax event="change"/>                                                   
+                      	</p:selectOneMenu>
+						
+						<p:commandButton id="updateButton" value="Update" actionListener="#{jadwalKoorMBean.ubahListener}" oncomplete="dialog.hide();" 
+							update=":#{p:component('tabelJadwal')}"/>						
+	                 
+	                 </p:panelGrid>                
+               		</h:form>
+               </p:dialog>
+               
+               </h:form>   
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+</html>
+

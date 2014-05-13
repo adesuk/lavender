@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition>
+      <h:form>
+        <p:menubar>
+          <p:menuitem value="Beranda" url="/faces/welcomePrimefaces" icon="ui-icon-home" />
+          <p:submenu label="Jadwal">
+            <p:menuitem value="Generate Jadwal" icon="ui-icon-carat-1-e"
+                        url="/faces/jadwal_karya_akhir/GenerateJadwal.xhtml" />
+            <p:menuitem value="Pengelolaan Jadwal" icon="ui-icon-carat-1-e"
+                        url="/faces/jadwal_karya_akhir/PengelolaanJadwal.xhtml" />
+          </p:submenu>
+          <p:submenu label="Periode">
+            <p:menuitem value="Pengelolaan Periode" icon="ui-icon-carat-1-e"
+                        url="/faces/periode/PengelolaanPeriode.xhtml" />
+          </p:submenu>
+          <p:submenu label="Hazard!">
+            <p:menuitem value="Dosen penguji" icon="ui-icon-carat-1-e"
+                        url="/faces/hazard/Dosen.xhtml" />
+            <p:menuitem value="Karya akhir" icon="ui-icon-carat-1-e"
+                        url="/faces/hazard/KarAkh.xhtml" />
+          </p:submenu>
+        </p:menubar>
+      </h:form>
+    </ui:composition>
+  </h:body>
+</html>
+

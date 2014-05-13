@@ -41,7 +41,7 @@ public class JadwalMBean implements Serializable {
 	public String getPeriodeType() {
 		return "Jadwal ["
 				.concat(tipeEksekusi.getTipeEksekusi(
-							periode.getTipeJadwal().charAt(0)))
+							periode.getTipeJadwal()))
 				.concat("]");			
 	}	
 		

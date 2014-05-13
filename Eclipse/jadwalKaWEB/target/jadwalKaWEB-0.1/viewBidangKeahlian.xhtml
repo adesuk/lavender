@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">             
+              	 <h:form styleClass="form-horizontal">
+              	 <br/>
+                  <!-- Inisial Dosen -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Inisial Dosen" />
+                    </h:outputLabel>
+                    <div class="col-md-10">
+                      <h:outputText id="inisialDosen" styleClass="form-control-static"
+                                    value="#{topikMBean.dosen.inisialDosen}" />
+                    </div>
+                  </div>
+
+                  <!-- Nama Dosen -->
+                  <div class="form-group">
+                    <h:outputLabel value="Nama Dosen" styleClass="col-md-2" />
+                    <div class="col-md-4">
+                      <h:outputText id="namaDosen" 
+                                    value="#{topikMBean.dosen.namaDosen}" />
+                    </div>
+                  </div>
+                  
+                   <!-- Periode Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Minat Bidang" /><span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="minatBidang" value="#{topikMBean.bidang}">
+                        <f:selectItems value="#{topikMBean.bidangList}"/>
+                        <p:ajax event="change"/>                                       
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+                           
+              	 <!-- Tombol Search -->
+                  <div class="form-group">                  	
+                    <div class="col-md-offset-7 col-md-15">
+                      <p:commandButton value="Search" style="margin: 0 5px; width: 90px;">
+                        <p:ajax event="click" update=":#{p:component('minatTopik')}"
+                                listener="#{topikMBean.searchListener}" /> 
+                      </p:commandButton>
+                    </div>
+                  </div>                    
+                
+                <p:panel header="Minat Topik">
+                	<h:form>
+        			<p:selectManyCheckbox id="minatTopik" value="#{topikMBean.topikSelected}">
+            			<f:selectItems value="#{topikMBean.topikList}" var="topik" 
+            				itemLabel="#{topik.namaTopik}" itemValue="#{topik}"/>
+        			</p:selectManyCheckbox>
+        			<p:commandButton value="Save" style="margin: 0 5px; width: 90px;"
+        					actionListener="#{topikMBean.save}"/>
+        			</h:form>		
+                </p:panel>                
+              	
+              
+               </h:form>
+             
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+</html>
+

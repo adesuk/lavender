@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title><ui:insert name="title"></ui:insert></title>
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/styles.css" />
+  </h:head>
+  <h:body styleClass="metro">
+    <div class="container">
+      <div id="header">
+        <ui:insert name="header">
+          <div>
+            <img src="" style="width: 100px; height: 100px;" />
+            <h1>Sistem Penjadwalan Seminar/Sidang</h1>
+          </div>
+          <div></div>
+          <div><p style="text-align: right"><span id="curDateTime"></span></p></div>
+        </ui:insert>
+      </div>
+
+      <div id="nav">
+        <ui:insert name="nav">
+          <ui:include src="/WEB-INF/templates/DevNav.xhtml" />
+        </ui:insert>
+      </div>
+
+      <div id="content">
+        <ui:insert name="content">
+
+        </ui:insert>
+      </div>
+
+      <div id="footer">
+        <hr></hr>
+        <ui:insert name="footer">
+          <p style="text-align: center">&copy; 2014. Institut Teknologi Bandung. All rights reserved.</p>
+        </ui:insert>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var dateTimeLabel = $("#curDateTime");
+        setTimeout(function() {
+          var now = new Date();
+          dateTimeLabel.html("9 Maret 2014 07:16");
+        }, 500)
+      });
+    </script>
+  </h:body>
+</html>

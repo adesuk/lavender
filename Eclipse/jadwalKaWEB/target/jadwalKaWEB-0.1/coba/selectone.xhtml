@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>PrimeFaces AJAX Enabled SelectOneMenu</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel header="Address">
+                <h:panelGrid columns="4">
+                    <h:outputLabel value="State:" for="states"/>
+                    <p:selectOneMenu id="states" value="#{dataBean.selectedState}"
+                                     style="width: 150px;">
+                        <f:selectItem itemLabel="" itemValue=""/>
+                        <f:selectItems value="#{dataBean.states}"/>
+                        <p:ajax event="change" update="cities, cs"/>
+                    </p:selectOneMenu>
+                    <h:outputLabel value="City:" for="cities"/>
+                    <p:selectOneMenu id="cities" value="#{dataBean.selectedCity}" style="width: 150px;">
+                        <f:selectItem itemLabel="" itemValue=""/>
+                        <f:selectItems value="#{dataBean.cities}"/>
+                        <p:ajax event="change" update="cs" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <p>
+<h:outputText id="cs"
+                                  value="#{dataBean.selectedCity} #{dataBean.selectedCity ne null ? ',': '' } #{dataBean.selectedState}"/>
+                </p>
+</p:panel>
+        </h:form>
+    </h:body>
+</html>
