@@ -1,6 +1,7 @@
 package ac.id.itb.ppl.lavender.managedbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +32,8 @@ public class TopikMBean implements Serializable {
 	private List<Topik> topikSelected;
 	
 	public TopikMBean() {
-		
+		topikList = new ArrayList<>();
+		topikSelected = new ArrayList<>();
 	}
 	
 	@PostConstruct
@@ -55,7 +57,6 @@ public class TopikMBean implements Serializable {
 	public void searchListener() {
 		System.out.println("MAsuk search. Bidang : "+ bidang);
 		
-//		topikList = topikBean.findTopikByBidang(bidang);
 		reloadTopikList();
 		System.out.println(topikList.size());
 		for (Topik t : topikList) {
@@ -72,8 +73,8 @@ public class TopikMBean implements Serializable {
 	
 	public void save() {
 		System.out.println("MAsuk save");
-//		dosen.setBidangKeahlian(topikSelected);
-//		dosenBean.edit(dosen);
+		dosen.setBidangKeahlian(topikSelected);
+		dosenBean.edit(dosen);
 		
 		
 		System.out.println(topikSelected.size());

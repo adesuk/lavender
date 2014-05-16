@@ -38,7 +38,7 @@
               			<artifactId>jadwalKaEJB</artifactId>
             		</ejbModule>
           		</modules>
-          		<generateApplicationXml>true</generateApplicationXml>
+          		<!-- <generateApplicationXml>true</generateApplicationXml>  -->
         	</configuration>
   		</plugin>
   	</plugins>

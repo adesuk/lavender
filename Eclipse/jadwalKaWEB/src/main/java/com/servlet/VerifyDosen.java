@@ -72,18 +72,19 @@ public class VerifyDosen extends HttpServlet {
 	            
 	            // skenario 2
 	            Dosen d = dosenBean.find("AS");
-	        	
-	        	List<Topik> listTopik = new ArrayList<Topik>();
-	        	Topik t1 = topikBean.find(new Integer(3));
-	        	Topik t2 = topikBean.find(new Integer(8));
-	        	
-	        	listTopik.add(t1);
-	        	listTopik.add(t2);
+	        	d.setNamaDosen("Ade Suk");
 	            
-	        	d.setBidangKeahlian(listTopik);	        	
+//	        	List<Topik> listTopik = new ArrayList<Topik>();
+//	        	Topik t1 = topikBean.find(new Integer(3));
+//	        	Topik t2 = topikBean.find(new Integer(8));
+//	        	
+//	        	listTopik.add(t1);
+//	        	listTopik.add(t2);
+//	            
+//	        	d.setBidangKeahlian(listTopik);	        	
 	        	dosenBean.edit(d);
 	        	out.println("Dosen Created");
-	        		        	
+	        					
 //	        	Dosen dosen = dosenBean.find("AS");
 //	        	out.println(dosen.getInisialDosen());
 //	            for (Topik to : dosen.getBidangKeahlian()) {
