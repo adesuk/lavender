@@ -22,5 +22,11 @@ public class PeriodeFormat {
             .append(sdf1.format(date2))
             .toString();
     }
-    
+ 
+    public static String formatDate(Date date) {
+        Locale indonesia = new Locale("in", "ID");
+        
+        SimpleDateFormat sdf1 = new SimpleDateFormat("EEEE, d MMM y", indonesia);
+        return sdf1.format(date);
+    }
 }

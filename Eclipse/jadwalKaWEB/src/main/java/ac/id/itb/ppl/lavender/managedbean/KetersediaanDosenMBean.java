@@ -3,6 +3,7 @@ package ac.id.itb.ppl.lavender.managedbean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import ac.id.itb.ppl.lavender.bean.KetersediaanDosenBean;
 import ac.id.itb.ppl.lavender.bean.PeriodeBean;
 import ac.id.itb.ppl.lavender.bean.SlotWaktuBean;
 import ac.id.itb.ppl.lavender.model.Dosen;
+import ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 
@@ -46,7 +48,29 @@ public class KetersediaanDosenMBean implements Serializable {
 	public void init() {
 		periodeList = periodeBean.findAll();
 		dosenList = dosenBean.findAll();
-		
+		slotWaktuList = slotWaktuBean.findAll();
+	}
+	
+	public void findPeriode() {
+		Map<Date, String> dateMap = periodeBean.getTanggalList(periodeSelected);
+		if (dateMap.size() != 0) {
+			tanggalList.clear();
+			for (Date d : dateMap.keySet()) {
+				tanggalList.add(new SelectItem(d, dateMap.get(d)));
+			}
+		}
+	}
+	
+	public void findSlotWaktu() {
+		slotWaktuSelected = ketesediaanBean.findSlotWaktu(
+				(Date)tanggalSelected.getValue(), dosenSelected.getInisialDosen());
+	}
+	
+	public void save() {
+		KetersediaanWaktuDosen kwd = new KetersediaanWaktuDosen();
+		kwd.setDosen(dosenSelected);
+		kwd.setSlotWaktu(slotWaktu);
+		ketesediaanBean.create();
 	}
 	
 	/*

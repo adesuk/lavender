@@ -1,9 +1,14 @@
 package ac.id.itb.ppl.lavender.bean;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import ac.id.itb.ppl.lavender.bean.remote.PeriodeRemote;
 import ac.id.itb.ppl.lavender.model.Periode;
+import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -40,5 +45,21 @@ public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote 
 						.setMaxResults(1).getSingleResult();
 		
 		return p;
+	}
+	
+	public Map<Date, String> getTanggalList(Periode periode) {
+		Map<Date, String> mapDate = new LinkedHashMap<>();
+	
+		Calendar calAkhir = Calendar.getInstance();
+		calAkhir.setTime(periode.getPeriodeAkhir());
+		calAkhir.add(Calendar.DATE, 1);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(periode.getPeriodeAwal());
+		while (!cal.equals(calAkhir)) {
+			mapDate.put(cal.getTime(), PeriodeFormat.formatDate(cal.getTime()));
+			cal.add(Calendar.DATE, 1);
+		}
+		
+		return mapDate;
 	}
 }

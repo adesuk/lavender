@@ -1,19 +1,30 @@
 package ac.id.itb.ppl.lavender.bean;
 
-import ac.id.itb.ppl.lavender.bean.remote.SlotWaktuBeanRemote;
+import ac.id.itb.ppl.lavender.bean.remote.SlotWaktuRemote;
+import ac.id.itb.ppl.lavender.model.SlotWaktu;
+
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Session Bean implementation class SlotWaktuBean
  */
 @Stateless
-public class SlotWaktuBean implements SlotWaktuBeanRemote, SlotWaktuBeanLocal {
+@LocalBean
+public class SlotWaktuBean extends AbstractBean<SlotWaktu> implements SlotWaktuRemote {
 
-    /**
-     * Default constructor. 
-     */
+	@PersistenceContext(unitName="jadwalPU")
+	private EntityManager em;
+	
     public SlotWaktuBean() {
-        // TODO Auto-generated constructor stub
+       super(SlotWaktu.class);
     }
+
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
 
 }
