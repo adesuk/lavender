@@ -39,4 +39,12 @@ public class KetersediaanDosenBean extends AbstractBean<KetersediaanWaktuDosen> 
 				.setParameter(2, inisialDosen).getResultList();
 		return slotWaktuList;
 	}
+	
+	public List<KetersediaanWaktuDosen> findKetersediaanByDateAndDosen(Date date, String inisialDosen) {
+		List<KetersediaanWaktuDosen> waktuList = em.createQuery(
+				"select k from KetersediaanWaktuDosen k where k.tanggalDsnSedia=?1 and k.dosen.inisialDosen=?2")
+				.setParameter(1, date)
+				.setParameter(2, inisialDosen).getResultList();
+		return waktuList;
+	}
 }

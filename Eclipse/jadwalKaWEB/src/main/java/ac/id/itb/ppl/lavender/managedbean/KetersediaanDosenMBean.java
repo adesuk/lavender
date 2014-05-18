@@ -33,7 +33,7 @@ public class KetersediaanDosenMBean implements Serializable {
 	@EJB
 	private SlotWaktuBean slotWaktuBean;
 	@EJB
-	private KetersediaanDosenBean ketesediaanBean;
+	private KetersediaanDosenBean ketersediaanBean;
 	
 	private List<Periode> periodeList;
 	private Periode periodeSelected;
@@ -62,15 +62,52 @@ public class KetersediaanDosenMBean implements Serializable {
 	}
 	
 	public void findSlotWaktu() {
-		slotWaktuSelected = ketesediaanBean.findSlotWaktu(
+		slotWaktuSelected = ketersediaanBean.findSlotWaktu(
 				(Date)tanggalSelected.getValue(), dosenSelected.getInisialDosen());
 	}
 	
+	/**
+	 * Membandingkan list yang dipilih dengan all list, jika tidak ada maka operasikan add
+	 * Membandingkan list dengan list yang dipilih, jika tidak ada maka operasi delete
+	 */
 	public void save() {
-		KetersediaanWaktuDosen kwd = new KetersediaanWaktuDosen();
-		kwd.setDosen(dosenSelected);
-		kwd.setSlotWaktu(slotWaktu);
-		ketesediaanBean.create();
+		// retrieve ketersediaan by date from db
+		List<KetersediaanWaktuDosen> kwdList = ketersediaanBean.findKetersediaanByDateAndDosen(
+				(Date)tanggalSelected.getValue(), dosenSelected.getInisialDosen());
+		
+		// operasi : add, membandingkan slotWaktuSelected dengan kwdList 
+		for (SlotWaktu slot : slotWaktuSelected) {	
+			boolean ketemu = false;
+			for(KetersediaanWaktuDosen wk : kwdList) {
+				if (slot.getIdSlot() == wk.getSlotWaktu().getIdSlot()) {
+					ketemu = true;
+					break;
+				}
+			}
+			
+			if (!ketemu) {
+				KetersediaanWaktuDosen kwd = new KetersediaanWaktuDosen();
+				kwd.setDosen(dosenSelected);
+				kwd.setSlotWaktu(slot);
+				kwd.setTanggalDsnSedia((Date)tanggalSelected.getValue());
+				ketersediaanBean.create(kwd);
+			}
+		}
+		
+		// operasi del, membandingkan kwdList dengan slotWaktuSelected
+		for(KetersediaanWaktuDosen wk : kwdList) {
+			boolean ketemu = false;
+			for (SlotWaktu slot : slotWaktuSelected) {						
+				if (slot.getIdSlot() == wk.getSlotWaktu().getIdSlot()) {
+					ketemu = true;
+					break;
+				}
+			}
+			
+			if (!ketemu) {
+				ketersediaanBean.remove(wk);
+			}
+		}
 	}
 	
 	/*
