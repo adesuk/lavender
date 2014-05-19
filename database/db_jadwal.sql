@@ -202,7 +202,7 @@ create table MENGUJI  (
 /*==============================================================*/
 create table PERIODE  (
    ID_PERIODE           NUMBER(5)                       not null,
-   NAMA_PERIODE         VARCHAR2(50)                    not null,
+   NAMA_PERIODE         VARCHAR2(100)                    not null,
    PERIODE_AWAL         DATE                            not null,
    PERIODE_AKHIR        DATE                            not null,
    TIPE_JADWAL          CHAR(1),
