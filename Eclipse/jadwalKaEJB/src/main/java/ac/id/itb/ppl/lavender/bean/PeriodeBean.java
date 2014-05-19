@@ -9,9 +9,9 @@ import java.util.Map;
 
 import ac.id.itb.ppl.lavender.bean.local.PeriodeLocal;
 import ac.id.itb.ppl.lavender.bean.remote.PeriodeRemote;
+import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.util.AllConstants;
-import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

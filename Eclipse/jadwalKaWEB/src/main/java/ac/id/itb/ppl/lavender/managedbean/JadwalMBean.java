@@ -10,9 +10,9 @@ import javax.faces.bean.ViewScoped;
 
 import ac.id.itb.ppl.lavender.bean.JadwalBean;
 import ac.id.itb.ppl.lavender.bean.PeriodeBean;
+import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
-import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 
 @ManagedBean(name="jadwalMBean")

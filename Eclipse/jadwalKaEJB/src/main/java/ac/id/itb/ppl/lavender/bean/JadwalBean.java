@@ -8,14 +8,14 @@ import java.util.List;
 
 import ac.id.itb.ppl.lavender.bean.local.JadwalLocal;
 import ac.id.itb.ppl.lavender.bean.remote.JadwalRemote;
+import ac.id.itb.ppl.lavender.formatter.DateFormat;
+import ac.id.itb.ppl.lavender.formatter.SlotWaktuFormat;
 import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
 import ac.id.itb.ppl.lavender.util.AllConstants;
-import ac.id.itb.ppl.lavender.util.DateFormat;
-import ac.id.itb.ppl.lavender.util.SlotWaktuFormat;
 import ac.id.itb.ppl.lavender.util.StatusJadwal;
 
 import javax.ejb.LocalBean;

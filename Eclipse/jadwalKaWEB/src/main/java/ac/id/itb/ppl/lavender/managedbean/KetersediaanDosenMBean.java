@@ -15,11 +15,11 @@ import ac.id.itb.ppl.lavender.bean.DosenBean;
 import ac.id.itb.ppl.lavender.bean.KetersediaanDosenBean;
 import ac.id.itb.ppl.lavender.bean.PeriodeBean;
 import ac.id.itb.ppl.lavender.bean.SlotWaktuBean;
+import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
-import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 
 @ManagedBean(name="kesediaanMBean")
 @ViewScoped
