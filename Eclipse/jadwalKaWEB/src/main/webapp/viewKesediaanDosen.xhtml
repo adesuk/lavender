@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">             
+              	 <h:form id="form" styleClass="form-horizontal">
+              	 <br/>
+              	 <!-- Periode Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Periode jadwal" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="periode" value="#{kesediaanMBean.periodeSelected}"
+                      		converter="periodeConverter" >
+                        <f:selectItems value="#{kesediaanMBean.periodeList}"
+                                       var="period" itemLabel="#{kesediaanMBean.formatnya(period)}"
+                                       itemValue="#{period}" />
+                        <p:ajax event="change" update="tglKesediaan"/>                                       
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+		 		<!-- Nama Dosen -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Nama Dosen" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="namaDosen" value="#{kesediaanMBean.dosenSelected}"
+                      		converter="dosenConverter"> 
+                        <f:selectItems value="#{kesediaanMBean.dosenList}"
+                                       var="dosen" itemLabel="#{dosen.nama}"
+                                       itemValue="#{dosen}" />
+                        <p:ajax event="change" update="inisialDosen"/>                                       
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+				 <!-- Inisial Dosen -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Inisial Dosen" />
+                    </h:outputLabel>
+                    <div class="col-md-10">
+                      <h:outputText id="inisialDosen" styleClass="form-control-static"
+                                    value="#{kesediaanMBean.dosenSelected.inisialDosen}" />
+                    </div>
+                  </div>
+
+
+				  <!-- Ketersediaan dosen -->
+
+				 <!-- Slot Waktu -->	
+
+				<!-- button save -->
+
+                  <!-- Nama Periode -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Nama periode" />
+                    </h:outputLabel>
+                    <div class="col-md-10">
+                      <h:outputText id="namaPeriode" styleClass="form-control-static"
+                                    value="#{jadwalKoorMBean.periode.namaPeriode}" />
+                    </div>
+                  </div>
+
+                  <!-- Jenis Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel value="Jenis jadwal" styleClass="col-md-2" />
+                    <div class="col-md-4">
+                      <h:outputText id="jenisJadwal" 
+                      		value="#{jadwalKoorMBean.getTipeJadwalRealName(jadwalKoorMBean.periode.tipeJadwal)}" />
+                    </div>
+                  </div>
+                  
+                  <!-- Status Terlaksana -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-md-2">
+                      <h:outputText value="Status Terlaksana" />
+                    </h:outputLabel>
+                    <div class="col-md-4">
+                      <p:selectOneMenu id="statusTerlaksana" value="#{jadwalKoorMBean.statusTerlaksana}">
+                        <f:selectItems value="#{jadwalKoorMBean.statusTerlaksanaList}"                        	
+                                       var="status" itemLabel="#{status.label}"
+                                       itemValue="#{status.value}" />
+                        <p:ajax event="change"/>                                                    
+                      </p:selectOneMenu>
+                    </div>
+                    <!-- Tombol Search -->
+                    <div class="col-md-offset-7 col-md-15">
+                      <p:commandButton value="Cari" style="margin: 0 5px; width: 90px;">
+                        <f:ajax event="click" render="@form tabelJadwal"
+                                listener="#{jadwalKoorMBean.cariStatusJadwal}" />
+                      </p:commandButton>
+                    </div>
+                  </div>     
+                                
+              
+               
+               </h:form>   
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+</html>
+

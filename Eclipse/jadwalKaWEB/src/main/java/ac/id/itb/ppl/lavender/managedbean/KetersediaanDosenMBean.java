@@ -19,8 +19,9 @@ import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.KetersediaanWaktuDosen;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
+import ac.id.itb.ppl.lavender.util.PeriodeFormat;
 
-@ManagedBean
+@ManagedBean(name="kesediaanMBean")
 @ViewScoped
 public class KetersediaanDosenMBean implements Serializable {
 
@@ -108,6 +109,10 @@ public class KetersediaanDosenMBean implements Serializable {
 				ketersediaanBean.remove(wk);
 			}
 		}
+	}
+	
+	public String formatnya(Periode periode) {
+		return PeriodeFormat.format(periode);
 	}
 	
 	/*
