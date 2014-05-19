@@ -21,11 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Asynchronous;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -46,26 +49,21 @@ public class GenerateJadwalMBean implements Serializable {
     private List<Periode> periodes;
     private Periode periode;
     private List<Ruangan> ruangans;
-    private List<Ruangan> selectedRuangans;
     boolean buttonRender = false;
-    boolean generateRender = false;
     
     // Business logic
     public void handlePeriodeChange() {
         if (periode == null) {
             ruangans = new ArrayList<Ruangan>(0);
             setButtonRender(false);
-            setGenerateRender(false);
         } else {
             char status = periodeDao.findStatusJadwal(periode);
             if (status == AllConstants.SEDANG_DIGENERATE) {
                 ruangans = new ArrayList<Ruangan>(0);
                 setButtonRender(false);
-                setGenerateRender(true);
             } else {
                 reloadRuangans();
                 setButtonRender(true);
-                setGenerateRender(false);
             }
         }
     }
@@ -86,6 +84,7 @@ public class GenerateJadwalMBean implements Serializable {
         return PeriodeFormat.format(periode);
     }
     
+    @Asynchronous
     public void generateJadwal() {
         //System.out.println(">>> Masuk generate jadwal <<<");
         if (periode == null) {
@@ -120,28 +119,43 @@ public class GenerateJadwalMBean implements Serializable {
         
         // ganti status lagi generate jadwal ke tabel periode
         periodeDao.changeGenerateStatusInProgress(periode);
-        ruangans = new ArrayList<Ruangan>();
         setButtonRender(false);
+        //RequestContext.getCurrentInstance().execute("showDialogTunggu()");
         
         //
         
         
-        try {
-            FacesContext.getCurrentInstance().getExternalContext()
-                .redirect("GenerateJadwal.xhtml");
-        } catch (IOException ioe) {
-            LOGGER.log(Level.SEVERE, null, ioe);
-        }
+//        try {
+//            FacesContext.getCurrentInstance().getExternalContext()
+//                .redirect("GenerateJadwal.xhtml");
+//        } catch (IOException ioe) {
+//            LOGGER.log(Level.SEVERE, null, ioe);
+//        }
         
         List<Jadwal> jadwal = cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, periode);
-        for (Jadwal j : jadwal) {
-            j.setIdPeriode(periode);;
+        
+        if (jadwal != null && !jadwal.isEmpty()) {
+            for (Jadwal j : jadwal) {
+                j.setIdPeriode(periode);
+            }
+            
+            jadwalDao.saveGeneratedJadwal(jadwal);
+            reloadRuangans();
+
+            DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent(":formGenerate:ruangans");
+            dataTable.setValueExpression("sortBy", null);
+            dataTable.reset();
+            dataTable.resetValue();
+            RequestContext.getCurrentInstance().execute("showDialogGenerate('Jadwal sudah digenerate.')");
+        } else {
+            RequestContext.getCurrentInstance().execute("showDialogGenerate('Jadwal gagal digenerate.')");
         }
-        jadwalDao.saveGeneratedJadwal(jadwal);
         
         // ganti status jadwal jadi udah di-generate
         periodeDao.changeGenerateStatusDone(periode);
         setButtonRender(true);
+        
+        
     }
     // End of business logic
     
@@ -165,14 +179,6 @@ public class GenerateJadwalMBean implements Serializable {
         return ruangans;
     }
     
-    public List<Ruangan> getSelectedRuangans() {
-        return selectedRuangans;
-    }
-    
-    public void setSelectedRuangans(List<Ruangan> selectedRuangans) {
-        this.selectedRuangans = selectedRuangans;
-    }
-    
     public boolean getButtonRender() {
         return buttonRender;
     }
@@ -181,12 +187,5 @@ public class GenerateJadwalMBean implements Serializable {
         this.buttonRender = buttonRender;
     }
     
-    public boolean getGenerateRender() {
-        return generateRender;
-    }
-    
-    public void setGenerateRender(boolean generateRender) {
-        this.generateRender = generateRender;
-    }
     // End of getter dan setter
 }

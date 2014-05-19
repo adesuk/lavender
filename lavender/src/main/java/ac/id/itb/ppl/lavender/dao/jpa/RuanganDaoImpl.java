@@ -15,6 +15,7 @@ import javax.persistence.*;
  */
 @Stateless
 public class RuanganDaoImpl extends JpaDao implements RuanganDao { 
+    
     @EJB RuanganDao ruanganDao;
     @EJB SlotWaktuDao slotWaktuDao;
     @EJB JadwalKuliahDao jadwalKuliahDao;
@@ -32,6 +33,7 @@ public class RuanganDaoImpl extends JpaDao implements RuanganDao {
         return em.find(Ruangan.class, id);
     }
     
+    @Override
     public List<Ruangan> findRuanganYangDipakai(Periode periode) {
         // select id_jadwal_kuliah, kd_ruangan, id_periode_kuliah,
         // kode_mata_kuliah, hari, waktu_masuk, waktu_keluar,
@@ -104,6 +106,7 @@ public class RuanganDaoImpl extends JpaDao implements RuanganDao {
         return ruangans;
     }
     
+    @Override
     public List<Ruangan> findRuanganDanKetersediaanRuangans(Periode periode) {
         List<Ruangan> ruanganTerpakaiList = findRuanganYangDipakai(periode);
         List<Ruangan> ruangans = ruanganDao.findAll();
