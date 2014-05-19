@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author edbert
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"*.jsf"})
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = Logger
         .getLogger(AuthFilter.class.getName());
@@ -79,7 +79,7 @@ public class AuthFilter implements Filter {
         String path = req.getRequestURI().substring(req.getContextPath().length());
         
         // page yang bisa diakses siapa saja
-        if (path.indexOf("/index.xhtml") >= 0 || path.indexOf("/login.xhtml") >= 0
+        if (path.indexOf("/index.jsf") >= 0 || path.indexOf("/login.jsf") >= 0
                 || path.indexOf("/public/") >= 0 || 
                 path.contains("javax.faces.resource") ) {
             chain.doFilter(request, response);
@@ -102,7 +102,7 @@ public class AuthFilter implements Filter {
                 res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             }
         } else {
-            res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page
+            res.sendRedirect(req.getContextPath() + "/login.jsf");  // Anonymous user. Redirect to login page
         }
     }
 

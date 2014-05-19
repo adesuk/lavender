@@ -12,30 +12,30 @@
             <h:form>
               <h:panelGroup rendered="#{not empty loginBean.user and loginBean.role.id == 'ROLE_KOORDINATOR'}">
                 <p:menubar>
-                  <p:menuitem value="Beranda" url="/index.xhtml" icon="ui-icon-home" />
+                  <p:menuitem value="Beranda" url="/index.jsf" icon="ui-icon-home" />
                   <p:submenu label="Jadwal">
                     <p:menuitem value="Generate Jadwal" icon="ui-icon-carat-1-e"
-                                url="/jadwal_karya_akhir/GenerateJadwal.xhtml" />
+                                url="/jadwal_karya_akhir/GenerateJadwal.jsf" />
                     <p:menuitem value="Pengelolaan Jadwal" icon="ui-icon-carat-1-e"
-                                url="/jadwal_karya_akhir/PengelolaanJadwal.xhtml" />
+                                url="/jadwal_karya_akhir/PengelolaanJadwal.jsf" />
                   </p:submenu>
                   <p:submenu label="Periode">
                     <p:menuitem value="Pengelolaan Periode" icon="ui-icon-carat-1-e"
-                                url="/periode/PengelolaanPeriode.xhtml" />
+                                url="/periode/PengelolaanPeriode.jsf" />
                   </p:submenu>
                   <p:submenu label="Karya Akhir">
                     <p:menuitem value="Penentuan Topik" icon="ui-icon-carat-1-e"
-                                url="/karya_akhir/PenentuanTopikKaryaAkhir.xhtml" />
+                                url="/karya_akhir/PenentuanTopikKaryaAkhir.jsf" />
                   </p:submenu>
                   <p:submenu label="Hazard!">
                     <p:menuitem value="Dosen penguji" icon="ui-icon-carat-1-e"
-                                url="/hazard/Dosen.xhtml" />
+                                url="/hazard/Dosen.jsf" />
                     <p:menuitem value="Karya akhir" icon="ui-icon-carat-1-e"
-                                url="/hazard/KarAkh.xhtml" />
+                                url="/hazard/KarAkh.jsf" />
                     <p:menuitem value="Jadwal kuliah" icon="ui-icon-carat-1-e"
-                                url="/hazard/Jk.xhtml" />
+                                url="/hazard/Jk.jsf" />
                     <p:menuitem value="Ruangan kosong" icon="ui-icon-carat-1-e"
-                                url="/hazard/RuanganKosong.xhtml" />
+                                url="/hazard/RuanganKosong.jsf" />
                   </p:submenu>
                   <p:menuitem value="Logout"
                               actionListener="#{loginBean.logout}"
@@ -45,8 +45,8 @@
               
               <h:panelGroup rendered="#{empty loginBean.user}">
                 <p:menubar>
-                  <p:menuitem value="Beranda" url="/index.xhtml" icon="ui-icon-home" />
-                  <p:menuitem value="Login" url="/login.xhtml" icon="ui-icon-home" />
+                  <p:menuitem value="Beranda" url="/index.jsf" icon="ui-icon-home" />
+                  <p:menuitem value="Login" url="/login.jsf" icon="ui-icon-home" />
                 </p:menubar>
               </h:panelGroup>
             </h:form>
