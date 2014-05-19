@@ -1,21 +1,15 @@
 package ac.id.itb.ppl.lavender.bean;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.sql.DataSource;
 
+import ac.id.itb.ppl.lavender.bean.local.TopikLocal;
 import ac.id.itb.ppl.lavender.bean.remote.TopikRemote;
 import ac.id.itb.ppl.lavender.model.Topik;
 
@@ -24,7 +18,7 @@ import ac.id.itb.ppl.lavender.model.Topik;
  */
 @Stateless
 @LocalBean
-public class TopikBean extends AbstractBean<Topik> implements TopikRemote {
+public class TopikBean extends AbstractBean<Topik> implements TopikRemote, TopikLocal {
 
 	SessionContext ctx;
 	
@@ -103,4 +97,22 @@ public class TopikBean extends AbstractBean<Topik> implements TopikRemote {
 		return topiks;
 	}
 
+	// edbert
+	 @Override
+	    public List<Topik> findAll() {
+	        return em.createQuery("select t from Topik as t").getResultList();
+	    }
+	    
+	    @Override
+	    public Topik find(Integer id) {
+	        return em.find(Topik.class, id);
+	    }
+	    
+	    @Override
+	    public List<Topik> findAllWithDosens() {
+	        List<Topik> topiks = em.createQuery(
+	            "select t from Topik as t join left join fetch t.dosenList as d")
+	            .getResultList();
+	        return topiks;
+	    }
 }

@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import ac.id.itb.ppl.lavender.bean.local.DosenLocal;
 import ac.id.itb.ppl.lavender.bean.remote.DosenRemote;
 import ac.id.itb.ppl.lavender.model.Dosen;
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
@@ -29,7 +30,7 @@ import ac.id.itb.ppl.lavender.model.Topik;
  */
 @Stateless
 @LocalBean
-public class DosenBean extends AbstractBean<Dosen> implements DosenRemote {
+public class DosenBean extends AbstractBean<Dosen> implements DosenRemote, DosenLocal {
 	
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -195,6 +196,11 @@ public class DosenBean extends AbstractBean<Dosen> implements DosenRemote {
 			System.out.println(ka.getJudulKa());
 		}
 		return listKaryaAkhir;
+	}
+
+	@Override
+	public Dosen find(String inisial) {
+		return find(inisial);
 	}
 	
 }
