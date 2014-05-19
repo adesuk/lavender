@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class ControlerGenerateJadwal {
 
-    public void callGenetika(List<Dosen> listDosen, List<KaryaAkhir> listKaryaAkhir,
+    public List<Jadwal> callGenetika(List<Dosen> listDosen, List<KaryaAkhir> listKaryaAkhir,
             List<Ruangan> listRuangan, List<SlotWaktu> listSlotWaktu,
             Periode periode){
         // set data source
@@ -68,7 +68,7 @@ public class ControlerGenerateJadwal {
 
         // ceking bentrok dosen pada jadwal yang bentrok jadwal kuliah
         // nunggu query
-
+        return jadwalS;
     }
 
     // method stub

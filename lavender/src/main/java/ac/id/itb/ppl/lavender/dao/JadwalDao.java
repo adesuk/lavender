@@ -24,6 +24,8 @@ public interface JadwalDao {
     
     void save(Jadwal jadwal);
     
+    void saveGeneratedJadwal(List<Jadwal> jadwal);
+    
     Jadwal update(Jadwal jadwal);
     
     boolean delete(Jadwal jadwal);
