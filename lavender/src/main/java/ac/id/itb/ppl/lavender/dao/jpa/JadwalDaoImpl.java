@@ -112,13 +112,14 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
         int x;
         for (Jadwal jad : jadwal) {
             List<Dosen> pengujis = jad.getDosenPenguji();
-            em.persist(jadwal);
+            jad.setIdJadwal(id++);
+            em.persist(jad);
             if (pengujis == null) return;
             x = 1;
             for (Dosen p : pengujis) {
                 query = em.createNativeQuery(
                     "insert into menguji (id_jadwal, inisial_dosen, status_penguji) values (?, ?, ?)")
-                    .setParameter(1, id++)
+                    .setParameter(1, jad.getIdJadwal())
                     .setParameter(2, (String) p.getInisialDosen())
                     .setParameter(3, x++);
                 query.executeUpdate();
