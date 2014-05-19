@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <br />
+        <div class="container">
+            <div style="margin: 0 auto; width: 500px">
+              <f:view>
+                <h:form id="loginForm" styleClass="form-horizontal">
+                  <p:messages id="msg" showDetail="true" closable="true" />
+                  
+                  <h2><h:outputText value="Login" /></h2>
+                  <hr />
+                  
+                  <div class="form-group">
+                    <h:outputLabel for="userId" styleClass="col-sm-2 control-label">
+                      <h:outputText value="User ID" />
+                    </h:outputLabel>
+                    <div class="col-sm-5">
+                      <p:inputText id="userId" value="#{loginBean.userId}" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <h:outputLabel for="password" styleClass="col-sm-2 control-label">
+                      <h:outputText value="Password" />
+                    </h:outputLabel>
+                    <div class="col-sm-5">
+                      <p:password id="password" value="#{loginBean.password}" />
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-5">
+                      <h:panelGrid columns="1">
+                        <p:commandButton id="save" value="Login" 
+                                         style="width: 90px; margin: 5px 5px 5px 0"
+                                         action="#{loginBean.login}"
+                                         update="loginForm" ajax="true" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-5">
+                      <h:panelGrid columns="1">
+                        <p:commandLink id="asGuest" value="Masuk sebagai pengunjung"
+                                action="#{loginBean.logout()}" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+                </h:form>
+              </f:view>
+            </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

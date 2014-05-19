@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h2><h:outputText value="Generate Jadwal Seminar/Sidang" /></h2>
+                <hr />
+
+                <!-- Alert! -->
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <h:form id="formGenerate" styleClass="form-horizontal">
+                  <!-- Periode nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Periode" />
+                    </h:outputLabel>
+                    <div class="col-sm-4">
+                      <p:selectOneMenu value="#{generateJadwal.periode}"
+                                       converter="#{periodeConverter}">
+                        <f:selectItem itemLabel="- Pilih periode -" />
+                        <f:selectItems value="#{generateJadwal.periodes}"
+                                       var="item" itemValue="#{item}"
+                                       itemLabel="#{generateJadwal.formatPeriode(item)}" />
+                        <p:ajax listener="#{generateJadwal.handlePeriodeChange}" 
+                                update="namaPeriode, ruangans" />
+                        <f:ajax render="tombol" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+                  <!-- Nama Periode nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Nama periode" />
+                    </h:outputLabel>
+                    <div class="col-sm-10">
+                      <p class="form-control-static">
+                        <h:outputText id="namaPeriode"
+                                      value="#{generateJadwal.periode.namaPeriode}" />
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Ruangan nya ini -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Ruangan" />
+                    </h:outputLabel>
+                    <div class="col-sm-4">
+                      <p:dataTable id="ruangans" var="ruangan" value="#{generateJadwal.ruangans}"
+                                   scrollable="true" scrollHeight="200">
+                        <p:column headerText="" width="40">
+                          <f:facet name="header">
+                            <h:outputText value="" />
+                          </f:facet>
+                          <p:selectBooleanCheckbox value="#{ruangan.selected}">
+                            <p:ajax event="change" update="@this" />
+                          </p:selectBooleanCheckbox>
+                        </p:column>
+                        <p:column sortBy="#{ruangan.kdRuangan}" headerText="Kode Ruangan">
+                          <h:outputText value="#{ruangan.kdRuangan}" />
+                        </p:column>
+                        <p:column sortBy="#{ruangan.ketersediaanWaktuRuangan.size()}" headerText="Jumlah Sesi Kosong">
+                          <h:outputText value="#{ruangan.ketersediaanWaktuRuangan.size() == 0 ? '' : ruangan.ketersediaanWaktuRuangan.size()}" />
+                        </p:column>
+                      </p:dataTable>
+                    </div>
+                  </div>
+
+                  <!-- Button Generate nya ini -->
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <h:panelGroup id="tombol">
+                        <p:commandButton value="Generate"
+                                         actionListener="#{generateJadwal.generateJadwal}"
+                                         rendered="#{generateJadwal.buttonRender}"
+                                         update="@this, tombol, sedangdigenerate"
+                                         ajax="true" immediate="true"/>
+                        <h:outputLabel id="sedangdigenerate" rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
+                          <h:outputText value="Jadwal sedang di-generate..." />
+                        </h:outputLabel>
+                      </h:panelGroup>
+                    </div>
+                  </div>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+        
+        <div id="dialogGenerate" class="modal fade bs-example-modal-sm" tabindex="-1"
+             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p id="messageContent"></p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                  <p:commandButton value="OK" type="button">
+                    <f:passThroughAttribute name="data-dismiss" value="modal" />
+                  </p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="dialogTunggu" class="modal fade bs-example-modal-sm" tabindex="-1"
+             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p id="messageContent">Jadwal sedang digenerate, harap tunggu....</p>
+              </div>
+              <div class="modal-footer">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showDialogGenerate(message) {
+            $("#dialogGenerate #messageContent").html(message);
+            $("#dialogGenerate").modal();
+          }
+          
+          function showDialogTunggu() {
+            $("#dialogTunggu").modal();
+          }
+          
+          function hideDialogTunggu() {
+            $("#dialogTunggu").modal("hide");
+          }
+        </script>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

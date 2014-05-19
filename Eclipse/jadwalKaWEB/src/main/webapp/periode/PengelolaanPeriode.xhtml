@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form styleClass="form-horizontal">
+                  <h2>Periode Pelaksanaan Seminar/Sidang</h2>
+                  <hr />
+
+                  <!-- Periode Jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Periode jadwal" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:selectOneMenu value="#{pengelolaanPeriode.selectedPeriode}"
+                                       converter="#{periodeConverter}"
+                                       style="width: 100%">
+                        <f:selectItem itemLabel="All" />
+                        <f:selectItems value="#{pengelolaanPeriode.periodes1}"
+                                       var="item" itemLabel="#{pengelolaanJadwal.formatPeriode(item)}"
+                                       itemValue="#{item}" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+                  <!-- Keyword -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Nama periode" />
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:inputText id="namaPeriode" style="width: 100%"
+                                   value="#{pengelolaanPeriode.keyword}" />
+                    </div>
+                  </div>
+
+                  <!-- Tombol-tombol itu -->
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <h:panelGrid columns="3" styleClass="pull-right">
+                        <p:commandButton value="Cari" actionListener="#{pengelolaanPeriode.reloadPeriodes2()}" 
+                                         update="jadwalArea"
+                                         style="width: 90px; margin: 5px" />
+                        <p:commandButton value="Tambah" action="TambahPeriode.xhtml"
+                                         style="width: 90px; margin: 5px" />
+                        <p:commandButton value="Hapus"
+                                         action="#{pengelolaanPeriode.deletePeriode()}"
+                                         update="jadwalArea"
+                                         style="width: 90px; margin: 5px"
+                                         immediate="true" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+
+                  <!-- Table itu -->
+                  <h:panelGroup layout="block" id="jadwalArea">
+                    <p:dataTable id="periodes" var="periode" 
+                                 style="font-size: 1em"
+                                 value="#{pengelolaanPeriode.periodes2}">
+                      <p:column headerText="" width="40">
+                        <p:selectBooleanCheckbox value="#{periode.selected}">
+                          <p:ajax event="change" update="@this" />
+                        </p:selectBooleanCheckbox>
+                      </p:column>
+                      <p:column headerText="Nama Periode" width="350">
+                        <h:outputText value="#{periode.namaPeriode}" />
+                      </p:column>
+                      <p:column headerText="Periode Awal">
+                        <h:outputText value="#{periode.periodeAwal}">
+                          <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                      </p:column>
+                      <p:column headerText="Periode Akhir">
+                        <h:outputText value="#{periode.periodeAkhir}">
+                          <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                      </p:column>
+                      <p:column headerText="Tipe Pelaksanaan" width="200">
+                        <h:outputText value="#{pengelolaanPeriode.getTipeJadwalName(periode.tipeJadwal)}" />
+                      </p:column>
+                      <p:column headerText="Status Verifikasi" width="80">
+                        <h:outputText value="#{periode.statusVerifikasi}" />
+                      </p:column>
+                      <p:column headerText="Status Rilis" width="80">
+                        <h:outputText value="#{periode.statusRilis}" />
+                      </p:column>
+                      <p:column headerText="" width="75">
+                        <p:commandButton value="Edit"
+                                         actionListener="#{pengelolaanPeriode.ubahPeriode(periode)}"
+                                         immediate="true"/>
+                      </p:column>
+                    </p:dataTable>
+                  </h:panelGroup>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+        
+        <div id="berhasilHapusDialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Periode sudah dihapus</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton action="PengelolaanPeriode.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="tidakAdaYangDihapusDialog" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Pilih minimal satu periode yang akan dihapus.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton type="button"
+                                 value="OK">
+                  <f:passThroughAttribute name="data-dismiss" value="modal" />
+                </p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showBerhasilHapusDialog() {
+            $("#berhasilHapusDialog").modal();
+          }
+          
+          function showTidakAdaYangDihapusDialog() {
+            $("#tidakAdaYangDihapusDialog").modal();
+          }
+        </script>
+      </ui:define>>
+    </ui:composition>
+  </h:body>
+</html>
+

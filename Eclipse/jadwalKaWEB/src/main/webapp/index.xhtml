@@ -1,13 +1,65 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-    </h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2><h:outputText value="Pengumuman" /></h2>
+              <hr />
+
+              <h:panelGroup layout="block" id="tabelJadwal">
+                <p:dataTable id="jadwalArea" var="item" value="#{pengelolaanJadwal.jadwal}"
+                             scrollable="true" scrollWidth="99.99%"
+                             style="margin: 0 auto; font-size: .8em;">
+                  <p:column headerText="NIM" width="70">
+                    <h:outputText value="#{item.karyaAkhir.mahasiswa.nim}" />
+                  </p:column>
+                  <p:column headerText="Nama" width="180">
+                    <h:outputText value="#{item.karyaAkhir.mahasiswa.namaMhs}" />
+                  </p:column>
+                  <p:column headerText="Judul Karya" width="250">
+                    <h:outputText value="#{item.karyaAkhir.judulKa}" />
+                  </p:column>
+                  <p:column headerText="Pemb 1" width="70">
+                    <h:outputText value="-" />
+                  </p:column>
+                  <p:column headerText="Pemb 2" width="70">
+                    <h:outputText value="-" />
+                  </p:column>
+                  <p:column headerText="Penguji 1" width="70">
+                    <h:outputText value="#{not empty item.dosenPenguji ? item.dosenPenguji.get(0).getInisialDosen() : '-'}" />
+                  </p:column>
+                  <p:column headerText="Penguji 2" width="70">
+                    <h:outputText value="#{not empty item.dosenPenguji and item.dosenPenguji.size() > 1 ? item.dosenPenguji.get(1).getInisialDosen() : '-'}" />
+                  </p:column>
+                  <p:column headerText="Tanggal" width="70">
+                    <h:outputText value="#{item.tanggal}">
+                      <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                  </p:column>
+                  <p:column headerText="Jam" width="70">
+                    <h:outputText value="#{pengelolaanJadwal.formatSlotWaktu(item.slotWaktu)}" />
+                  </p:column>
+                  <p:column headerText="Ruangan" width="70">
+                    <h:outputText value="#{item.ruangan.kdRuangan}" />
+                  </p:column>
+                </p:dataTable>
+              </h:panelGroup>
+            </div>
+          </div>
+        </div>
+      </ui:define>
+    </ui:composition>
+    <!--<h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />-->
+  </h:body>
 </html>

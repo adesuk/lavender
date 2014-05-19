@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="events">
+        <f:event listener="#{pengelolaanPeriode.initializePeriode}" type="preRenderView" />
+      </ui:define>
+
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form class="form-horizontal" id="periodeInputForm">
+                  <h2><h:outputText value="Tambah Periode" /></h2>
+                  <hr />
+
+                  <p:messages autoUpdate="true" id="msg" closable="true" />
+
+                  <!-- Nama periode -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Nama periode" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:inputText id="namaPeriode" 
+                                   value="#{pengelolaanPeriode.periode.namaPeriode}"
+                                   required="true"
+                                   requiredMessage="Nama harus diisi." />
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="namaPeriode" />
+                    </div>
+                  </div>
+
+                  <!-- Periode awal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Periode awal" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:calendar id="periodeAwal" 
+                                  value="#{pengelolaanPeriode.periode.periodeAwal}"
+                                  pattern="dd/MM/yyyy" required="true"
+                                  requiredMessage="Periode awal harus diisi."
+                                  readonlyInput="true"
+                                  binding="#{startDateComponent}" />
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="periodeAwal" />
+                    </div>
+                  </div>
+
+                  <!-- Periode akhir -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Periode akhir" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:calendar id="periodeAkhir" 
+                                  value="#{pengelolaanPeriode.periode.periodeAkhir}"
+                                  pattern="dd/MM/yyyy"
+                                  required="true"
+                                  requiredMessage="Periode akhir harus diisi"
+                                  readonlyInput="true">
+                        <f:validator validatorId="dateRangeValidator" />
+                        <f:attribute name="startDateComponent" value="#{startDateComponent}" />
+                      </p:calendar>
+                    </div>
+                    <div class="col-sm-4">
+                      <p:message for="periodeAkhir" />
+                    </div>
+                  </div>
+
+                  <!-- Tipe jadwal -->
+                  <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-2 control-label">
+                      <h:outputText value="Tipe Pelaksanaan" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-3">
+                      <p:selectOneMenu value="#{pengelolaanPeriode.periode.tipeJadwal}">
+                        <f:selectItems value="#{pengelolaanPeriode.tipeJadwals}" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+
+                  <!-- Tombol-tombol -->
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-3">
+                      <h:panelGrid columns="2">
+                        <p:commandButton id="save" value="Simpan" 
+                                         style="width: 90px; margin: 5px 5px 5px 0"
+                                         actionListener="#{pengelolaanPeriode.savePeriode}"
+                                         validateClient="true"
+                                         update="periodeInputForm" />
+                        <p:commandButton id="cancel" value="Batal"
+                                         style="width: 90px; margin: 5px 0 5px 5px"
+                                         action="#{pengelolaanPeriode.cancel}"
+                                         immediate="true" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+        <div id="info" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Periode sudah disimpan.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton action="PengelolaanPeriode.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          function showInfo() {
+            $("#info").modal();
+          }
+        </script>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+

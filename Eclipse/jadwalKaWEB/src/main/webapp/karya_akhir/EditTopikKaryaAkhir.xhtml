@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+    <title>Facelet Title</title>
+  </h:head>
+  <h:body>
+    <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+      <ui:define name="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <f:view>
+                <h:form styleClass="form-horizontal">
+                  <h2><h:outputText value="Penentuan Topik Karya Akhir" /></h2>
+                  <hr />
+                  
+                  <p:messages autoUpdate="true" showDetail="true" id="msg" />
+                  
+                  <!-- NIM -->
+                  <div class="form-group">
+                    <h:outputLabel for="nim" value="NIM"
+                                   styleClass="col-sm-2 control-label" />
+                    <div class="col-sm-4">
+                      <p class="form-control-static">
+                        <h:outputText id="nim" 
+                                      value="#{topikKaryaAkhir.karyaAkhir.mahasiswa.nim}" />
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <!-- Nama -->
+                  <div class="form-group">
+                    <h:outputLabel for="nama" value="Nama"
+                                   styleClass="col-sm-2 control-label" />
+                    <div class="col-sm-4">
+                      <p class="form-control-static">
+                        <h:outputText id="nama" 
+                                      value="#{topikKaryaAkhir.karyaAkhir.mahasiswa.namaMhs}" />
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <!-- Topik -->
+                  <div class="form-group">
+                    <h:outputLabel for="topiknya" styleClass="col-sm-2 control-label"> 
+                      <h:outputText value="Topik" /> <span class="required">*</span>
+                    </h:outputLabel>
+                    <div class="col-sm-4">
+                      <p:selectOneMenu id="topiknya" value="#{topikKaryaAkhir.karyaAkhir.topik}"
+                                       converter="#{topikConverter}"
+                                       style="width: 100%"
+                                       required="true"
+                                       requiredMessage="Pilih topik karya akhir">
+                        <f:selectItem itemLabel="- Pilih topik -" />
+                        <f:selectItems value="#{topikKaryaAkhir.topiks}"
+                                       var="topik" itemLabel="#{topik.namaTopik}"
+                                       itemValue="#{topik}" />
+                        <p:ajax event="change" update="@this" />
+                      </p:selectOneMenu>
+                    </div>
+                  </div>
+                  
+                  <!-- Judul -->
+                  <div class="form-group">
+                    <h:outputLabel for="judul" value="Judul"
+                                   styleClass="col-sm-2 control-label" />
+                    <div class="col-sm-4">
+                      <p class="form-control-static">
+                        <h:outputText id="judul" 
+                                      value="#{topikKaryaAkhir.karyaAkhir.judulKa}" />
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <!-- Status -->
+                  <div class="form-group">
+                    <h:outputLabel for="status" value="Status"
+                                   styleClass="col-sm-2 control-label" />
+                    <div class="col-sm-4">
+                      <p class="form-control-static">
+                        <h:outputText id="status" 
+                                      value="#{topikKaryaAkhir.getTipeStatusKaryaName(topikKaryaAkhir.karyaAkhir.statusKa)}" />
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <!-- Tombol-tombol -->
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-3">
+                      <h:panelGrid columns="2">
+                        <p:commandButton id="save" value="Simpan" 
+                                         style="width: 90px; margin: 5px 5px 5px 0"
+                                         action="#{topikKaryaAkhir.save}"
+                                         validateClient="true" />
+                        <p:commandButton id="cancel" value="Batal"
+                                         style="width: 90px; margin: 5px 0 5px 5px"
+                                         action="#{topikKaryaAkhir.cancel}" />
+                      </h:panelGrid>
+                    </div>
+                  </div>
+                </h:form>
+              </f:view>
+            </div>
+          </div>
+        </div>
+        
+        <div id="info" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p>Perubahan sudah disimpan.</p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                <p:commandButton
+                                 action="PenentuanTopikKaryaAkhir.xhtml?faces-redirect=true"
+                                 value="OK"></p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showInfo() {
+            $("#info").modal();
+          }
+        </script>
+      </ui:define>
+    </ui:composition>
+  </h:body>
+</html>
+
