@@ -46,6 +46,7 @@ public class GeneratorJadwal {
          System.out.println(myPop.getFittest());
          
          if(myPop.getFittest().getFitness() < 1){
+             System.out.println("jadwal null");
              return null;
          }else {
             Individual result = myPop.getFittest();
