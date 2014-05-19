@@ -156,8 +156,8 @@ create table KARYA_AKHIR  (
 create table KETERSEDIAAN_WAKTU_DOSEN  (
    INISIAL_DOSEN        VARCHAR2(3)                     not null,
    ID_SLOT              NUMBER(5)                       not null,
-   TANGGAL_DSN_SEDIA    DATE                            not null,
-   constraint PK_KETERSEDIAAN_WAKTU_DOSEN primary key (INISIAL_DOSEN, ID_SLOT, TANGGAL_DSN_SEDIA)
+   TANGGAL_DSN_SEDIA    DATE,
+   constraint PK_KETERSEDIAAN_WAKTU_DOSEN primary key (INISIAL_DOSEN, ID_SLOT)
 );
 
 /*==============================================================*/
@@ -202,7 +202,7 @@ create table MENGUJI  (
 /*==============================================================*/
 create table PERIODE  (
    ID_PERIODE           NUMBER(5)                       not null,
-   NAMA_PERIODE         VARCHAR2(50)                    not null,
+   NAMA_PERIODE         VARCHAR2(100)                    not null,
    PERIODE_AWAL         DATE                            not null,
    PERIODE_AKHIR        DATE                            not null,
    TIPE_JADWAL          CHAR(1),
