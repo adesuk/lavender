@@ -44,6 +44,7 @@ public class PeriodeDaoImpl extends JpaDao implements PeriodeDao {
         Query query = em.createNativeQuery("select max(id_periode) from periode");
         List<BigDecimal> temp = query.getResultList();
         periode.setIdPeriode(Integer.valueOf(temp.get(0).toString()) + 1);
+        periode.setStatusJadwal(AllConstants.BELUM_DIGENERATE);
         em.persist(periode);
     }
     

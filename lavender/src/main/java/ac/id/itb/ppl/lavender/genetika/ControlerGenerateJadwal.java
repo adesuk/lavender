@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class ControlerGenerateJadwal {
 
-    public void callGenetika(List<Dosen> listDosen, List<KaryaAkhir> listKaryaAkhir,
+    public List<Jadwal> callGenetika(List<Dosen> listDosen, List<KaryaAkhir> listKaryaAkhir,
             List<Ruangan> listRuangan, List<SlotWaktu> listSlotWaktu,
             Periode periode){
         // set data source
@@ -46,29 +46,8 @@ public class ControlerGenerateJadwal {
         
         // call modul genetika to generate jadwal
         jadwalS = new GeneratorJadwal().generateJadwal();
-
-        // print jadwal for checking
-        System.out.println("ID SLOT WAKTU" + "\t"+
-                            "DATE" + "\t"+
-                            "ID_RUANGAN" +"\t"+
-                            "ID_KA"+"\t"+
-                            "ID_PEMBIMBING"+"\t"+
-                            "ID_DOSEN");
-        for (int i = 0; i<jadwalS.size(); i++){
-            Jadwal dataJadwal = jadwalS.get(i);
-            System.out.println(dataJadwal.getSlotWaktu().getIdSlot() + "\t"+
-                               dataJadwal.getTanggal().toString() + "\t"+
-                               dataJadwal.getRuangan().getKdRuangan() +"\t"+
-                               dataJadwal.getKaryaAkhir().getIdKa()+"\t"+
-                               dataJadwal.getKaryaAkhir().getDosenPembimbing().get(0).getInisialDosen()+"\t"+
-                               dataJadwal.getDosenPenguji().get(0).getInisialDosen()+"\t"+
-                               dataJadwal.getGenerateDate().toString());
-         }
-        // save jadwal to database
-
-        // ceking bentrok dosen pada jadwal yang bentrok jadwal kuliah
-        // nunggu query
-
+        
+        return jadwalS;
     }
 
     // method stub

@@ -18,7 +18,7 @@
                 <!-- Alert! -->
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-                <h:form styleClass="form-horizontal">
+                <h:form id="formGenerate" styleClass="form-horizontal">
                   <!-- Periode nya ini -->
                   <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label">
@@ -81,11 +81,12 @@
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <h:panelGroup id="tombol">
-                        <h:commandButton styleClass="btn btn-primary" value="Generate"
-                                         action="#{generateJadwal.generateJadwal}"
+                        <p:commandButton value="Generate"
+                                         actionListener="#{generateJadwal.generateJadwal}"
                                          rendered="#{generateJadwal.buttonRender}"
-                                         immediate="true" />
-                        <h:outputLabel rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
+                                         update="@this, tombol, sedangdigenerate"
+                                         ajax="true" immediate="true"/>
+                        <h:outputLabel id="sedangdigenerate" rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
                           <h:outputText value="Jadwal sedang di-generate..." />
                         </h:outputLabel>
                       </h:panelGroup>
@@ -96,6 +97,59 @@
             </div>
           </div>
         </div>
+        
+        <div id="dialogGenerate" class="modal fade bs-example-modal-sm" tabindex="-1"
+             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p id="messageContent"></p>
+              </div>
+              <div class="modal-footer">
+                <h:form>
+                  <p:commandButton value="OK" type="button">
+                    <f:passThroughAttribute name="data-dismiss" value="modal" />
+                  </p:commandButton>
+                </h:form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="dialogTunggu" class="modal fade bs-example-modal-sm" tabindex="-1"
+             role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+              </div>
+              <div class="modal-body">
+                <p id="messageContent">Jadwal sedang digenerate, harap tunggu....</p>
+              </div>
+              <div class="modal-footer">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <script type="text/javascript">
+          function showDialogGenerate(message) {
+            $("#dialogGenerate #messageContent").html(message);
+            $("#dialogGenerate").modal();
+          }
+          
+          function showDialogTunggu() {
+            $("#dialogTunggu").modal();
+          }
+          
+          function hideDialogTunggu() {
+            $("#dialogTunggu").modal("hide");
+          }
+        </script>
       </ui:define>
     </ui:composition>
   </h:body>

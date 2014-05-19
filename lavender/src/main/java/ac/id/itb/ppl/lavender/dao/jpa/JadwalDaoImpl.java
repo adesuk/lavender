@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
  */
 @Stateless
 public class JadwalDaoImpl extends JpaDao implements JadwalDao {
+    
     @Override
     public List<Jadwal> findJadwalByPeriodeAndVersi(Periode periode, Date versi) {
         if (periode == null) {
@@ -41,9 +42,9 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
             "select j from Jadwal as j join fetch j.slotWaktu as s where j.idJadwal = :id")
             .setParameter("id", id);
         Jadwal jadwal = (Jadwal) query.getSingleResult();
-        for (Dosen d : jadwal.getDosenPenguji()) {
-            System.out.println(">>> " + d.getNamaDosen() + " <<<");
-        }
+//        for (Dosen d : jadwal.getDosenPenguji()) {
+//            System.out.println(">>> " + d.getNamaDosen() + " <<<");
+//        }
         
         return jadwal;
     }
@@ -84,18 +85,48 @@ public class JadwalDaoImpl extends JpaDao implements JadwalDao {
             
         }
         List<Dosen> pengujis = jadwal.getDosenPenguji();
-        //jadwal.setDosenPenguji(new ArrayList<Dosen>(0));
         em.persist(jadwal);
         if (pengujis == null) return;
+        int x = 1;
         for (Dosen p : pengujis) {
             query = em.createNativeQuery(
-                "insert into menguji (id_jadwal, inisial_dosen) values (?, ?)")
+                "insert into menguji (id_jadwal, inisial_dosen, status_penguji) values (?, ?, ?)")
                 .setParameter(1, jadwal.getIdJadwal())
-                .setParameter(2, (String) p.getInisialDosen());
+                .setParameter(2, (String) p.getInisialDosen())
+                .setParameter(3, x++);
             query.executeUpdate();
         }
-        //jadwal.setDosenPenguji(pengujis);
     }
+    
+    @Override
+    public void saveGeneratedJadwal(List<Jadwal> jadwal) {
+        if (jadwal == null || jadwal.isEmpty()) {
+            return;
+        }
+        
+        Query query = em.createNativeQuery("select max(id_jadwal) from jadwal");
+        List<BigDecimal> temp = query.getResultList();
+        Integer id = temp == null || temp.isEmpty() || temp.get(0) == null 
+            ? 1 
+            :Integer.valueOf(temp.get(0).toString()) + 1;
+        int x;
+        for (Jadwal jad : jadwal) {
+            List<Dosen> pengujis = jad.getDosenPenguji();
+            jad.setIdJadwal(id++);
+            em.persist(jad);
+            if (pengujis == null) return;
+            x = 1;
+            for (Dosen p : pengujis) {
+                query = em.createNativeQuery(
+                    "insert into menguji (id_jadwal, inisial_dosen, status_penguji) values (?, ?, ?)")
+                    .setParameter(1, jad.getIdJadwal())
+                    .setParameter(2, (String) p.getInisialDosen())
+                    .setParameter(3, x++);
+                query.executeUpdate();
+            }
+        }
+    }
+    
     
     @Override
     public Jadwal update(Jadwal jadwal) {
