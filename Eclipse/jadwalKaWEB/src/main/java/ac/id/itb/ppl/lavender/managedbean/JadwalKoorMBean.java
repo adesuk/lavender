@@ -18,6 +18,7 @@ import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
+import ac.id.itb.ppl.lavender.util.MyTipeEksekusi;
 import ac.id.itb.ppl.lavender.util.StatusJadwal;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 
@@ -32,12 +33,12 @@ public class JadwalKoorMBean implements Serializable {
 	private PeriodeBean periodeBean;
 	
 	private Periode periode;
-	private TipeEksekusi tipeEksekusi;
+	private MyTipeEksekusi tipeEksekusi;
 	private List<Periode> periodes;
 	private List<JadwalView> jadwal;
 	
 	public JadwalKoorMBean() {
-		tipeEksekusi = new TipeEksekusi();
+		tipeEksekusi = new MyTipeEksekusi();
 		statusJadwal = new StatusJadwal();
 	}
 	

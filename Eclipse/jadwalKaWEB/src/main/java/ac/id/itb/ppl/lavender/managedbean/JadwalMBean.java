@@ -13,6 +13,7 @@ import ac.id.itb.ppl.lavender.bean.PeriodeBean;
 import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.view.JadwalView;
+import ac.id.itb.ppl.lavender.util.MyTipeEksekusi;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
 
 @ManagedBean(name="jadwalMBean")
@@ -26,11 +27,11 @@ public class JadwalMBean implements Serializable {
 	private PeriodeBean periodeBean;
 	
 	private Periode periode;
-	private TipeEksekusi tipeEksekusi;
+	private MyTipeEksekusi tipeEksekusi;
 	
 	@PostConstruct
 	public void init() {
-		tipeEksekusi = new TipeEksekusi();
+		tipeEksekusi = new MyTipeEksekusi();
 		periode = periodeBean.lastPeriode();
 	}
 		

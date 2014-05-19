@@ -7,20 +7,30 @@ import javax.persistence.*;
  *
  * @author edbert
  */
-//@Entity
+@Entity
+@Table(name = "USERS")
 public class User implements Serializable {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "USER_NAME")
     private String userId;
+    @Column(name = "PASSWORD")
     private String password;
-    private String name;
-    private String role;
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+    @ManyToOne
+    @JoinColumn(name = "ID_ROLE")
+    private Role role;
     
-    public User() { }
+    public User() {
+    }
     
-    public User(String userId, String password, String name, String role) {
+    public User(String userId) {
+        this.userId = userId;
+    }
+    
+    public User(String userId, String password, String name, Role role) {
         this.userId = userId;
         this.password = password;
-        this.name = name;
+        this.firstName = name;
         this.role = role;
     }
 
@@ -40,19 +50,19 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
     
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
     
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
