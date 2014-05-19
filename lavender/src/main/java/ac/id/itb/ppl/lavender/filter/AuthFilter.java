@@ -90,6 +90,7 @@ public class AuthFilter implements Filter {
             if ((path.indexOf("/jadwal_karya_akhir/") >= 0 ||
                 path.indexOf("/karya_akhir/") >= 0 ||
                 path.indexOf("/periode/") >= 0 ||
+                path.contains("/hazard/") ||
                     "partial/ajax".equals(req.getHeader("Faces-Request"))) &&
                 user.getRole().getId().equals(RoleType.KOORDINATOR.getName())) {
                 // ga ada masalah dengan link yg bisa diakses koordinator

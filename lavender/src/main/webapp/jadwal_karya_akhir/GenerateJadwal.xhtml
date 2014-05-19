@@ -81,11 +81,12 @@
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <h:panelGroup id="tombol">
-                        <h:commandButton styleClass="btn btn-primary" value="Generate"
-                                         action="#{generateJadwal.generateJadwal}"
+                        <p:commandButton value="Generate"
+                                         actionListener="#{generateJadwal.generateJadwal}"
                                          rendered="#{generateJadwal.buttonRender}"
-                                         immediate="true" />
-                        <h:outputLabel rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
+                                         update="@this, tombol, sedangdigenerate, @form:ruangans"
+                                         ajax="true" />
+                        <h:outputLabel id="sedangdigenerate" rendered="#{generateJadwal.periode != null and !generateJadwal.buttonRender}">
                           <h:outputText value="Jadwal sedang di-generate..." />
                         </h:outputLabel>
                       </h:panelGroup>

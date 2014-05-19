@@ -1,6 +1,7 @@
 package ac.id.itb.ppl.lavender.managedbean.jadwal;
 
 import ac.id.itb.ppl.lavender.dao.DosenDao;
+import ac.id.itb.ppl.lavender.dao.JadwalDao;
 import ac.id.itb.ppl.lavender.dao.KaryaAkhirDao;
 import ac.id.itb.ppl.lavender.dao.PeriodeDao;
 import ac.id.itb.ppl.lavender.dao.RuanganDao;
@@ -12,6 +13,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.Ruangan;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
+import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.util.AllConstants;
 import java.io.IOException;
 import java.io.Serializable;
@@ -40,6 +42,7 @@ public class GenerateJadwalMBean implements Serializable {
     @Inject private DosenDao dosenDao;
     @Inject private SlotWaktuDao slotWaktuDao;
     @Inject private KaryaAkhirDao karyaAkhirDao;
+    @Inject private JadwalDao jadwalDao;
     private List<Periode> periodes;
     private Periode periode;
     private List<Ruangan> ruangans;
@@ -117,18 +120,28 @@ public class GenerateJadwalMBean implements Serializable {
         
         // ganti status lagi generate jadwal ke tabel periode
         periodeDao.changeGenerateStatusInProgress(periode);
+        ruangans = new ArrayList<Ruangan>();
+        setButtonRender(false);
         
-        //cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, periode);
+        //
         
         
-        /*try {
+        try {
             FacesContext.getCurrentInstance().getExternalContext()
                 .redirect("GenerateJadwal.xhtml");
         } catch (IOException ioe) {
             LOGGER.log(Level.SEVERE, null, ioe);
-        }*/
+        }
+        
+        List<Jadwal> jadwal = cgj.callGenetika(dosens, karyaAkhirs, selectedRuangans, slotWaktus, periode);
+        for (Jadwal j : jadwal) {
+            j.setIdPeriode(periode);;
+        }
+        jadwalDao.saveGeneratedJadwal(jadwal);
         
         // ganti status jadwal jadi udah di-generate
+        periodeDao.changeGenerateStatusDone(periode);
+        setButtonRender(true);
     }
     // End of business logic
     
