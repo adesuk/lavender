@@ -19,7 +19,7 @@ import javax.inject.Named;
  *
  * @author Edbert
  */
-@ManagedBean(name = "pengelolaanJadwalBean")
+@ManagedBean(name = "pengelolaanJadwalMBean")
 @SessionScoped
 public class PengelolaanJadwalMBean implements java.io.Serializable {
     private static final long serialVersionUID = -91232124123L;

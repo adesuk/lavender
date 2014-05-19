@@ -10,7 +10,7 @@ import javax.faces.bean.ViewScoped;
 import ac.id.itb.ppl.lavender.bean.DosenBean;
 import ac.id.itb.ppl.lavender.model.Dosen;
 
-@ManagedBean(name="dosenBean")
+@ManagedBean(name="dosenMBean")
 @ViewScoped
 public class DosenMBean implements Serializable{
 	/**

@@ -10,7 +10,7 @@ package ac.id.itb.ppl.lavender.genetika;
  * @author Asri Maspupah
  */
 public class Individual {
-     static int defaultGeneLength = 8;
+     static int defaultGeneLength = DataSource.getInstance().getListGenKaryaAkhir().size();
      private Kromosom[] kromosoms = new Kromosom[defaultGeneLength];
      // Cache
      private float fitness = 0f;
