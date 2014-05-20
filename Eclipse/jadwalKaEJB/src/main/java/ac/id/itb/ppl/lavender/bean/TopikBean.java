@@ -18,7 +18,7 @@ import ac.id.itb.ppl.lavender.model.Topik;
  */
 @Stateless
 @LocalBean
-public class TopikBean extends AbstractBean<Topik> implements TopikRemote, TopikLocal {
+public class TopikBean extends AbstractBean<Topik> { //implements TopikRemote, TopikLocal {
 
 	SessionContext ctx;
 	
@@ -103,12 +103,12 @@ public class TopikBean extends AbstractBean<Topik> implements TopikRemote, Topik
 	        return em.createQuery("select t from Topik as t").getResultList();
 	    }
 	    
-	    @Override
+//	    @Override
 	    public Topik find(Integer id) {
 	        return em.find(Topik.class, id);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public List<Topik> findAllWithDosens() {
 	        List<Topik> topiks = em.createQuery(
 	            "select t from Topik as t join left join fetch t.dosenList as d")

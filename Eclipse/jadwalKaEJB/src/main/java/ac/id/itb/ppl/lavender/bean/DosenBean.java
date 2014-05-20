@@ -30,7 +30,7 @@ import ac.id.itb.ppl.lavender.model.Topik;
  */
 @Stateless
 @LocalBean
-public class DosenBean extends AbstractBean<Dosen> implements DosenRemote, DosenLocal {
+public class DosenBean extends AbstractBean<Dosen> {
 	
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -198,9 +198,9 @@ public class DosenBean extends AbstractBean<Dosen> implements DosenRemote, Dosen
 		return listKaryaAkhir;
 	}
 
-	@Override
+//	@Override
 	public Dosen find(String inisial) {
-		return find(inisial);
+		return super.find(inisial);
 	}
 	
 }

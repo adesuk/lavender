@@ -2,8 +2,11 @@ package ac.id.itb.ppl.lavender.bean.local;
 
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
 import ac.id.itb.ppl.lavender.model.Mahasiswa;
+
 import java.util.List;
+
 import javax.ejb.Local;
+import javax.ejb.LocalBean;
 
 /**
  *

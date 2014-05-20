@@ -1,10 +1,11 @@
 package ac.id.itb.ppl.lavender.managedbean.topik;
 
-import ac.id.itb.ppl.lavender.bean.local.KaryaAkhirLocal;
-import ac.id.itb.ppl.lavender.bean.local.TopikLocal;
+import ac.id.itb.ppl.lavender.bean.KaryaAkhirBean;
+import ac.id.itb.ppl.lavender.bean.TopikBean;
 import ac.id.itb.ppl.lavender.model.KaryaAkhir;
 import ac.id.itb.ppl.lavender.model.Topik;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +13,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
+
 import org.primefaces.context.RequestContext;
 
 /**
@@ -29,8 +32,8 @@ public class TopikKaryaAkhirMBean implements Serializable {
     private static final long serialVersionUID = -9001237248551290L;
     private static final Logger LOGGER = Logger.getLogger(TopikKaryaAkhirMBean.class.getName());
     
-    @Inject private KaryaAkhirLocal karyaAkhirDao;
-    @Inject private TopikLocal topikDao;
+    @EJB private KaryaAkhirBean karyaAkhirDao;
+    @EJB private TopikBean topikDao;
     private int tahun = getTahuns().get(0);
     private String judul;
     private List<KaryaAkhir> karyaAkhirs;

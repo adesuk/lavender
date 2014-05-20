@@ -6,6 +6,7 @@ import ac.id.itb.ppl.lavender.model.Role;
 import ac.id.itb.ppl.lavender.model.User;
 import ac.id.itb.ppl.lavender.util.RoleType;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +17,8 @@ import javax.persistence.Query;
  * @author edbert
  */
 @Stateless
-public class UserBean extends AbstractBean<User> implements UserLocal {
+@LocalBean
+public class UserBean extends AbstractBean<User> { //implements UserLocal {
 	
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -30,7 +32,7 @@ public class UserBean extends AbstractBean<User> implements UserLocal {
 		return em;
 	}
 	
-    @Override
+//    @Override
     public User login(String userId, String password) {
 //        if (userId.equals("AW") && password.equals("12345")) {
 //            Role role = new Role(RoleType.KOORDINATOR.getName());

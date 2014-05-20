@@ -24,7 +24,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote, PeriodeLocal {
+public class PeriodeBean extends AbstractBean<Periode> { //implements PeriodeRemote, PeriodeLocal {
 
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -69,7 +69,7 @@ public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote,
 	}
 	
 	//edbert
-	 @Override
+//	 @Override
 	    public Periode find(Integer id) {
 	        return em.find(Periode.class, id);
 	    }
@@ -81,7 +81,7 @@ public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote,
 	        return periodes;
 	    }
 	    
-	    @Override
+//	    @Override
 	    public List<Periode> findByKeyword(String keyword) {
 	        Query query = em.createQuery(
 	            "select p from Periode as p where lower(p.namaPeriode) like lower(:keyword) order by p.periodeAwal desc")
@@ -90,7 +90,7 @@ public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote,
 	        return periodes;
 	    }
 	    
-	    @Override
+//	    @Override
 	    public void save(Periode periode) {
 	        Query query = em.createNativeQuery("select max(id_periode) from periode");
 	        List<BigDecimal> temp = query.getResultList();
@@ -99,30 +99,30 @@ public class PeriodeBean extends AbstractBean<Periode> implements PeriodeRemote,
 	        em.persist(periode);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public Periode update(Periode periode) {
 	        return em.merge(periode);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public void delete(Periode periode) {
 	        Periode p = em.merge(periode);
 	        em.remove(p);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public void changeGenerateStatusInProgress(Periode periode) {
 	        periode.setStatusJadwal(AllConstants.SEDANG_DIGENERATE);
 	        em.merge(periode);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public void changeGenerateStatusDone(Periode periode) {
 	        periode.setStatusJadwal(AllConstants.SUDAH_DIGENERATE);
 	        em.merge(periode);
 	    }
 	    
-	    @Override
+//	    @Override
 	    public char findStatusJadwal(Periode periode) {
 	        Query query = em.createNativeQuery(
 	            "select status_jadwal from periode where id_periode = ?")

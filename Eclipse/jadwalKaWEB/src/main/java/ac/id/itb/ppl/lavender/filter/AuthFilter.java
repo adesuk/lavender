@@ -3,9 +3,11 @@ package ac.id.itb.ppl.lavender.filter;
 import ac.id.itb.ppl.lavender.managedbean.login.LoginBean;
 import ac.id.itb.ppl.lavender.model.User;
 import ac.id.itb.ppl.lavender.util.RoleType;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -87,6 +89,11 @@ public class AuthFilter implements Filter {
         }
         
         if (user != null) {
+        	
+        	 System.out.println("name in auth : "+ user.getFirstName());
+        	 System.out.println("passowrd : "+ user.getPassword());
+             System.out.println("role in auth : "+ user.getRole().getName());            
+        	
             if ((path.indexOf("/jadwal_karya_akhir/") >= 0 ||
                 path.indexOf("/karya_akhir/") >= 0 ||
                 path.indexOf("/periode/") >= 0 ||

@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class SlotWaktuBean extends AbstractBean<SlotWaktu> implements SlotWaktuRemote, SlotWaktuLocal {
+public class SlotWaktuBean extends AbstractBean<SlotWaktu> { //implements SlotWaktuRemote, SlotWaktuLocal {
 
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -35,7 +35,7 @@ public class SlotWaktuBean extends AbstractBean<SlotWaktu> implements SlotWaktuR
 	        return em.createQuery("select s from SlotWaktu as s").getResultList();
 	    }
 	    
-	  @Override
+//	  @Override
 	  public SlotWaktu find(Integer id) {
 	        return em.find(SlotWaktu.class, id);
 	    }

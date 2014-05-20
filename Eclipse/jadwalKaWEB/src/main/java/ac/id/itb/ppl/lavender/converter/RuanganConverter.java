@@ -7,7 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
 
 /**
@@ -17,7 +17,7 @@ import javax.inject.Named;
 @Named(value = "ruanganConverter")
 @RequestScoped
 public class RuanganConverter implements Converter, Serializable {
-    @Inject private RuanganLocal ruanganDao;
+    @EJB private RuanganLocal ruanganDao;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

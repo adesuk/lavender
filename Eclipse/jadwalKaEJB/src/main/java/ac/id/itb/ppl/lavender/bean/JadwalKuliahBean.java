@@ -16,7 +16,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
  * @author edbert
  */
 @Stateless
-public class JadwalKuliahBean extends AbstractBean<JadwalKuliah> implements JadwalKuliahLocal {
+public class JadwalKuliahBean extends AbstractBean<JadwalKuliah> { //implements JadwalKuliahLocal {
     
 	@PersistenceUnit(unitName="jadwalPU")
 	private EntityManager em;
@@ -30,7 +30,7 @@ public class JadwalKuliahBean extends AbstractBean<JadwalKuliah> implements Jadw
 		return em;
 	}
 	
-	@Override
+//	@Override
     public List<JadwalKuliah> findByPeriode(Periode periode) {
         Query query = em.createNativeQuery(
             new StringBuilder()

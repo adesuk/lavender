@@ -1,5 +1,12 @@
 package ac.id.itb.ppl.lavender.managedbean.jadwal;
 
+import ac.id.itb.ppl.lavender.bean.DosenBean;
+import ac.id.itb.ppl.lavender.bean.JadwalBean;
+import ac.id.itb.ppl.lavender.bean.KaryaAkhirBean;
+import ac.id.itb.ppl.lavender.bean.MahasiswaBean;
+import ac.id.itb.ppl.lavender.bean.PeriodeBean;
+import ac.id.itb.ppl.lavender.bean.RuanganBean;
+import ac.id.itb.ppl.lavender.bean.SlotWaktuBean;
 import ac.id.itb.ppl.lavender.bean.local.DosenLocal;
 import ac.id.itb.ppl.lavender.bean.local.JadwalLocal;
 import ac.id.itb.ppl.lavender.bean.local.KaryaAkhirLocal;
@@ -18,6 +25,7 @@ import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.model.Ruangan;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,12 +35,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -47,19 +57,19 @@ public class PengelolaanJadwalMBean implements Serializable {
     private static final long serialVersionUID = -923472098100123532L;
     private static final Logger LOGGER = Logger.getLogger(PengelolaanJadwalMBean.class.getName());
     
-    @Inject private PeriodeLocal periodeDao;
-    @Inject private JadwalLocal jadwalDao;
+    @EJB private PeriodeBean periodeDao;
+    @EJB private JadwalBean jadwalDao;
     private List<Periode> periodes;
     private Periode periode;
     private List<Date> versiJadwals;
     private Date versiJadwal;
     private List<Jadwal> jadwal;
     private Jadwal jadwalDetail;
-    @Inject private MahasiswaLocal mahasiswaDao;
-    @Inject private SlotWaktuLocal slotWaktuDao;
-    @Inject private RuanganLocal ruanganDao;
-    @Inject private KaryaAkhirLocal karyaAkhirDao;
-    @Inject private DosenLocal dosenDao;
+    @EJB private MahasiswaBean mahasiswaDao;
+    @EJB private SlotWaktuBean slotWaktuDao;
+    @EJB private RuanganBean ruanganDao;
+    @EJB private KaryaAkhirBean karyaAkhirDao;
+    @EJB private DosenBean dosenDao;
     private List<Mahasiswa> mahasiswas;
     private Mahasiswa selectedMahasiswa;
     private List<Dosen> pengujis1;

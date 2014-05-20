@@ -1,5 +1,11 @@
 package ac.id.itb.ppl.lavender.managedbean.jadwal;
 
+import ac.id.itb.ppl.lavender.bean.DosenBean;
+import ac.id.itb.ppl.lavender.bean.JadwalBean;
+import ac.id.itb.ppl.lavender.bean.KaryaAkhirBean;
+import ac.id.itb.ppl.lavender.bean.PeriodeBean;
+import ac.id.itb.ppl.lavender.bean.RuanganBean;
+import ac.id.itb.ppl.lavender.bean.SlotWaktuBean;
 import ac.id.itb.ppl.lavender.bean.local.DosenLocal;
 import ac.id.itb.ppl.lavender.bean.local.JadwalLocal;
 import ac.id.itb.ppl.lavender.bean.local.KaryaAkhirLocal;
@@ -15,18 +21,21 @@ import ac.id.itb.ppl.lavender.model.SlotWaktu;
 import ac.id.itb.ppl.lavender.formatter.PeriodeFormat;
 import ac.id.itb.ppl.lavender.model.Jadwal;
 import ac.id.itb.ppl.lavender.util.AllConstants;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.Asynchronous;
-import javax.inject.Inject;
-import javax.inject.Named;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 
@@ -40,12 +49,12 @@ public class GenerateJadwalMBean implements Serializable {
     private static final long serialVersionUID = -9123212412884303L;
     private static final Logger LOGGER = Logger.getLogger(GenerateJadwalMBean.class.getName());
     
-    @Inject private PeriodeLocal periodeDao;
-    @Inject private RuanganLocal ruanganDao;
-    @Inject private DosenLocal dosenDao;
-    @Inject private SlotWaktuLocal slotWaktuDao;
-    @Inject private KaryaAkhirLocal karyaAkhirDao;
-    @Inject private JadwalLocal jadwalDao;
+    @EJB private PeriodeBean periodeDao;
+    @EJB private RuanganBean ruanganDao;
+    @EJB private DosenBean dosenDao;
+    @EJB private SlotWaktuBean slotWaktuDao;
+    @EJB private KaryaAkhirBean karyaAkhirDao;
+    @EJB private JadwalBean jadwalDao;
     private List<Periode> periodes;
     private Periode periode;
     private List<Ruangan> ruangans;

@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.*;
@@ -18,7 +19,8 @@ import javax.persistence.*;
  * @author Edbert
  */
 @Stateless
-public class RuanganBean extends AbstractBean<Ruangan> implements RuanganLocal { 
+@LocalBean
+public class RuanganBean extends AbstractBean<Ruangan> { //implements RuanganLocal { 
     
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -44,12 +46,12 @@ public class RuanganBean extends AbstractBean<Ruangan> implements RuanganLocal {
         return ruangans;
     }
     
-    @Override
+//    @Override
     public Ruangan find(String id) {
         return em.find(Ruangan.class, id);
     }
     
-    @Override
+//    @Override
     public List<Ruangan> findRuanganYangDipakai(Periode periode) {
         // select id_jadwal_kuliah, kd_ruangan, id_periode_kuliah,
         // kode_mata_kuliah, hari, waktu_masuk, waktu_keluar,
@@ -122,7 +124,7 @@ public class RuanganBean extends AbstractBean<Ruangan> implements RuanganLocal {
         return ruangans;
     }
     
-    @Override
+//    @Override
     public List<Ruangan> findRuanganDanKetersediaanRuangans(Periode periode) {
         List<Ruangan> ruanganTerpakaiList = findRuanganYangDipakai(periode);
         List<Ruangan> ruangans = ruanganDao.findAll();

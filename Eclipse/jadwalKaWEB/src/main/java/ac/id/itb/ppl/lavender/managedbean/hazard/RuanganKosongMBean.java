@@ -1,12 +1,16 @@
 package ac.id.itb.ppl.lavender.managedbean.hazard;
 
+import ac.id.itb.ppl.lavender.bean.PeriodeBean;
+import ac.id.itb.ppl.lavender.bean.RuanganBean;
 import ac.id.itb.ppl.lavender.bean.local.RuanganLocal;
 import ac.id.itb.ppl.lavender.bean.local.PeriodeLocal;
 import ac.id.itb.ppl.lavender.model.*;
+
 import java.io.*;
 import java.util.*;
+
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
 
 /**
@@ -16,8 +20,8 @@ import javax.inject.Named;
 @Named("ruanganKosong")
 @SessionScoped
 public class RuanganKosongMBean implements Serializable {
-    @Inject private RuanganLocal rDao;
-    @Inject private PeriodeLocal pDao;
+    @EJB private RuanganBean rDao;
+    @EJB private PeriodeBean pDao;
     private List<Ruangan> rs;
     
     public List<Ruangan> getRs() {

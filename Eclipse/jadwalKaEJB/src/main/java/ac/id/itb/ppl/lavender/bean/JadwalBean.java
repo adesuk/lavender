@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
  */
 @Stateless
 @LocalBean
-public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote, JadwalLocal {
+public class JadwalBean extends AbstractBean<Jadwal> { //implements JadwalRemote, JadwalLocal {
 
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
@@ -243,8 +243,8 @@ public class JadwalBean extends AbstractBean<Jadwal> implements JadwalRemote, Ja
 		return listJadwalView;
 	}
 
-	@Override
+//	@Override
 	public Jadwal find(Integer id) {
-		return find(id);
+		return super.find(id);
 	}
 }

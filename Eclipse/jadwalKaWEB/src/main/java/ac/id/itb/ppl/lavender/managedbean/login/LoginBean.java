@@ -1,13 +1,16 @@
 package ac.id.itb.ppl.lavender.managedbean.login;
 
-import ac.id.itb.ppl.lavender.bean.local.UserLocal;
+import ac.id.itb.ppl.lavender.bean.UserBean;
 import ac.id.itb.ppl.lavender.model.Role;
 import ac.id.itb.ppl.lavender.model.User;
 import ac.id.itb.ppl.lavender.util.UserSession;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,7 +31,7 @@ public class LoginBean implements Serializable {
     private static final long serialVersionUID = -999281800728913L;
     private static final Logger LOGGER = Logger.getLogger(LoginBean.class.getName());
 
-    @Inject private UserLocal userDao;
+    @EJB private UserBean userDao;
     private String userId;
     private String password;
     private User user;
@@ -58,6 +61,10 @@ public class LoginBean implements Serializable {
         this.userId = userId;
     }
 
+    public String getUserName() {
+    	return user.getFirstName();
+    }
+    
     public User getUser() {
         return user;
     }
@@ -72,8 +79,13 @@ public class LoginBean implements Serializable {
 
     public String login() {
         User result = userDao.login(userId, password);
+                
         if (result != null) {
-            // get Http Session and store username
+        	 System.out.println("name : "+ result.getFirstName());
+             System.out.println("passowrd : "+ result.getPassword());
+             System.out.println("role : "+ result.getRole().getName());
+             
+             // get Http Session and store username
             HttpSession session = UserSession.getInstance().getSession();
             session.setAttribute("userId", userId);
             result.setPassword(null);
@@ -81,7 +93,7 @@ public class LoginBean implements Serializable {
             user = result;
             return "index?faces-redirect=true";
         } else {
-
+        	System.out.println("result is NULL");
             FacesContext.getCurrentInstance().addMessage(
                 null,
                 new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -97,7 +109,7 @@ public class LoginBean implements Serializable {
         this.user = null;
         try {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            ec.redirect(ec.getRequestContextPath() + "/" + "index.xhtml");
+            ec.redirect(ec.getRequestContextPath() + "/" + "index.jsf");
         } catch (IOException ioe) {
             LOGGER.log(Level.SEVERE, null, ioe);
 

@@ -16,7 +16,8 @@ import javax.persistence.PersistenceUnit;
  * @author Edbert
  */
 @Stateless
-public class MahasiswaBean extends AbstractBean<Mahasiswa> implements MahasiswaLocal {
+@LocalBean
+public class MahasiswaBean extends AbstractBean<Mahasiswa> { //implements MahasiswaLocal {
     
 	@PersistenceUnit(unitName="jadwalPU")
 	private EntityManager em;
@@ -30,12 +31,12 @@ public class MahasiswaBean extends AbstractBean<Mahasiswa> implements MahasiswaL
 		return em;
 	}
 		
-	@Override
+//	@Override
     public Mahasiswa find(String nim) {
-        return find(nim);
+        return super.find(nim);
     }
     
-    @Override
+//    @Override
     public List<Mahasiswa> getAllMahasiswaYangIkutDiSelectedPeriode(char tipeJadwal) {
         List<Mahasiswa> mhss = em.createQuery(
             "select m from Mahasiswa as m inner join fetch m.karyaAkhirList as k on k.statusKa = :status")

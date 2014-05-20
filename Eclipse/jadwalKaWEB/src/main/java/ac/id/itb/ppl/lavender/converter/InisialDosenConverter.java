@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
 
 /**
@@ -16,7 +16,7 @@ import javax.inject.Named;
 @Named(value = "inisialDosenConverter")
 @RequestScoped
 public class InisialDosenConverter implements Converter {
-    @Inject private DosenLocal dosenDao;
+    @EJB private DosenLocal dosenDao;
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

@@ -47,6 +47,6 @@ public class JadwalMBean implements Serializable {
 	}	
 		
 	public List<JadwalView> getJadwals() {	
-		return jadwalBean.findJadwalByPeriode(1);//p.getIdPeriode());
+		return jadwalBean.findJadwalByPeriode(periode.getIdPeriode());
 	}   
 }

@@ -1,8 +1,9 @@
 package ac.id.itb.ppl.lavender.managedbean.periode;
 
-import ac.id.itb.ppl.lavender.bean.local.PeriodeLocal;
+import ac.id.itb.ppl.lavender.bean.PeriodeBean;
 import ac.id.itb.ppl.lavender.model.Periode;
 import ac.id.itb.ppl.lavender.util.TipeEksekusi;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -11,13 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
@@ -31,7 +34,7 @@ public class PengelolaanPeriodeMBean implements Serializable {
     private static final long serialVersionUID = -901204217738820234L;
     private static final Logger LOGGER = Logger.getLogger(PengelolaanPeriodeMBean.class.getName()); 
     
-    @Inject private PeriodeLocal periodeDao;
+    @EJB private PeriodeBean periodeDao;
     // view semua periode
     private List<Periode> periodes1;
     private Periode selectedPeriode;

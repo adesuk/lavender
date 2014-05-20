@@ -9,6 +9,7 @@ import ac.id.itb.ppl.lavender.util.AllConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceUnit;
@@ -19,7 +20,8 @@ import javax.persistence.Query;
  * @author Edbert
  */
 @Stateless
-public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkhirLocal {
+@LocalBean
+public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> { //implements KaryaAkhirLocal {
     
 	@PersistenceUnit(unitName="jadwalPU")
 	private EntityManager em;
@@ -35,10 +37,10 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkh
 	
 	@Override
     public List<KaryaAkhir> findAll() {
-        return null;
+        return super.findAll();
     }
     
-    @Override
+//    @Override
     public KaryaAkhir findByOwner(Mahasiswa mahasiswa) {
         KaryaAkhir ka = (KaryaAkhir) em.createQuery(
             "select k from KaryaAkhir as k join fetch k.mahasiswa as m join fetch k.topik as t where k.mahasiswa.nim = :nim")
@@ -47,7 +49,7 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkh
         return ka;
     }
     
-    @Override
+//    @Override
     public List<KaryaAkhir> findToBeExecutedKaryaAkhirs(char tipeJadwal) {
         Query query = em.createQuery(
             "select ka from KaryaAkhir as ka " +
@@ -60,7 +62,7 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkh
         return karyaAkhirs;
     }
     
-    @Override
+//    @Override
     public List<KaryaAkhir> getAllMahasiswaYangAkanIkutSeminar(char tipeJadwal) {
         if (tipeJadwal != AllConstants.SEMINAR_TA_1 || tipeJadwal != AllConstants.SEMINAR_TESIS) {
             return new ArrayList<KaryaAkhir>(0);
@@ -73,7 +75,7 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkh
         return karyaAkhirs;
     }
     
-    @Override
+//    @Override
     public List<KaryaAkhir> findKaryaAkhir(int tahunMasuk, String jenjang, String judul) {
         String nim = "135";
         if (jenjang.equals("S1")) {
@@ -99,7 +101,7 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> implements KaryaAkh
         return karyaAkhirs;
     }
     
-    @Override
+//    @Override
     public KaryaAkhir update(KaryaAkhir karyaAkhir) {
         return em.merge(karyaAkhir);
     }

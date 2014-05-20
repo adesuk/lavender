@@ -7,7 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.inject.Named;
 
 /**
@@ -17,7 +17,7 @@ import javax.inject.Named;
 @Named(value = "slotWaktuConverter")
 @RequestScoped
 public class SlotWaktuConverter implements Converter, Serializable {
-    @Inject private SlotWaktuLocal slotWaktuDao;
+    @EJB private SlotWaktuLocal slotWaktuDao;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
