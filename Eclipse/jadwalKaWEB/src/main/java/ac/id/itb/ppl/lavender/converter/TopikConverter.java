@@ -49,7 +49,7 @@ public class TopikConverter implements Converter, Serializable{
 //	}
 
 	// edbert
-	@Inject private TopikLocal topikDao;
+	@Inject private TopikBean topikDao;
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

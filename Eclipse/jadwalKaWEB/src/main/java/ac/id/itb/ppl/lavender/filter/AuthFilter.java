@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author edbert
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"*.jsf"})
+//@WebFilter(filterName = "AuthFilter", urlPatterns = {"*.jsf"})
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = Logger
         .getLogger(AuthFilter.class.getName());

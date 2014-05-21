@@ -1,7 +1,8 @@
 package ac.id.itb.ppl.lavender.converter;
 
-import ac.id.itb.ppl.lavender.bean.local.DosenLocal;
+import ac.id.itb.ppl.lavender.bean.DosenBean;
 import ac.id.itb.ppl.lavender.model.Dosen;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,7 +17,7 @@ import javax.inject.Named;
 @Named(value = "inisialDosenConverter")
 @RequestScoped
 public class InisialDosenConverter implements Converter {
-    @EJB private DosenLocal dosenDao;
+    @EJB private DosenBean dosenDao;
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

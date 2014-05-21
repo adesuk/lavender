@@ -18,6 +18,12 @@
                                 url="/jadwal_karya_akhir/GenerateJadwal.jsf" />
                     <p:menuitem value="Pengelolaan Jadwal" icon="ui-icon-carat-1-e"
                                 url="/jadwal_karya_akhir/PengelolaanJadwal.jsf" />
+                    <p:menuitem value="View Jadwal" icon="ui-icon-carat-1-e"
+                                url="/jadwal/viewJadwal.jsf" />
+                    <p:menuitem value="View Jadwal Koor" icon="ui-icon-carat-1-e"
+                                url="/jadwal/viewJadwalKoor.jsf" /> 
+                    <p:menuitem value="Ubah Jadwal Koor" icon="ui-icon-carat-1-e"
+                                url="/jadwal/ubahJadwalKoor.jsf" />                                                              
                   </p:submenu>
                   <p:submenu label="Periode">
                     <p:menuitem value="Pengelolaan Periode" icon="ui-icon-carat-1-e"
@@ -27,15 +33,28 @@
                     <p:menuitem value="Penentuan Topik" icon="ui-icon-carat-1-e"
                                 url="/karya_akhir/PenentuanTopikKaryaAkhir.jsf" />
                   </p:submenu>
-                  <p:submenu label="Hazard!">
-                    <p:menuitem value="Dosen penguji" icon="ui-icon-carat-1-e"
-                                url="/hazard/Dosen.jsf" />
-                    <p:menuitem value="Karya akhir" icon="ui-icon-carat-1-e"
-                                url="/hazard/KarAkh.jsf" />
-                    <p:menuitem value="Jadwal kuliah" icon="ui-icon-carat-1-e"
-                                url="/hazard/Jk.jsf" />
-                    <p:menuitem value="Ruangan kosong" icon="ui-icon-carat-1-e"
-                                url="/hazard/RuanganKosong.jsf" />
+                  <p:submenu label="Bidang Keahlian">
+                    <p:menuitem value="Minat Topik" icon="ui-icon-carat-1-e"
+                                url="/bidang_keahlian/viewBidangKeahlian.jsf" />
+                  </p:submenu>
+                
+                  
+                  <p:menuitem value="Logout"
+                              actionListener="#{loginBean.logout}"
+                              immediate="true"/>
+                </p:menubar>
+              </h:panelGroup>
+              
+              <h:panelGroup rendered="#{not empty loginBean.user and loginBean.role.id == 'ROLE_DOSEN'}">
+                <p:menubar>
+                  <p:menuitem value="Beranda" url="/index.jsf" icon="ui-icon-home" />
+                  <p:submenu label="Jadwal">
+                     <p:menuitem value="View Jadwal" icon="ui-icon-carat-1-e"
+                                url="/jadwal/viewJadwal.jsf" />                        
+                  </p:submenu>
+                 <p:submenu label="Bidang Keahlian">
+                    <p:menuitem value="Minat Topik" icon="ui-icon-carat-1-e"
+                                url="/bidang_keahlian/viewBidangKeahlian.jsf" />
                   </p:submenu>
                   <p:menuitem value="Logout"
                               actionListener="#{loginBean.logout}"

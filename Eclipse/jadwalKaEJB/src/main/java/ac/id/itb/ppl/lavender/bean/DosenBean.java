@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -30,6 +31,7 @@ import ac.id.itb.ppl.lavender.model.Topik;
  */
 @Stateless
 @LocalBean
+@WebService
 public class DosenBean extends AbstractBean<Dosen> {
 	
 	@PersistenceContext(unitName="jadwalPU")

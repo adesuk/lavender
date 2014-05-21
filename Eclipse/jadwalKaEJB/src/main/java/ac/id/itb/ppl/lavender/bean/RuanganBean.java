@@ -1,8 +1,5 @@
 package ac.id.itb.ppl.lavender.bean;
 
-import ac.id.itb.ppl.lavender.bean.local.RuanganLocal;
-import ac.id.itb.ppl.lavender.bean.local.SlotWaktuLocal;
-import ac.id.itb.ppl.lavender.bean.local.JadwalKuliahLocal;
 import ac.id.itb.ppl.lavender.model.*;
 
 import java.math.BigDecimal;
@@ -20,14 +17,14 @@ import javax.persistence.*;
  */
 @Stateless
 @LocalBean
-public class RuanganBean extends AbstractBean<Ruangan> { //implements RuanganLocal { 
+public class RuanganBean extends AbstractBean<Ruangan> { //implements RuanganBean { 
     
 	@PersistenceContext(unitName="jadwalPU")
 	private EntityManager em;
     
-	@EJB RuanganLocal ruanganDao;
-    @EJB SlotWaktuLocal slotWaktuDao;
-    @EJB JadwalKuliahLocal jadwalKuliahDao;
+	@EJB RuanganBean ruanganDao;
+    @EJB SlotWaktuBean slotWaktuDao;
+    @EJB JadwalKuliahBean jadwalKuliahDao;
 	
     public RuanganBean() {
         super(Ruangan.class);

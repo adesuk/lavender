@@ -1,8 +1,10 @@
 package ac.id.itb.ppl.lavender.converter;
 
-import ac.id.itb.ppl.lavender.bean.local.RuanganLocal;
+import ac.id.itb.ppl.lavender.bean.RuanganBean;
 import ac.id.itb.ppl.lavender.model.Ruangan;
+
 import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,7 +19,7 @@ import javax.inject.Named;
 @Named(value = "ruanganConverter")
 @RequestScoped
 public class RuanganConverter implements Converter, Serializable {
-    @EJB private RuanganLocal ruanganDao;
+    @EJB private RuanganBean ruanganDao;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

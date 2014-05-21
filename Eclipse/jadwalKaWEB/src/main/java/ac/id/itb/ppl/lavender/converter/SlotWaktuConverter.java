@@ -1,8 +1,10 @@
 package ac.id.itb.ppl.lavender.converter;
 
-import ac.id.itb.ppl.lavender.bean.local.SlotWaktuLocal;
+import ac.id.itb.ppl.lavender.bean.SlotWaktuBean;
 import ac.id.itb.ppl.lavender.model.SlotWaktu;
+
 import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -17,7 +19,7 @@ import javax.inject.Named;
 @Named(value = "slotWaktuConverter")
 @RequestScoped
 public class SlotWaktuConverter implements Converter, Serializable {
-    @EJB private SlotWaktuLocal slotWaktuDao;
+    @EJB private SlotWaktuBean slotWaktuDao;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

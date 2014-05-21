@@ -35,7 +35,7 @@ public class KaryaAkhirBean extends AbstractBean<KaryaAkhir> { //implements Kary
 		return em;
 	}
 	
-	@Override
+//	@Override
     public List<KaryaAkhir> findAll() {
         return super.findAll();
     }
